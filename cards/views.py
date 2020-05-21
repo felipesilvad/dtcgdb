@@ -5,19 +5,22 @@ from .models import Card, Set, Digimon, NewC
 from .filters import CardFilter
 
 def setlist(request):
+    page_title = 'Set List'
     sets = Set.objects.all().order_by('release_date')
-    return render(request, 'cards/setlist.html', {'sets': sets})
+    return render(request, 'cards/setlist.html', {'page_title':page_title, 'sets': sets})
 
 def card_detail(request, card_slug, slug_set):
     set = Set.objects.get(slug=slug_set)
     card = Card.objects.get(set=set, slug=card_slug)
+    page_title = card.number
     cards_in_set = set.card_set.all().order_by('slug')
     cards_in_set_reverse = set.card_set.all().order_by('-slug')
-    return render(request, 'cards/card_detail.html', {'card':card, 'cards_in_set':cards_in_set,
+    return render(request, 'cards/card_detail.html', {'page_title':page_title, 'card':card, 'cards_in_set':cards_in_set,
     'card_slug':card_slug, 'cards_in_set_reverse':cards_in_set_reverse})
 
 def set_detail(request, slug_set):
     set = Set.objects.get(slug=slug_set)
+    page_title = set.title
     cards = set.card_set.all().order_by('slug')
     tRed = set.card_set.filter(color='Red').count()
     tBlue = set.card_set.filter(color='Blue').count()
@@ -34,12 +37,13 @@ def set_detail(request, slug_set):
     tTamer = set.card_set.filter(card_type='Tamer').count()
     tOption = set.card_set.filter(card_type='Option').count()
 
-    return render(request, 'cards/set_detail.html', {'cards': cards, 'set': set,
+    return render(request, 'cards/set_detail.html', {'page_title':page_title, 'cards': cards, 'set': set,
     'tRed': tRed, 'tBlue':tBlue, 'tYellow':tYellow, 'tGreen':tGreen, 'tColorless':tColorless,
     'tC':tC, 'tU':tU,'tR':tR, 'tSR':tSR, 'tSEC':tSEC, 'tDigimon':tDigimon, 'tDigitama':tDigitama,
     'tTamer':tTamer, 'tOption':tOption })
 
 def cardslist(request):
+    page_title = 'Advanced Search'
     cards = Card.objects.all().order_by('card_type', 'lv', '-color', 'play_cost')
     sets = Set.objects.all().order_by('-release_date')
     digimons = Digimon.objects.all().order_by('title')
@@ -144,5 +148,5 @@ def cardslist(request):
     cards_count = cards.count()
     
     return render(request, 'cards/cards_list.html', 
-    {'cards': cards, 'myFilter': myFilter, 'page_obj': queryset, 'cards_count':cards_count,
+    {'page_title':page_title, 'cards': cards, 'myFilter': myFilter, 'page_obj': queryset, 'cards_count':cards_count,
     'sets':sets, 'digimons':digimons, 'effect':effect, 'effect_keyword':effect_keyword})
