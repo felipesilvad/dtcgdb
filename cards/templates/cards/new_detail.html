@@ -1,0 +1,32 @@
+{% extends 'base_layout.html' %}
+{% block content %}
+
+<div class="row">
+    <div class="col">
+        <div class="card card-body">
+            <img class="news-img mx-auto d-block" src="{{new.thumbnail.url}}">
+            <h1 class="card-title">{{new.title}}<h1>
+            <div>
+                <h6 class="newscontent">{{new.content | safe}}</h6>
+            </div>
+        </div>
+        {% if new.releated_cards.all %}
+            <div class="card card-body mt-3">
+                <h2 class="font-italic font-weight-bold d-flex justify-content-center">Featured Cards</h2>
+                <div class="list d-flex justify-content-center">
+                    {% for card in new.releated_cards.all %}
+                        <div class="hover_img hover_img-home">
+                            <a href="/cards/{{card.set.slug}}/{{card.slug}}">
+                                <img class="card-thumb home-w" src="{% if card.image_en %}{{card.image_en.url}}{% else %}{{card.image_jp.url}}{% endif %}">
+                                <img class="hidden-large" src="{% if card.image_en %}{{card.image_en.url}}{% else %}{{card.image_jp.url}}{% endif %}">
+                            </a>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endif %}
+    </div>
+</div>
+
+
+{% endblock %}

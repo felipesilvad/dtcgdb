@@ -1,43 +1,60 @@
 {% extends 'base_layout.html' %}
 {% block content %}
 
+<div class="hide-desk w-100 d-flex justify-content-between">
+    {% for card in previous_card|slice:":1" %}
+        <div class="light-bg">
+            {% if card.slug %}
+                <a class="font-weight-bold previous-c" href="/cards/{{card.set.slug}}/{{ card.slug}}">◄ {{card.slug}} - {{card.title}}</a>
+            {% endif %}
+        </div>
+    {% endfor %}
+    {% for card in next_card|slice:":1" %}
+        <div class="light-bg">
+            {% if card.slug %}
+                <a class="next-c font-weight-bold" href="/cards/{{card.set.slug}}/{{ card.slug}}">{{card.slug}} - {{card.title}} ►</a>
+            {% endif %}
+        </div>
+    {% endfor %}
+</div>
+
 <div class="row mt-3">
     <div class="col-lg-4">
-        <div class="light-bg">
-            <nav>
-                <div class="nav nav-pills m-2" id="nav-tab" role="tablist">
-                    {% if card.image_en %}
-                    <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Translated</a>
-                    {% endif %}
-                    {% if card.image_jp.url %}
-                    <a class="nav-item nav-link {% if not card.image_en %} active {% endif %}" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Japanese</a>
-                    {% endif %}
-                    {% if card.image_parallel %}
-                    <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#parallel" role="tab" aria-controls="nav-profile" aria-selected="false">Parallel</a>
-                    {% endif %}
-                </div>
-            </nav>
+        <nav>
+            <div class="nav nav-pills" id="nav-tab" role="tablist">
+                {% if card.image_en %}
+                <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Translated</a>
+                {% endif %}
+                {% if card.image_jp.url %}
+                <a class="nav-item nav-link {% if not card.image_en %} active {% endif %}" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Japanese</a>
+                {% endif %}
+                {% if card.image_parallel %}
+                <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#parallel" role="tab" aria-controls="nav-profile" aria-selected="false">Parallel</a>
+                {% endif %}
+            </div>
+        </nav>
+        <div class="card-bg border-w">
             <div class="tab-content" id="nav-tabContent">
                 {% if card.image_en %}
                 <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
-                    <img class="img-fluid mx-auto d-block" width="400px" src="{{card.image_en.url}}">
+                    <img class="img-fluid mx-auto d-block card-img-main" src="{{card.image_en.url}}">
                 </div>
                 {% endif %}
                 {% if card.image_jp.url %}
                 <div class="tab-pane fade {% if not card.image_en %} show active {% endif %}" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
-                    <img class="img-fluid mx-auto d-block" width="400px" src="{{card.image_jp.url}}">
+                    <img class="img-fluid mx-auto d-block card-img-main" src="{{card.image_jp.url}}">
                 </div>
                 {% endif %}
                 {% if card.image_parallel %}
                 <div class="tab-pane fade" id="parallel" role="tabpanel" aria-labelledby="nav-profile-tab">
-                    <img class="img-fluid mx-auto d-block" width="400px" src="{{card.image_parallel.url}}">
+                    <img class="img-fluid mx-auto d-block card-img-main" src="{{card.image_parallel.url}}">
                 </div>
                 {% endif %}
             </div>
         </div>
     </div>
     <div class="col-lg-8">
-        <div class="color-{{card.color}} light-bg mb-3 p-0">
+        <div class="color-{{card.color}} light-bg mb-3 p-0 dflex-mobile">
             <div class="d-inline-flex mb-less-3">
                 <h1 class="card-title ml-4 pt-1">{{ card.title }}</h1>
                 <h5 class="card-rarity-{{card.color}} ml-2 mt-2 color-{{card.color}}-txt">{{card.rarity}}</h5>
@@ -60,7 +77,7 @@
                 {% endif %}
             </div>
             <div></div>
-            <div class="d-inline-flex p-2 bd-highlight">
+            <div class="d-inline-flex p-2 bd-highlight between-mobile">
                 {% if card.play_cost is not None %}
                     <h5 class="dptxt dpfull mr-1">Play Cost </h5><h2 class="cost-bg cost-bg-play mr-3">{{card.play_cost}}</h2>
                 {% endif %}
@@ -380,30 +397,25 @@
             </div>
         </div>
     </div>
-
-   
-    <!-- {% for card in cards_in_set|slice:":1" %}
-        {% if card_slug > card.slug %}
-            <a> {{card.slug}} - {{card.title}}</a>
-        {% endif %}
-    {% endfor %}
-
-    {% for card in cards_in_set_reverse|slice:":1" %}
-        {% if card_slug > card.slug %}
-            <a> {{card.slug}} - {{card.title}}</a>
-        {% endif %}
-    {% endfor %}
-
-    {% for card in cards_in_set|slice:":1" %}
-        {% if card_slug < card.slug %}
-            <a> {{card.slug}} - {{card.title}}</a>
-        {% endif %}
-    {% endfor %}
     
-    <div class="row w-100">
-        <a class="col-sm-6 previous-c" href="/cards/{{card.set.slug}}/{{ card.slug|add:'-1' }}">Previous Card</a>
-        <a class="col-sm-6 next-c" href="/cards/{{card.set.slug}}/{{ card.slug|add:'+1' }}">Next Card</a>
-    </div> -->
+    
+    <div class="w-100 d-flex justify-content-between">
+        {% for card in previous_card|slice:":1" %}
+            <div class="light-bg">
+                {% if card.slug %}
+                    <a class="font-weight-bold previous-c" href="/cards/{{card.set.slug}}/{{ card.slug}}">◄ {{card.slug}} - {{card.title}}</a>
+                {% endif %}
+            </div>
+        {% endfor %}
+        {% for card in next_card|slice:":1" %}
+            <div class="light-bg">
+                {% if card.slug %}
+                    <a class="next-c font-weight-bold" href="/cards/{{card.set.slug}}/{{ card.slug}}">{{card.slug}} - {{card.title}} ►</a>
+                {% endif %}
+            </div>
+        {% endfor %}
+    </div>
+
 </div>    
 
 {% endblock %}

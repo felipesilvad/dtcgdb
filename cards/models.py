@@ -89,6 +89,9 @@ class Card(models.Model):
     promo_name = models.CharField(max_length=100, null=True, blank=True)
     promo_release_date = models.DateField(blank=True, null=True)
 
+    new_date = models.DateField(blank=True, null=True)
+    new_parallel = models.BooleanField(blank=True, null=True)
+
     date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
@@ -136,10 +139,12 @@ class Digimon(models.Model):
     def __str__(self):
         return self.title
 
-class NewC(models.Model):
-    card_number = models.CharField(max_length=100, null=True, blank=True,)
-    card = models.ForeignKey("Card", blank=True, null=True, on_delete=models.CASCADE)
-    parallel = models.BooleanField()
-
+class New(models.Model):
+    title = models.CharField(max_length=255, blank=True, null=True)
+    thumbnail = models.ImageField(blank=True, upload_to="news/")
+    content = models.TextField(max_length=2255, blank=True, null=True)
+    date = models.DateTimeField(auto_now_add=True, blank=True, null=True)
+    releated_cards = models.ManyToManyField("Card", blank=True, null=True)
+    
     def __str__(self):
-        return self.card_number
+        return self.title

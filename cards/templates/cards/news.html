@@ -1,0 +1,24 @@
+{% extends 'base_layout.html' %}
+{% block content %}
+
+<div class="row">
+    <div class="col">
+        <div class="light-bg mt-2">
+            <h1 class="font-italic font-weight-bold d-flex justify-content-center">News</h1>
+                <div class="tab-pane fade show active" id="gallery" role="tabpanel" aria-labelledby="gallery">
+                    <div class="list d-flex justify-content-left">
+                    {% for new in news %}
+                        <div class="border-g news-home p-2">
+                            <a href="/news/{{new.id}}/">
+                                <img class="news-home-img mx-auto d-block" src="{{new.thumbnail.url}}">
+                                <h4>{{new.title}}<h4>
+                            </a>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

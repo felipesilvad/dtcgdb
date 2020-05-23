@@ -5,18 +5,14 @@
     <div class="row">
         <div class="col">
             <div class="light-bg mt-2">
-                <h2 class="font-italic font-weight-bold">Last Revealed Cards</h2>
+                <h2 class="font-italic font-weight-bold d-flex justify-content-center">Lastest News</h2>
                     <div class="tab-pane fade show active" id="gallery" role="tabpanel" aria-labelledby="gallery">
-                        <div class="list">
-                        {% for card in new_cards %}
-                            <div class="hover_img">
-                                <a href="/cards/{{card.card.set.slug}}/{{card.card.slug}}">
-                                    {% if card.parallel == True %}
-                                        <img class="card-thumb" id="promo-w" src="{% if card.card.image_parallel %}{{card.card.image_parallel.url}}{% else %}{{card.card.image_jp.url}}{% endif %}">
-                                    {% else %}
-                                        <img class="card-thumb" id="promo-w" src="{% if card.card.image_en %}{{card.card.image_en.url}}{% else %}{{card.card.image_jp.url}}{% endif %}">
-                                    {% endif %}
-                                    <img class="hidden-large" src="{% if card.card.image_en %}{{card.card.image_en.url}}{% else %}{{card.card.image_jp.url}}{% endif %}">
+                        <div class="list d-flex justify-content-left">
+                        {% for new in news %}
+                            <div class="border-g news-home p-2">
+                                <a href="/news/{{new.id}}/">
+                                    <img class="news-home-img mx-auto d-block" src="{{new.thumbnail.url}}">
+                                    <h4>{{new.title}}<h4>
                                 </a>
                             </div>
                         {% endfor %}
@@ -29,13 +25,38 @@
     <div class="row">
         <div class="col">
             <div class="light-bg mt-2">
-                <h2 class="font-italic font-weight-bold">Random Cards</h2>
+                <h2 class="font-italic font-weight-bold d-flex justify-content-center">Last Revealed Cards</h2>
                     <div class="tab-pane fade show active" id="gallery" role="tabpanel" aria-labelledby="gallery">
-                        <div class="list">
-                        {% for card in random_cards %}
-                            <div class="hover_img">
+                        <div class="list d-flex justify-content-center">
+                        {% for card in new_cards %}
+                            <div class="hover_img hover_img-home">
                                 <a href="/cards/{{card.set.slug}}/{{card.slug}}">
-                                    <img class="card-thumb" id="promo-w" src="{% if card.image_en %}{{card.image_en.url}}{% else %}{{card.image_jp.url}}{% endif %}">
+                                    {% if card.new_parallel == True %}
+                                        <img class="card-thumb home-w" src="{% if card.image_parallel %}{{card.image_parallel.url}}{% else %}{{card.image_jp.url}}{% endif %}">
+                                    {% else %}
+                                        <img class="card-thumb home-w" src="{% if card.image_en %}{{card.image_en.url}}{% else %}{{card.image_jp.url}}{% endif %}">
+                                    {% endif %}
+                                    <img class="hidden-large" src="{% if card.image_en %}{{card.image_en.url}}{% else %}{{card.image_jp.url}}{% endif %}">
+                                </a>
+                            </div>
+                        {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col">
+            <div class="light-bg mt-2">
+                <h2 class="font-italic font-weight-bold d-flex justify-content-center">Random Cards</h2>
+                    <div class="tab-pane fade show active" id="gallery" role="tabpanel" aria-labelledby="gallery">
+                        <div class="list d-flex justify-content-center">
+                        {% for card in random_cards %}
+                            <div class="hover_img hover_img-home">
+                                <a href="/cards/{{card.set.slug}}/{{card.slug}}">
+                                    <img class="card-thumb home-w" src="{% if card.image_en %}{{card.image_en.url}}{% else %}{{card.image_jp.url}}{% endif %}">
                                     <img class="hidden-large" src="{% if card.image_en %}{{card.image_en.url}}{% else %}{{card.image_jp.url}}{% endif %}">
                                 </a>
                             </div>

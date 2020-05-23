@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.db.models import Q
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from .models import Card, Set, Digimon, NewC
+from .models import Card, Set, Digimon, New
 from .filters import CardFilter
 
 def setlist(request):
@@ -13,10 +13,10 @@ def card_detail(request, card_slug, slug_set):
     set = Set.objects.get(slug=slug_set)
     card = Card.objects.get(set=set, slug=card_slug)
     page_title = card.number
-    cards_in_set = set.card_set.all().order_by('slug')
-    cards_in_set_reverse = set.card_set.all().order_by('-slug')
-    return render(request, 'cards/card_detail.html', {'page_title':page_title, 'card':card, 'cards_in_set':cards_in_set,
-    'card_slug':card_slug, 'cards_in_set_reverse':cards_in_set_reverse})
+    previous_card = set.card_set.filter(slug__lt=card_slug).order_by('-slug')
+    next_card = set.card_set.filter(slug__gt=card_slug).order_by('slug')
+    return render(request, 'cards/card_detail.html', {'page_title':page_title, 'card':card, 'previous_card':previous_card,
+     'next_card':next_card})
 
 def set_detail(request, slug_set):
     set = Set.objects.get(slug=slug_set)

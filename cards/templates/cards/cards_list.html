@@ -225,8 +225,8 @@
                     </ul>
                 </nav>
                 <div class="nav nav-pills m-2" id="nav-tab" role="tablist">
-                    <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#gallery" role="tab" aria-controls="gallery" aria-selected="true">Gallery</a>
-                    <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#list" role="tab" aria-controls="list" aria-selected="false">List</a>
+                    <a class="pilss-cl active" id="nav-home-tab" data-toggle="tab" href="#gallery" role="tab" aria-controls="gallery" aria-selected="true">Gallery</a>
+                    <a class="pilss-cl" id="nav-profile-tab" data-toggle="tab" href="#list" role="tab" aria-controls="list" aria-selected="false">List</a>
                 </div>
             </nav>
             <div class="tab-content" id="nav-tabContent">
@@ -258,16 +258,16 @@
                         {% for card in page_obj %}
                             <tr>
                                 <td class="color-{{card.color}} t-number">{{card.number}}</td>
-                                <td class="cost-bg-play align-middle text-center font-weight-bold">
+                                <td class="t-pc cost-bg-play align-middle text-center font-weight-bold">
                                     {% if card.play_cost is None %}-
                                     {% else %}{{card.play_cost}}
                                     {% endif %}
                                 </td>
                                 {% if card.evolution_cost_1 is None %}
-                                    <td class="align-middle text-center">-</td>
+                                    <td class="t-pc align-middle text-center">-</td>
                                 {% else %}
                                     {% if card.evolution_cost_2 %}
-                                        <td class="m-0 p-0">
+                                        <td class="t-pc m-0 p-0">
                                             <table clasclass="m-0 p-0">
                                                 <tr class="m-0 p-0">
                                                     <td class="color-radial-{{card.evolution_cost_1_color}} align-middle text-center evo-2-td font-weight-bold">
@@ -280,7 +280,7 @@
                                             </table>
                                         </td>
                                     {% else %}
-                                        <td class="color-radial-{{card.evolution_cost_1_color}} align-middle text-center font-weight-bold">
+                                        <td class="t-pc color-radial-{{card.evolution_cost_1_color}} align-middle text-center font-weight-bold">
                                             {{card.evolution_cost_1}}
                                         </td>
                                     {% endif %}
@@ -306,7 +306,7 @@
                                         <tr class="m-0 p-0">
                                             <td class="m-0 p-0 bb-none">
                                                 <a href="/cards/{{card.set.slug}}/{{card.slug}}">
-                                                    <div class="hover_img">
+                                                    <div class="hover_img hovertxt">
                                                         <h6 class="font-weight-bold">{{card.title}}</h6>
                                                         <img class="hidden-large" id="list-thumb" src="{% if card.image_en %}{{card.image_en.url}}{% else %}{{card.image_jp.url}}{% endif %}">
                                                     </div>
@@ -315,7 +315,7 @@
                                         </tr>
                                     </table>
                                 </td>
-                                <td class="border-g align-middle text-center">
+                                <td class="t-pc border-g align-middle text-center">
                                     {% if card.dp %}{{card.dp}}000
                                     {% else %} - 
                                     {% endif %}

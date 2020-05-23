@@ -2,12 +2,12 @@
 {% block content %}
 
 <div class="row mt-3">
-    <div class="col-md">
+    <div class="col-lg">
         {% if set.set_type == "Promo" %}
         <div class="card card-body">
             <h2 class="text-uppercase font-italic font-weight-bold">{{set.slug}} - Promo - Promotional Cards</h2>
             <div class="row w-100">
-                <div class="col-md border-g">
+                <div class="col-lg border-g">
                     Promos List
                     {% for card in cards %}
                         {% ifchanged card.promo_name %}
@@ -19,7 +19,7 @@
                         {% endifchanged %}
                     {% endfor %}
                 </div>
-                <div class="col-md border-g">
+                <div class="col-lg border-g">
                     <table class="table table-dark tab-pane">
                         <tr>
                             <th>Digimon Cards</th>
@@ -39,7 +39,7 @@
                         </tr>
                     </table>
                 </div>
-                <div class="col-md border-g">
+                <div class="col-lg border-g">
                     <table class="table table-dark tab-pane">
                         <tr>
                             <th>Red Cards</th>
@@ -69,7 +69,7 @@
         <div class="card card-body">
             <h2 class="text-uppercase font-italic font-weight-bold">{{set.slug}} - {{set.title}}</h2>
             <div class="row">
-                <div class="col-md border-g ">
+                <div class="col-lg border-g ">
                     {% if set.set_type == "Deck" %}
                         {% if set.produc_image_1 %}
                             <img class="set-thumb mx-auto d-block" src="{{set.produc_image_1.url}}">
@@ -103,7 +103,7 @@
                         <img class="set-thumb mx-auto d-block" src="{{set.produc_image_1.url}}">
                     {% endif %}
                 </div>
-                <div class="col-md border-g">
+                <div class="col-lg border-g">
                     <table class="table table-dark">
                         <tr>
                             <th class="w-30">Release Date</th>
@@ -142,7 +142,7 @@
                         <p>1 Pack contains 6 Cards</p>
                     {% endif %}
                 </div>
-                <div class="col-md border-g tab-content">
+                <div class="col-lg border-g tab-content">
                     <nav>
                         <div class="nav" id="nav-tab" role="tablist">
                             <a class="nav-link active" data-toggle="tab" href="#rarity" role="tab" aria-controls="rarity" aria-selected="true">Rarity</a>
@@ -220,15 +220,15 @@
 </div>
 
 <div class="row mt-3">
-    <div class="col-md">
+    <div class="col-lg">
         <div class="card card-body">
             <h2 class="text-uppercase font-italic font-weight-bold">Cards List</h2>
             <nav>
                 <div class="nav nav-pills m-2" id="nav-tab" role="tablist">
-                    <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#gallery" role="tab" aria-controls="gallery" aria-selected="true">
+                    <a class="pilss-cl btn active" id="nav-home-tab" data-toggle="tab" href="#gallery" role="tab" aria-controls="gallery" aria-selected="true">
                         Gallery
                     </a>
-                    <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#list" role="tab" aria-controls="list" aria-selected="false">List</a>
+                    <a class="pilss-cl btn" id="nav-profile-tab" data-toggle="tab" href="#list" role="tab" aria-controls="list" aria-selected="false">List</a>
                 </div>
             </nav>
             <div class="tab-content" id="nav-tabContent">
@@ -282,16 +282,16 @@
                         {% for card in cards %}
                             <tr>
                                 <td class="color-{{card.color}} t-number">{{card.number}}</td>
-                                <td class="cost-bg-play align-middle text-center font-weight-bold">
+                                <td class="t-pc cost-bg-play align-middle text-center font-weight-bold">
                                     {% if card.play_cost is None %}-
                                     {% else %}{{card.play_cost}}
                                     {% endif %}
                                 </td>
                                 {% if card.evolution_cost_1 is None %}
-                                    <td class="align-middle text-center">-</td>
+                                    <td class="align-middle text-center t-pc">-</td>
                                 {% else %}
                                     {% if card.evolution_cost_2 %}
-                                        <td class="m-0 p-0">
+                                        <td class="m-0 p-0 t-pc">
                                             <table clasclass="m-0 p-0">
                                                 <tr class="m-0 p-0">
                                                     <td class="color-radial-{{card.evolution_cost_1_color}} align-middle text-center evo-2-td font-weight-bold">
@@ -304,7 +304,7 @@
                                             </table>
                                         </td>
                                     {% else %}
-                                        <td class="color-radial-{{card.evolution_cost_1_color}} align-middle text-center font-weight-bold">
+                                        <td class="t-pc color-radial-{{card.evolution_cost_1_color}} align-middle text-center font-weight-bold">
                                             {{card.evolution_cost_1}}
                                         </td>
                                     {% endif %}
@@ -335,7 +335,7 @@
                                             </td>
                                             <td class="m-0 p-0 bb-none  pl-2">
                                                 <a href="/cards/{{set.slug}}/{{card.slug}}">
-                                                    <div class="hover_img">
+                                                    <div class="hover_img hovertxt">
                                                         <h6 class="font-weight-bold">{{card.title}}</h6>
                                                         <img class="hidden-large" id="list-thumb" src="{% if card.image_en %}{{card.image_en.url}}{% else %}{{card.image_jp.url}}{% endif %}">
                                                     </div>
@@ -344,7 +344,7 @@
                                         </tr>
                                     </table>
                                 </td>
-                                <td class="border-g align-middle text-center">
+                                <td class="t-pc order-g align-middle text-center">
                                     {% if card.dp %}{{card.dp}}000
                                     {% else %} - 
                                     {% endif %}

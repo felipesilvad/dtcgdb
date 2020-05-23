@@ -19,21 +19,32 @@
     </head>
     <header class="bg-p-darker">
         <div class="container">
-            <nav class="navbar navbar-expand-lg mb-4">
-                <a class="nav-header {% if request.path == '/' %}current{% endif %}" href="/">Home</a>
-                <a class="nav-header {% if request.path == '/cards/' %}current{% endif %}" href="/cards/" >Set List</a>
-                <a class="nav-header {% if request.path == '/cards/search' %}current{% endif %}" href="/cards/search">Advanced Search</a>
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <form class="form-inline ml-auto" method="GET" action="/cards/search#results">
-                    <div class="md-form my-0">
-                    <input value="{{request.GET.q}}" name="q" class="form-control" type="text" placeholder="Search" aria-label="Search">
-                    </div>
-                    <button class="btn btn-outline-white btn-md my-0 ml-sm-2" type="submit"><img width="25px" color="white" src="/static/search.png"></button>
-                </form>
+            <div class="pos-f-t bg-dark">
+                <div class="collapse navbar-collapse" id="navbarToggleExternalContent">
+                  <div class="bg-dark p-4">
+                    <div class="header-button-mob"><a class="nav-header {% if request.path == '/news/' %}current{% endif %}" href="/news/">News</a></div>
+                    <div class="header-button-mob"><a class="nav-header {% if request.path == '/cards/' %}current{% endif %}" href="/cards/">Set List</a></div>
+                    <div class="header-button-mob"><a class="nav-header {% if request.path == '/cards/search' %}current{% endif %}" href="/cards/search">Advanced Search</a></div>
+                    <div class="header-button-mob"><a class="nav-header {% if request.path == '/card-images/' %}current{% endif %}" href="/card-images/">Card Images</a></div>
+                  </div>
                 </div>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </nav>
+                <nav class="navbar navbar-dark bg-dark">
+                    <a class="nav-header {% if request.path == '/' %}current{% endif %}" href="/">Home</a>
+                    <a class="hide-mob nav-header {% if request.path == '/news/' %}current{% endif %}" href="/news/">News</a>
+                    <a class="hide-mob nav-header {% if request.path == '/cards/' %}current{% endif %}" href="/cards/">Set List</a>
+                    <a class="hide-mob nav-header {% if request.path == '/cards/search' %}current{% endif %}" href="/cards/search">Advanced Search</a>
+                    <a class="hide-mob nav-header {% if request.path == '/card-images/' %}current{% endif %}" href="/card-images/">Card Images</a>
+                    <form class="form-inline ml-auto" method="GET" action="/cards/search#results">
+                        <div class="md-form my-0">
+                        <input value="{{request.GET.q}}" name="q" class="form-control" type="text" placeholder="Search" aria-label="Search">
+                        </div>
+                        <button class="btn btn-outline-white btn-md my-0 ml-sm-2" type="submit"><img class="search-icon" src="/static/search.png"></button>
+                    </form>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                </nav>
+              </div>
         </div>
     </header>
     <body>
