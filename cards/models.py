@@ -22,6 +22,8 @@ class Card(models.Model):
         ('Blue', 'Blue'),
         ('Yellow', 'Yellow'),
         ('Green', 'Green'),
+        ('Purple', 'Purple'),
+        ('Black', 'Black'),
         ('Colorless', 'Colorless'),
     ]
     color = models.CharField(choices=COLORS, max_length=20, default='Red')
@@ -51,6 +53,8 @@ class Card(models.Model):
         ('Recovery (Deck) +', 'Recovery (Deck) +'),
         ('Security Attack +', 'Security Attack +'),
         ('Security Attack -', 'Security Attack -'),
+        ('Vengeance', 'Vengeance'),
+        ('Download', 'Download'),
     ]
 
     effect_blue_1 = models.CharField(max_length=100, null=True, blank=True)

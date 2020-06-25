@@ -438,6 +438,12 @@ body {
 .color-Green{
     background: #009c6b;
 }
+.color-Purple{
+    background: #8C36B3;
+}
+.color-Black{
+    background: #232323;
+}
 .color-Colorless{
     background: #ffffff;
     color: Black;
@@ -471,6 +477,14 @@ body {
 }
 .color-radial-Green{
     background: radial-gradient(#67c2a2, #026c48);
+}
+
+.color-radial-Purple{
+    background: radial-gradient(#95699E, #765885);
+}
+
+.color-radial-Black{
+    background: radial-gradient(#585858, #212121);
 }
 
 
@@ -751,7 +765,8 @@ td.t-lv{
         padding-right: 10px;
         padding-left: 10px;
     }
-    .card-rarity-Red, .card-rarity-Blue, .card-rarity-Green  {
+    .card-rarity-Red, .card-rarity-Blue, .card-rarity-Green,
+    .card-rarity-Purple, .card-rarity-Black  {
         font-weight: bolder;
         background-color: #fff;
         border-radius: 100px;
