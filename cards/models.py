@@ -55,6 +55,7 @@ class Card(models.Model):
         ('Security Attack -', 'Security Attack -'),
         ('Vengeance', 'Vengeance'),
         ('Download', 'Download'),
+        ('De-Digivolve', 'De-Digivolve')
     ]
 
     effect_blue_1 = models.CharField(max_length=100, null=True, blank=True)
