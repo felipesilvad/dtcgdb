@@ -3,8 +3,6 @@ from django.db.models import Q
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from .models import Card, Set, Digimon, New
 from .filters import CardFilter
-import requests
-from bs4 import BeautifulSoup
 
 def setlist(request):
     page_title = 'Set List'
@@ -15,16 +13,10 @@ def card_detail(request, card_slug, slug_set):
     set = Set.objects.get(slug=slug_set)
     card = Card.objects.get(set=set, slug=card_slug)
     page_title = card.number
-    URL = 'https://www.amazon.com/Compatible-iPhone-Clear-Anti-Scratch-Absorption/dp/B07HRJL27Z?pf_rd_r=ZBKRZ1E6AHZFRJWND323&pf_rd_p=7c2c56ce-3b28-4a59-982c-2f5e4c0a2414&pd_rd_r=2d7712ed-a8c9-4ed0-8f28-4ced0c6b08dc&pd_rd_w=RUvqN&pd_rd_wg=q0RTL&ref_=pd_gw_unk'
-    headers = {"User-Agent": 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36'}
-    page = requests.get(URL, headers=headers)
-    soup = BeautifulSoup(page.content, 'lxml')
-    price = soup.find(id="priceblock_ourprice")
     previous_card = set.card_set.filter(slug__lt=card_slug).order_by('-slug')
     next_card = set.card_set.filter(slug__gt=card_slug).order_by('slug')
     return render(request, 'cards/card_detail.html', {'page_title':page_title,'card':card,
-    'URL':URL, 'headers':headers, 'page':page, 'soup':soup,
-    'price':price,
+   
     'previous_card':previous_card, 'next_card':next_card})
 
 
