@@ -166,6 +166,13 @@ a:hover {
     margin-right: 25%;
 }
 
+.los-card {
+    width: 100%;
+    display: flex;
+    vertical-align: middle!important;
+    padding: 6px;
+}
+
 .lv-bg {
     font-size: 30px;
     border-radius: 20px;
@@ -179,6 +186,12 @@ a:hover {
     font-size: 26px;
 }
 
+.table-card td{
+    padding-top: 0.75rem;
+    padding-right: 0.2rem;
+    padding-bottom: 0.75rem;
+    padding-left: 0.6rem;
+}
 .color-radial-Colorless{
     background: #ffffff;
     color: Black;
@@ -203,6 +216,17 @@ a:hover {
     padding-top: 6px;
     font-weight: normal;
     font-size: 25px;
+}
+
+.costtxt{
+    font-weight: normal;
+    font-size: 17px;
+    text-transform: uppercase;
+    font-weight: 900;
+}
+
+.costtxt p {
+    margin-bottom: 0;
 }
 
 .dpn {
