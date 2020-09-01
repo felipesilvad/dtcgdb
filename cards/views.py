@@ -3,7 +3,6 @@ from django.db.models import Q
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from .models import Card, Set, Digimon, New
 from .filters import CardFilter
-import lxml
 import requests
 from bs4 import BeautifulSoup
 

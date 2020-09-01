@@ -1,4 +1,7 @@
 
+.\cards\paapi.py
+.\cards\tests.py
+
 # Elastic Beanstalk Files
 .elasticbeanstalk/*
 !.elasticbeanstalk/*.cfg.yml
