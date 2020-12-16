@@ -97,6 +97,12 @@ class Card(models.Model):
     new_date = models.DateField(blank=True, null=True)
     new_parallel = models.BooleanField(blank=True, null=True)
 
+    yuyu_tei = models.URLField(max_length=400, null=True, blank=True)
+    suruga_ya = models.URLField(max_length=400, null=True, blank=True)
+    amazon_jp = models.URLField(max_length=400, null=True, blank=True)
+    ebay = models.URLField(max_length=400, null=True, blank=True)
+
+
     date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

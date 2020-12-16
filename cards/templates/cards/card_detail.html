@@ -1,8 +1,6 @@
 {% extends 'base_layout.html' %}
 {% block content %}
 
-<iframe src="//rcm-fe.amazon-adsystem.com/e/cm?lt1=_blank&t=cloudsjp04-22&language=ja_JP&o=9&p=8&l=as4&m=amazon&f=ifr&ref=as_ss_li_til&asins=B08DCM8KRH&linkId=7b3e545a3ba19782f8a732e8a721b574"></iframe>
-
 <div class="hide-desk w-100 d-flex justify-content-between">
     {% for card in previous_card|slice:":1" %}
         <div class="light-bg">
@@ -19,7 +17,19 @@
         </div>
     {% endfor %}
 </div>
-
+{% if card.yuyu_tei %}
+    yuyu_tei: {{usd_yuyu_tei}}
+{% endif %}
+{% if card.suruga_ya %}
+    suruga_ya: {{usd_suruga_ya}}
+{% endif %}
+{% if card.amazon_jp %}
+    amazon_jp: {{usd_amazon_jp}}
+{% endif %}
+{% if card.ebay %}
+    ebay: {{usd_price_ebay}}
+{% endif %}
+avarage: {{usd_total}}
 <div class="row mt-3">
     
     <div class="col-lg-4">

@@ -3,6 +3,11 @@ from django.db.models import Q
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from .models import Card, Set, Digimon, New
 from .filters import CardFilter
+import lxml
+import requests
+from bs4 import BeautifulSoup
+from forex_python.converter import CurrencyRates
+
 
 def setlist(request):
     page_title = 'Set List'
@@ -15,9 +20,76 @@ def card_detail(request, card_slug, slug_set):
     page_title = card.number
     previous_card = set.card_set.filter(slug__lt=card_slug).order_by('-slug')
     next_card = set.card_set.filter(slug__gt=card_slug).order_by('slug')
-    return render(request, 'cards/card_detail.html', {'page_title':page_title,'card':card,
-   
-    'previous_card':previous_card, 'next_card':next_card})
+
+    headers = {"User-Agent": 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36'}
+    c = CurrencyRates()
+
+    jpy_yuyu_tei = None
+    usd_yuyu_tei = None
+    if card.yuyu_tei:
+        URL_yuyu_tei = card.yuyu_tei
+        page_yuyu_tei = requests.get(URL_yuyu_tei, headers=headers)
+        soup_yuyu_tei = BeautifulSoup(page_yuyu_tei.content, 'lxml')
+        price_yuyu_tei = soup_yuyu_tei.find(class_="price").b.text
+        jpy_yuyu_tei = int(price_yuyu_tei.replace('円', ''))
+        usd_yuyu_tei = round((c.convert('JPY', 'USD', jpy_yuyu_tei)), 2)
+
+
+    jpy_suruga_ya = None
+    usd_suruga_ya = None
+    if card.suruga_ya:
+        URL_suruga_ya = card.suruga_ya
+        page_suruga_ya = requests.get(URL_suruga_ya, headers=headers)
+        soup_suruga_ya = BeautifulSoup(page_suruga_ya.content, 'lxml')
+        price_suruga_ya = soup_suruga_ya.find(class_="text-red text-bold mgnL10").text
+        jpy_suruga_ya = int(price_suruga_ya.replace('円 (税込)', ''))
+        usd_suruga_ya = round((c.convert('JPY', 'USD', jpy_suruga_ya)), 2)
+
+
+    jpy_amazon_jp = None
+    usd_amazon_jp = None
+    if card.amazon_jp:
+        URL_amazon_jp = card.amazon_jp
+        page_amazon_jp = requests.get(URL_amazon_jp, headers=headers)
+        soup_amazon_jp = BeautifulSoup(page_amazon_jp.content, 'lxml')
+        price_amazon_jp = soup_amazon_jp.find(id="priceblock_ourprice").text
+        jpy_amazon_jp = int(price_amazon_jp.replace('¥', ''))
+        usd_amazon_jp = round((c.convert('JPY', 'USD', jpy_amazon_jp)), 2)
+
+
+    usd_price_ebay = None
+    jpy_price_ebay = None
+    if card.ebay:
+        URL_ebay = card.ebay
+        page_ebay = requests.get(URL_ebay, headers=headers)
+        soup_ebay = BeautifulSoup(page_ebay.content, 'lxml')
+        price_ebay = soup_ebay.find(id="prcIsum").get('content')
+        usd_price_ebay = float(price_ebay)
+        jpy_price_ebay = round((c.convert('USD', 'JPY', usd_price_ebay)))
+
+    # usd_total = round((usd_yuyu_tei + usd_suruga_ya + usd_amazon_jp + usd_price_ebay) / 4, 2)
+
+    # usd_total = round((
+    #     if card.yuyu_tei:
+    #         usd_yuyu_tei 
+    #     +
+    #     if card.suruga_ya:
+    #         usd_suruga_ya 
+    #     +
+    #     if card.amazon_jp:
+    #         usd_amazon_jp 
+    #     +
+    #     if card.usd_price_ebay:
+    #         usd_usd_price_ebay 
+    # ) / 4, 2)
+
+
+    return render(request, 'cards/card_detail.html', {
+        'page_title':page_title,'card':card,'previous_card':previous_card, 'next_card':next_card,
+        'jpy_yuyu_tei':jpy_yuyu_tei, 'jpy_suruga_ya':jpy_suruga_ya, 'jpy_amazon_jp':jpy_amazon_jp, 'usd_price_ebay':usd_price_ebay,
+        'usd_yuyu_tei':usd_yuyu_tei, 'usd_suruga_ya':usd_suruga_ya, 'usd_amazon_jp':usd_amazon_jp, 'jpy_price_ebay':jpy_price_ebay,
+        'usd_total':usd_total
+    })
 
 
 def set_detail(request, slug_set):
