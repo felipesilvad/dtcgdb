@@ -67,28 +67,21 @@ def card_detail(request, card_slug, slug_set):
         usd_price_ebay = float(price_ebay)
         jpy_price_ebay = round((c.convert('USD', 'JPY', usd_price_ebay)))
 
-    # usd_total = round((usd_yuyu_tei + usd_suruga_ya + usd_amazon_jp + usd_price_ebay) / 4, 2)
-
-    # usd_total = round((
-    #     if card.yuyu_tei:
-    #         usd_yuyu_tei 
-    #     +
-    #     if card.suruga_ya:
-    #         usd_suruga_ya 
-    #     +
-    #     if card.amazon_jp:
-    #         usd_amazon_jp 
-    #     +
-    #     if card.usd_price_ebay:
-    #         usd_usd_price_ebay 
-    # ) / 4, 2)
-
+    usd = [usd_yuyu_tei, usd_suruga_ya, usd_amazon_jp, usd_price_ebay]
+    usd_res = [] 
+    for val in usd: 
+        if val != None : 
+            usd_res.append(val)
+    
+    usd_average = None
+    if usd_res != []:
+        usd_average = round(sum(usd_res) / len(usd_res), 2)
 
     return render(request, 'cards/card_detail.html', {
         'page_title':page_title,'card':card,'previous_card':previous_card, 'next_card':next_card,
         'jpy_yuyu_tei':jpy_yuyu_tei, 'jpy_suruga_ya':jpy_suruga_ya, 'jpy_amazon_jp':jpy_amazon_jp, 'usd_price_ebay':usd_price_ebay,
         'usd_yuyu_tei':usd_yuyu_tei, 'usd_suruga_ya':usd_suruga_ya, 'usd_amazon_jp':usd_amazon_jp, 'jpy_price_ebay':jpy_price_ebay,
-        'usd_total':usd_total
+        'usd_average':usd_average
     })
 
 

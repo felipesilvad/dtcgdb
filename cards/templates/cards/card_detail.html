@@ -29,7 +29,9 @@
 {% if card.ebay %}
     ebay: {{usd_price_ebay}}
 {% endif %}
-avarage: {{usd_total}}
+{% if usd_average != None %}
+    avarage: {{usd_average}}
+{% endif %}
 <div class="row mt-3">
     
     <div class="col-lg-4">

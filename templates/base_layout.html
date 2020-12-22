@@ -44,6 +44,13 @@
                     <a class="hide-mob nav-header {% if request.path == '/cards/' %}current{% endif %}" href="/cards/">Set List</a>
                     <a class="hide-mob nav-header {% if request.path == '/cards/search' %}current{% endif %}" href="/cards/search">Advanced Search</a>
                     <a class="hide-mob nav-header {% if request.path == '/card-images/' %}current{% endif %}" href="/card-images/">Card Images</a>
+                    {% if user.is_authenticated %}
+                        <a class="hide-mob nav-header {% if request.path == '/profile/' %}current{% endif %}" href="/profile/">Profile</a>
+                        <a class="hide-mob nav-header {% if request.path == '/logout/' %}current{% endif %}" href="/logout/">Logout</a>
+                    {% else %}
+                        <a class="hide-mob nav-header {% if request.path == '/login/' %}current{% endif %}" href="/login/">Login</a>
+                        <a class="hide-mob nav-header {% if request.path == '/register/' %}current{% endif %}" href="/register/">Register</a>
+                    {% endif %}
                     <form class="form-inline ml-auto" method="GET" action="/cards/search#results">
                         <div class="md-form my-0">
                         <input value="{{request.GET.q}}" name="q" class="form-control" type="text" placeholder="Search" aria-label="Search">
@@ -59,6 +66,13 @@
     </header>
     <body>
         <div class="container content">
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-{{message.tags}}">
+                        {{message}}
+                    </div>
+                {% endfor %}
+            {% endif %}
             {% block content %}
             {% endblock %}
         </div>
