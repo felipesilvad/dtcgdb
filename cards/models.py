@@ -155,7 +155,7 @@ class New(models.Model):
     thumbnail = models.ImageField(blank=True, upload_to="news/")
     content = models.TextField(max_length=2255, blank=True, null=True)
     date = models.DateTimeField(blank=True, null=True)
-    releated_cards = models.ManyToManyField("Card", blank=True, null=True)
+    releated_cards = models.ManyToManyField("Card", blank=True)
     
     def __str__(self):
         return self.title

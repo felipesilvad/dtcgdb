@@ -75,9 +75,9 @@
         </div>
     </div>
     <div class="col-lg-8 pl-1 pr-1">
-        <div class="color-{{card.color}} light-bg mb-3 p-0 dflex-mobile">
+        <div class="color-{{card.color}} light-bg no-radius-bot p-0 dflex-mobile">
             <div class="d-inline-flex mb-less-3">
-                <h1 class="card-title ml-4 pt-1">{{ card.title }}{{ price }}</h1>
+                <h1 class="card-title ml-4 pt-1">{{ card.title }}</h1>
                 <h5 class="card-rarity-{{card.color}} ml-2 mt-2 color-{{card.color}}-txt">{{card.rarity}}</h5>
             </div>
             <div></div>
@@ -87,7 +87,8 @@
             </div>
         </div>
         
-        <div class="light-bg">
+        <!-- OLD
+        <div class="light-bg no-radius-tops">
             <div class="d-inline-flex los-card bd-highlight"> 
                 <h3 class="mr-3 digimontext">{{card.card_type}}</h3>
                 {% if card.lv is not None %}
@@ -189,10 +190,127 @@
                     </div>
                 {% endif %}
             </div>
+        </div> -->
+        
+        <div class="light-bg no-radius-top">
+            <div class="row p-0 m-0">
+                {% if card.card_type is not None %}
+                    <div class="col-lg p-0">
+                        <div class="th cardh card-info">Card Type</div>
+                        <div class="td cardtd card-info"><a href="/cards/search?card_type={{card.card_type}}#results">{{card.card_type}}</a></div>
+                    </div>
+                {% endif %}
+                {% if card.color is not None %}
+                    <div class="col-lg p-0">
+                        <div class="th cardh card-info">Color</div>
+                        <div class="td cardtd  card-info color-{{card.color}}">
+                            <a class="color-{{card.color}}" href="/cards/search?color={{card.color}}#results">
+                                {{card.color}}
+                            </a>
+                        </div>
+                    </div>
+                {% endif %}
+                {% if card.lv is not None %}
+                    <div class="col-lg p-0">
+                        <div class="th cardh card-info">LV</div>
+                        <div class="td cardtd card-info">{{card.lv}}</div>
+                    </div>
+                {% endif %}
+                {% if card.dp is not None %}
+                    <div class="col-lg p-0">
+                        <div class="th cardh card-info">DP</div>
+                        <div class="td cardtd card-info">{{card.dp}}<a class="zeros">000</a></div>
+                    </div>
+                {% endif %}
+            </div>
+            <div class="row p-0 m-0">
+                {% if card.number is not None %}
+                    <div class="col-lg p-0">
+                        <div class="th cardh card-info">Number</div>
+                        <div class="td cardtd card-info">{{card.number}}</div>
+                    </div>
+                {% endif %}
+                {% if card.rarity is not None %}
+                    <div class="col-lg p-0">
+                        <div class="th cardh card-info">Rarity</div>
+                        <div class="td cardtd card-info">
+                            {% if card.rarity == 'C' %}<a href="/cards/search?rarity={{card.rarity}}#results">Common</a>
+                            {% elif card.rarity == 'U' %}<a href="/cards/search?rarity={{card.rarity}}#results">Uncommon</a>
+                            {% elif card.rarity == 'R' %}<a href="/cards/search?rarity={{card.rarity}}#results">Rare</a>
+                            {% elif card.rarity == 'SR' %}<a href="/cards/search?rarity={{card.rarity}}#results">Super Rare</a>
+                            {% elif card.rarity == 'SEC' %}<a href="/cards/search?rarity={{card.rarity}}#results">Secret Rare</a>
+                            {% elif card.rarity == 'P' %}<a href="/cards/search?rarity={{card.rarity}}#results">Promo</a>
+                            {% endif %}
+                        </div>
+                    </div>
+                {% endif %}
+                {% if card.play_cost is not None %}
+                    <div class="col-lg p-0">
+                        <div class="th cardh card-info">Play Cost</div>
+                        <div class="td cardtd card-info cost-bg-play">{{card.play_cost}}</div>
+                    </div>
+                {% endif %}
+                {% if card.evolution_cost_1 is not None %}
+                    <div class="col-lg p-0">
+                        <div class="th cardh card-info">Digivolve Cost</div>
+                        <div class="td cardtd card-info color-radial-{{card.evolution_cost_1_color}}">{{card.evolution_cost_1}}</div>
+                    </div>
+                {% endif %}
+                {% if card.evolution_cost_2 is not None %}
+                    <div class="col-lg p-0">
+                        <div class="th cardh card-info">Digivolve Cost</div>
+                        <div class="td cardtd card-info color-radial-{{card.evolution_cost_2_color}}">{{card.evolution_cost_2}}</div>
+                    </div>
+                {% endif %}
+            </div>
+            <div class="row p-0 m-0">
+                <div class="col-lg p-0 d-inline-flex">
+                    <div class="th cardh card-info flex-fill center">Set</div>
+                    <div class="td cardtd card-info flex-fill">
+                        <a href="/cards/{{card.set.slug}}"><no class="text-uppercase">{{card.set.slug}}</no> - {{card.set}}</a>
+                        <h6 class="fz-promo-name">{% if card.promo_name %}({{card.promo_name}}){% endif %}</h6>
+                    </div>
+                </div>
+            </div>
+            {% if card.digimon %}
+                <div class="row p-0 m-0">
+                    <div class="col-lg p-0">
+                        <div class="th cardh card-info">Digimon</div>
+                        <div class="td cardtd card-info">
+                            {% if card.digimon.image %}
+                                <img class="digimon-icon" src="{{ card.digimon.image.url }}">
+                            {% endif %}
+                            <a href="/cards/search?digimon={{card.digimon.id}}#results" class="mt-2 ml-2">{{card.digimon}}</a>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+            {% if card.digimon %}
+                <div class="row p-0 m-0">
+                    <div class="col-lg p-0">
+                        <div class="th cardh card-info">Stage</div>
+                        <div class="td cardtd card-info">{{card.digimon.stage}}</div>
+                    </div>
+                    <div class="col-lg p-0">
+                        <div class="th cardh card-info">Attribute</div>
+                        <div class="td cardtd card-info">{{card.digimon.attribute}}</div>
+                    </div>
+                    <div class="col-lg p-0">
+                        <div class="th cardh card-info">Digimon Type</div>
+                        <div class="td cardtd card-info">{{card.digimon.digimon_type}}</div>
+                    </div>
+                </div>
+            {% endif %}
         </div>
+
+
+
+
         {% if card.effect_blue_1 or card.effect_txt_1 or card.effect_keyword_1  %}
-            <div class="light-bg mt-2">
-                <h2 class="ml-3 mb-1 font-italic font-weight-bolder">Main Effect</h2>
+            <div class="light-bg mt-2 no-radius-bot effecth">
+                <h4 class="ml-2 font-italic font-weight-bolder">Main Effect</h4>
+            </div>
+            <div class="light-bg no-radius-top">
                 <h6 class="font-weight-normal">
                     {% if card.effect_blue_1 %}<a class="effect-blue ml-1 mr-1" id="white-effect">{{card.effect_blue_1}}</a>{% endif %}
                     {% if card.effect_purple_1 %}<a class="effect-purple ml-1 mr-1" id="white-effect">{{card.effect_purple_1}}</a>{% endif %}
@@ -303,13 +421,15 @@
         {% endif %}
 
         {% if card.evolutionary_effect_blue_1 or card.evolutionary_effect_txt_1 or card.evolutionary_effect_keyword_1  %}
-            <div class="color-{{card.color}} light-bg mt-2">
+            <div class="effecth light-bg mt-2 no-radius-bot color-{{card.color}}">
                 {% if card.card_type == 'Digimon' or card.card_type == 'Digitama' %}
-                    <h2 class="ml-3 mb-1 font-italic font-weight-bolder">Inheritable Effect</h2>
+                    <h4 class="ml-2 font-italic font-weight-bolder">Inheritable Effect</h4>
                 {% endif %}
                 {% if card.card_type == 'Tamer' or card.card_type == 'Option' %}
-                    <h2 class="ml-3 mb-1 font-italic font-weight-bolder">Security Effect</h2>
+                    <h4 class="ml-2 font-italic font-weight-bolder">Security Effect</h4>
                 {% endif %}
+            </div>
+            <div class="color-{{card.color}} light-bg no-radius-top">
                 <h6 class="font-weight-normal">
                     {% if card.evolutionary_effect_blue_1 %}<a class="effect-blue ml-1 mr-1" id="white-effect">{{card.evolutionary_effect_blue_1}}</a>{% endif %}
                     {% if card.evolutionary_effect_purple_1 %}<a class="effect-purple ml-1 mr-1" id="white-effect">{{card.evolutionary_effect_purple_1}}</a>{% endif %}

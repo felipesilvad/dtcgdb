@@ -52,9 +52,11 @@ def card_detail(request, card_slug, slug_set):
         URL_amazon_jp = card.amazon_jp
         page_amazon_jp = requests.get(URL_amazon_jp, headers=headers)
         soup_amazon_jp = BeautifulSoup(page_amazon_jp.content, 'lxml')
-        price_amazon_jp = soup_amazon_jp.find(id="priceblock_ourprice").text
-        jpy_amazon_jp = int(price_amazon_jp.replace('¥', ''))
-        usd_amazon_jp = round((c.convert('JPY', 'USD', jpy_amazon_jp)), 2)
+        price_amazon_jp = soup_amazon_jp.find(id="priceblock_ourprice")
+        if price_amazon_jp:
+            price_amazon_jp = soup_amazon_jp.find(id="priceblock_ourprice").text
+            jpy_amazon_jp = int(price_amazon_jp.replace('￥', '').replace('¥', '').replace(',', ''))
+            usd_amazon_jp = round((c.convert('JPY', 'USD', jpy_amazon_jp)), 2)
 
 
     usd_price_ebay = None

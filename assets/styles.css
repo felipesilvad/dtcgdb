@@ -98,8 +98,18 @@ a:hover {
 
 .light-bg {
     background-color: rgba(91,92,95,0.7);
-    border-radius: 15px;
+    border-radius: 8px;
     padding: 8px;
+}
+
+.no-radius-bot {
+    border-bottom-right-radius:0!important;
+    border-bottom-left-radius:0!important;
+}
+
+.no-radius-top {
+    border-top-right-radius:0!important;
+    border-top-left-radius:0!important;
 }
 
 .card-main {
@@ -198,10 +208,7 @@ a:hover {
 }
 
 .zeros {
-    vertical-align: bottom;
-    padding-top: 11.5px;
-    font-weight: bold;
-    font-style: italic;
+    font-size: 10px;
 }
 
 .digimontext {
@@ -514,10 +521,7 @@ body {
 
 
 .zeros {
-    vertical-align: bottom;
-    padding-top: 11.5px;
-    font-weight: bold;
-    font-style: italic;
+    font-size: 13px;
 }
 
 .digimontext {
@@ -838,16 +842,13 @@ td.t-lv{
     h2 {
         font-size: 70px;
     }
-    .zeros {
-        padding-top: 29.5px;
-    }
 
     .table td, .table th {
         font-size: 40px;
     }
 
     .digimon-icon {
-        width: 78px;
+        width: 68px;
     }
 
     .h6, h6 {
@@ -957,4 +958,42 @@ td.t-lv{
 
   .hovertxt{
     width: 100%!important;
+}
+
+
+.card-info {
+    text-align: center;
+    border-width: 1px;
+    border-color: #858585;
+    border-style: solid;
+}
+
+.cardh{
+    font-weight: normal;
+    font-size: 17px;
+    text-transform: uppercase;
+    font-weight: 900;
+    background-color: #252A33;
+}
+
+.cardtd{
+    font-weight: normal;
+    font-size: 17px;
+    font-weight: 500;
+}
+
+.center {
+    margin: auto;
+  }
+
+
+.effecth{
+    font-weight: normal;
+    text-transform: uppercase;
+    font-weight: 900;
+    background-color: rgba(37, 42, 51, 0.8);
+    border-width: 1px;
+    border-color: #858585;
+    border-style: solid;
+    border-bottom: none;
 }
