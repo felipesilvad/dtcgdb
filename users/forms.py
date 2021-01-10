@@ -25,7 +25,7 @@ class ProfileUpdateForm(forms.ModelForm):
         fields = ['image']
 
 
-class Collection(forms.ModelForm):
-    class Meta:
-        model = Profile
-        fields = ['user_cards']
+# class Collection(forms.ModelForm):
+#     class Meta:
+#         model = Profile
+#         fields = ['usercards']

@@ -3,10 +3,6 @@ from django.contrib.auth.models import User
 from PIL import Image
 from cards.models import Card, Set
 
-class UserCard(models.Model):
-    card = models.ForeignKey(Card, on_delete=models.CASCADE)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     image = models.ImageField(default='default.jpg', upload_to='profile_pics')
@@ -24,4 +20,8 @@ class Profile(models.Model):
             output_size = (300, 300)
             img.thumbnail(output_size)
             img.save(self.image.path)
-
+            
+class UserCard(models.Model):
+    card = models.ForeignKey(Card, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    quantity = models.IntegerField(blank=True, null=True)
