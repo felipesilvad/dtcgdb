@@ -5,7 +5,7 @@ from cards.models import Card, Set
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    image = models.ImageField(default='/static/default.jpg', upload_to='profile_pics')
+    image = models.ImageField(default='default.jpg', upload_to='profile_pics')
     usercards = models.ManyToManyField(Card, through='UserCard')
 
     def __str__(self):
