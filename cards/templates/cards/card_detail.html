@@ -43,7 +43,7 @@
                 {% if card.image_jp.url %}
                 <a class="nav-item nav-link {% if not card.image_en %} active {% endif %}" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Japanese</a>
                 {% endif %}
-                {% if card.image_parallel %}
+                {% if card.image_parallel_jp %}
                 <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#parallel" role="tab" aria-controls="nav-profile" aria-selected="false">Parallel</a>
                 {% endif %}
             </div>
@@ -60,9 +60,9 @@
                     <img class="img-fluid mx-auto d-block card-img-main" src="{{card.image_jp.url}}">
                 </div>
                 {% endif %}
-                {% if card.image_parallel %}
+                {% if card.image_parallel_jp %}
                 <div class="tab-pane fade" id="parallel" role="tabpanel" aria-labelledby="nav-profile-tab">
-                    <img class="img-fluid mx-auto d-block card-img-main" src="{{card.image_parallel.url}}">
+                    <img class="img-fluid mx-auto d-block card-img-main" src="{{card.image_parallel_jp.url}}">
                 </div>
                 {% endif %}
             </div>

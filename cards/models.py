@@ -6,7 +6,8 @@ class Card(models.Model):
     slug = models.SlugField(null=True)
     image_jp = models.ImageField(blank=True, upload_to="jp/")
     image_en = models.ImageField(blank=True, upload_to="en/")
-    image_parallel = models.ImageField(blank=True, upload_to="parallel/")
+    image_parallel_jp = models.ImageField(blank=True, upload_to="parallel-jp/")
+    image_parallel_en = models.ImageField(blank=True, upload_to="parallel-en/")
     artist = models.CharField(max_length=100, null=True)
     set = models.ForeignKey("Set", blank=True, null=True, on_delete=models.CASCADE)
     number = models.CharField(max_length=100, null=True)
@@ -111,13 +112,13 @@ class Card(models.Model):
 
 class Set(models.Model):
     title = models.CharField(max_length=255)
-    image = models.ImageField(blank=True)
+    image = models.ImageField(blank=True, upload_to="sets/")
     slug = models.SlugField(null=True)
     release_date = models.DateField(blank=True, null=True)
     total_unique = models.IntegerField(blank=True, null=True)
     total_cards = models.IntegerField(blank=True, null=True)
-    produc_image_1 = models.ImageField(blank=True)
-    produc_image_2 = models.ImageField(blank=True)
+    produc_image_1 = models.ImageField(blank=True, upload_to="sets/")
+    produc_image_2 = models.ImageField(blank=True, upload_to="sets/")
     price_1 = models.CharField(max_length=255, blank=True, null=True)
     price_2 = models.CharField(max_length=255, blank=True, null=True)
 
@@ -133,7 +134,7 @@ class Set(models.Model):
 
 class Digimon(models.Model):
     title = models.CharField(max_length=255)
-    image = models.ImageField(blank=True)
+    image = models.ImageField(blank=True, upload_to="digimon-icons/")
     slug = models.SlugField(null=True)
 
     STAGES = [
