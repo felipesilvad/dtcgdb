@@ -1,17 +1,18 @@
-from amazon.paapi import AmazonAPI
+import lxml
+import requests
+from bs4 import BeautifulSoup
+from forex_python.converter import CurrencyRates
 
-# US
-access_key_US = "AKIAJTVOWFPSQHRZUJCA"
-secret_key_US = "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"
-partner_tag_US = "clouds056-20"
+c = CurrencyRates()
+headers = {"User-Agent": 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36'}
 
-# JP
-access_key_JP = "AKIAISMYWF6AZ2TRPGCQ"
-secret_key_JP = "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"
-partner_tag_JP = "cloudsjp04-22"
 
-amazon = AmazonAPI(access_key_JP, secret_key_JP, partner_tag_JP, "JP")
+URL_amazon_jp = 'https://www.amazon.co.jp/gp/product/B08JVTQVMS'
+page_amazon_jp = requests.get(URL_amazon_jp, headers=headers)
+soup_amazon_jp = BeautifulSoup(page_amazon_jp.content, 'lxml')
+price_amazon_jp = soup_amazon_jp.find(id="priceblock_ourprice").text
+jpy_amazon_jp = int(price_amazon_jp.replace('￥', '').replace(',', ''))
 
-product = amazon.get_product('7b3e545a3ba19782f8a732e8a721b574')
+print(c.convert('JPY', 'USD', jpy_amazon_jp))
+# print(soup.prettify())
 
-print(product.title)
