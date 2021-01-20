@@ -1,4 +1,5 @@
 {% extends 'base_layout.html' %}
+{% load crispy_forms_tags %}
 {% block content %}
 
 <div class="hide-desk w-100 d-flex justify-content-between">
@@ -538,6 +539,18 @@
             </div>
         {% else %}
         {% endif %}
+
+        <form method="POST">
+            {% csrf_token %}
+            <fieldset class="form-group">
+                <legend class="border-bottom mb-4">Add card</legend>
+                {{ form|crispy }}
+            </fieldset>
+            <div class="form-group">
+                <button class="pilss-cl btn" type="submit">Add</button>
+            </div>
+        </form>
+
     </div>
 
 

@@ -7,6 +7,13 @@
             <h1>{{user.username}}</h1>
             <h2>{{user.email}}</h2>
         </div>
+
+
+        {% for usercard in usercards %}
+            <a class="nav-link cardh">{{usercard.card}} - {{usercard.quantity}}</a>
+        {% endfor %}
+
+
         <!-- <form method="POST" enctype="multipart/form-data">
             {% csrf_token %}
             <fieldset class="form-group">
@@ -51,7 +58,7 @@
                                         <th class="t-number">Number</th>
                                         <th class="t-rarity">Rarity</th>
                                         <th class="t-name pl-3">Name</th>
-                                        <th class="t-pc">DP</th>
+                                        <th class="t-pc">Quantity</th>
                                         {% if set.set_type == "Booster" %}<th class="t-pc">Parallel</th>{% endif %}
                                         <th class="t-type">Type</th>
                                     </tr>
@@ -139,17 +146,5 @@
             </div>
         </div>
 
-        
-
-        <form method="POST" enctype="multipart/form-data">
-            {% csrf_token %}
-            <fieldset class="form-group">
-                <legend class="border-bottom mb-4">Collection</legend>
-                {{ collection|crispy }}
-            </fieldset>
-            <div class="form-group">
-                <button class="btn" type="submit">Update</button>
-            </div>
-        </form>
     </div>
 {% endblock %}

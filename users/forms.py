@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
-from.models import Profile
+from.models import Profile, UserCard
 from cards.models import Card, Set
 
 class userRegisterForm(UserCreationForm):
@@ -25,7 +25,7 @@ class ProfileUpdateForm(forms.ModelForm):
         fields = ['image']
 
 
-# class Collection(forms.ModelForm):
-#     class Meta:
-#         model = Profile
-#         fields = ['usercards']
+class Collection(forms.ModelForm):
+    class Meta:
+        model = UserCard
+        fields = ['quantity']

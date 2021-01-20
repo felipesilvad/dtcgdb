@@ -3,11 +3,13 @@ from django.db.models import Q
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from .models import Card, Set, Digimon, New
 from .filters import CardFilter
+from users.forms import Collection
 import lxml
 import requests
 from bs4 import BeautifulSoup
 from forex_python.converter import CurrencyRates
-
+from datetime import datetime
+from threading import Timer
 
 def setlist(request):
     page_title = 'Set List'
@@ -20,6 +22,11 @@ def card_detail(request, card_slug, slug_set):
     page_title = card.number
     previous_card = set.card_set.filter(slug__lt=card_slug).order_by('-slug')
     next_card = set.card_set.filter(slug__gt=card_slug).order_by('slug')
+
+    x=datetime.today()
+    y=x.replace(day=x.day+1, hour=1, minute=0, second=0, microsecond=0)
+    delta_t=y-x
+    secs=delta_t.seconds+1
 
     headers = {"User-Agent": 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36'}
     c = CurrencyRates()
@@ -79,11 +86,24 @@ def card_detail(request, card_slug, slug_set):
     if usd_res != []:
         usd_average = round(sum(usd_res) / len(usd_res), 2)
 
+
+    if request.method == 'POST':
+        form = Collection(
+            request.POST,
+        )
+        if form.is_valid():
+            form.instance.profile = request.user.profile
+            form.instance.card = card
+            form.save()
+    else:
+        form = Collection()
+
     return render(request, 'cards/card_detail.html', {
         'page_title':page_title,'card':card,'previous_card':previous_card, 'next_card':next_card,
         'jpy_yuyu_tei':jpy_yuyu_tei, 'jpy_suruga_ya':jpy_suruga_ya, 'jpy_amazon_jp':jpy_amazon_jp, 'usd_price_ebay':usd_price_ebay,
         'usd_yuyu_tei':usd_yuyu_tei, 'usd_suruga_ya':usd_suruga_ya, 'usd_amazon_jp':usd_amazon_jp, 'jpy_price_ebay':jpy_price_ebay,
-        'usd_average':usd_average
+        'usd_average':usd_average,
+        'form': form
     })
 
 
