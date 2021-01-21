@@ -13,7 +13,7 @@ from threading import Timer
 
 def setlist(request):
     page_title = 'Set List'
-    sets = Set.objects.all().order_by('release_date')
+    sets = Set.objects.all().order_by('slug')
     return render(request, 'cards/setlist.html', {'page_title':page_title, 'sets': sets})
 
 def card_detail(request, card_slug, slug_set):
