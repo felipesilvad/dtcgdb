@@ -1,9 +1,11 @@
 from django.shortcuts import render
 from django.db.models import Q
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.contrib import messages
 from .models import Card, Set, Digimon, New
 from .filters import CardFilter
 from users.forms import Collection
+from users.models import UserCard
 import lxml
 import requests
 from bs4 import BeautifulSoup
@@ -86,15 +88,22 @@ def card_detail(request, card_slug, slug_set):
     if usd_res != []:
         usd_average = round(sum(usd_res) / len(usd_res), 2)
 
+    usercards=None
+    usercards_count=None
+    if request.user.is_authenticated:
+        usercards = UserCard.objects.all().filter(profile=request.user.profile).filter(card=card).first()
+        usercards_count = UserCard.objects.all().filter(profile=request.user.profile).filter(card=card).count()
 
     if request.method == 'POST':
-        form = Collection(
-            request.POST,
-        )
+        form = Collection(request.POST, instance=usercards)
         if form.is_valid():
             form.instance.profile = request.user.profile
             form.instance.card = card
             form.save()
+            if usercards_count == 0:
+                messages.success(request, 'Card added to Collection')
+            else:
+                messages.success(request, 'Card Updated')
     else:
         form = Collection()
 
@@ -103,7 +112,7 @@ def card_detail(request, card_slug, slug_set):
         'jpy_yuyu_tei':jpy_yuyu_tei, 'jpy_suruga_ya':jpy_suruga_ya, 'jpy_amazon_jp':jpy_amazon_jp, 'usd_price_ebay':usd_price_ebay,
         'usd_yuyu_tei':usd_yuyu_tei, 'usd_suruga_ya':usd_suruga_ya, 'usd_amazon_jp':usd_amazon_jp, 'jpy_price_ebay':jpy_price_ebay,
         'usd_average':usd_average,
-        'form': form
+        'form': form, 'usercards':usercards
     })
 
 

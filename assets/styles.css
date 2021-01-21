@@ -407,8 +407,8 @@ a:hover {
 .set-list-title {
     text-transform: uppercase;
     font-weight: bold;
-    padding-top: 10px;
     text-align: center;
+    padding: 2px;
 }
 
 .set-list-img {

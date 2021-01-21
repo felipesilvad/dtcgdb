@@ -4,9 +4,9 @@
     <div class="row">
         <div class="col">
             <div class="card card-body">
-                <div class="border-g d-inline-flex mt-2 align-middle">
+                <div class="border-g d-inline-flex mt-2 justify-content-center align-items-center">
                     <img src="/static/icon_pack.png">
-                    <h2 class="font-italic font-weight-bold pt-lg-2">Booster Sets</h2>
+                    <h2 class="set-list-title">Booster Sets</h2>
                 </div>
                 <div class="list w-100 d-flex justify-content-center">
                     {% for set in sets %}
@@ -25,9 +25,9 @@
                         {% endif %}
                     {% endfor %}
                 </div>
-                <div class="border-g d-inline-flex mt-2 align-middle">
+                <div class="border-g d-inline-flex mt-2 justify-content-center align-items-center">
                     <img src="/static/icon_deck.png">
-                    <h2 class="font-italic font-weight-bold pt-2">Starter Decks</h2>
+                    <h2 class="set-list-title">Starter Decks</h2>
                 </div>
                 <div class="list w-100 d-flex justify-content-center">
                     {% for set in sets %}
@@ -44,10 +44,10 @@
                         {% endif %}
                     {% endfor %}
                 </div>
-                <div class="border-g d-inline-flex mt-2 align-middle">
-                    <h2 class="font-italic font-weight-bold p-2">Promos</h2>
+                <div class="border-g d-inline-flex mt-2 justify-content-center align-items-center">
+                    <h2 class="set-list-title">Promos</h2>
                 </div>
-                <div class="list w-100 ">
+                <div class="list w-100 d-flex justify-content-center">
                     {% for set in sets %}
                         {% if set.set_type == "Promo" %}
                             <div class="set-list-items m-2">

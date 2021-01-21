@@ -2,22 +2,6 @@
 {% load crispy_forms_tags %}
 {% block content %}
 
-<div class="hide-desk w-100 d-flex justify-content-between">
-    {% for card in previous_card|slice:":1" %}
-        <div class="light-bg">
-            {% if card.slug %}
-                <a class="font-weight-bold previous-c" href="/cards/{{card.set.slug}}/{{ card.slug}}">◄ {{card.slug}} - {{card.title}}</a>
-            {% endif %}
-        </div>
-    {% endfor %}
-    {% for card in next_card|slice:":1" %}
-        <div class="light-bg">
-            {% if card.slug %}
-                <a class="next-c font-weight-bold" href="/cards/{{card.set.slug}}/{{ card.slug}}">{{card.slug}} - {{card.title}} ►</a>
-            {% endif %}
-        </div>
-    {% endfor %}
-</div>
 {% if card.yuyu_tei %}
     yuyu_tei: {{usd_yuyu_tei}}
 {% endif %}
@@ -418,7 +402,6 @@
                     {% endif %}
                 </h6>            
             </div>
-        {% else %}
         {% endif %}
 
         {% if card.evolutionary_effect_blue_1 or card.evolutionary_effect_txt_1 or card.evolutionary_effect_keyword_1  %}
@@ -537,19 +520,20 @@
                     {% endif %}
                 </h6>
             </div>
-        {% else %}
         {% endif %}
 
-        <form method="POST">
-            {% csrf_token %}
-            <fieldset class="form-group">
-                <legend class="border-bottom mb-4">Add card</legend>
-                {{ form|crispy }}
-            </fieldset>
-            <div class="form-group">
-                <button class="pilss-cl btn" type="submit">Add</button>
-            </div>
-        </form>
+        {% if user.is_authenticated %}
+            <form method="POST">
+                {% csrf_token %}
+                <fieldset class="form-group">
+                    <legend class="border-bottom mb-4">Add card</legend>
+                    {{ form|crispy }}
+                </fieldset>
+                <div class="form-group">
+                    <button class="pilss-cl btn" type="submit">Add</button>
+                </div>
+            </form>
+        {% endif %}
 
     </div>
 

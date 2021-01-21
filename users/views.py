@@ -28,23 +28,24 @@ def profile(request):
         if form.is_valid():
             form.instance.profile = request.user.profile
             form.save()
-        # u_form = UserUpdateForm(
-        #     request.POST,
-        #     instance=request.user
-        # )
-        # p_form = ProfileUpdateForm(
-        #     request.POST,
-        #     request.FILES,
-        #     instance=request.user.profile
-        # )
-        # if u_form.is_valid() and p_form.is_valid():
-        #     u_form.save()
-        #     p_form.save()
-        #     messages.success(request, f'Your account has been updated!')            
+
+        u_form = UserUpdateForm(
+            request.POST,
+            instance=request.user
+        )
+        p_form = ProfileUpdateForm(
+            request.POST,
+            request.FILES,
+            instance=request.user.profile
+        )
+        if u_form.is_valid() and p_form.is_valid():
+            u_form.save()
+            p_form.save()
+            messages.success(request, f'Your account has been updated!')            
             return redirect('profile')
     else:
-        # u_form = UserUpdateForm(instance=request.user)
-        # p_form = ProfileUpdateForm(instance=request.user.profile)
+        u_form = UserUpdateForm(instance=request.user)
+        p_form = ProfileUpdateForm(instance=request.user.profile)
         form = Collection()
 
     sets = Set.objects.all().order_by('release_date')
