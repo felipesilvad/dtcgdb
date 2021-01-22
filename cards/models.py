@@ -6,9 +6,11 @@ class Card(models.Model):
     slug = models.SlugField(null=True)
     image_jp = models.ImageField(blank=True, upload_to="jp/")
     image_en = models.ImageField(blank=True, upload_to="en/")
+    translated = models.BooleanField(null=True, blank=True, default='False')
+    artist = models.CharField(max_length=100, null=True, blank=True)
     image_parallel_jp = models.ImageField(blank=True, upload_to="parallel-jp/")
     image_parallel_en = models.ImageField(blank=True, upload_to="parallel-en/")
-    artist = models.CharField(max_length=100, null=True)
+    artist_parallel = models.CharField(max_length=100, null=True, blank=True)
     set = models.ForeignKey("Set", blank=True, null=True, on_delete=models.CASCADE)
     number = models.CharField(max_length=100, null=True)
     CARDTYPE = [
@@ -58,6 +60,8 @@ class Card(models.Model):
         ('Download', 'Download'),
         ('De-Digivolve', 'De-Digivolve')
     ]
+
+    effect = models.ManyToManyField("Effect", blank=True)
 
     effect_blue_1 = models.CharField(max_length=100, null=True, blank=True)
     effect_purple_1 = models.CharField(max_length=100, null=True, blank=True)
@@ -109,6 +113,46 @@ class Card(models.Model):
     def __str__(self):
         return self.number
 
+class Effect(models.Model):
+    EFFECT_TYPES = [
+        ('Main', 'Main'),
+        ('Inheritable', 'Inheritable'),
+    ]
+    effect_type = models.CharField(choices=EFFECT_TYPES, max_length=100, blank=True, null=True)
+    BLUE_EFFECTS = [
+        ("Main", "Main"),
+        ("Security", "Security"),
+        ("Your Turn", "Your Turn"),
+        ("On Play", "On Play"),
+        ("When Attacking", "When Attacking"),
+        ("When Digivolving", "When Digivolving"),
+        ("Start of Your Turn", "Start of Your Turn"),
+        ("Opponent's Turn", "Opponent's Turn"),
+        ("On Deletion", "On Deletion"),
+        ("End of Attack", "End of Attack"),
+        ("All Turns", "All Turns"),
+        ("End of Opponent's Turn", "End of Opponent's Turn"),
+        ("Both Turns", "Both Turns"),
+    ]
+    effect_blue = models.CharField(choices=BLUE_EFFECTS, max_length=100, blank=True, null=True)
+    PURPLE_EFFECTS = [
+        ("Once Per Turn", "Once Per Turn"),
+        ("Twice Per Turn", "Twice Per Turn"),
+    ]
+    effect_purple = models.CharField(choices=PURPLE_EFFECTS, max_length=100, blank=True, null=True)
+    effect_txt = models.TextField(blank=True, null=True)
+    effect_keyword = models.ForeignKey("EffectKeyword", blank=True, null=True, on_delete=models.CASCADE)
+    effect_keyword_int = models.IntegerField(blank=True, null=True)
+
+    def __str__(self):
+        return f'{self.effect_type} - {self.effect_blue} - {self.effect_purple}'
+
+class EffectKeyword(models.Model):
+    title = models.CharField(max_length=100, blank=True, null=True)
+    desc = models.TextField(blank=True, null=True)
+
+    def __str__(self):
+        return self.title
 
 class Set(models.Model):
     title = models.CharField(max_length=255)

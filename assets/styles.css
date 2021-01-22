@@ -118,6 +118,7 @@ a:hover {
 
 .card-img-main{
     width: 400px;
+    padding: 4px;
 }
 
 .card-title {
@@ -272,27 +273,26 @@ a:hover {
     background-color: rgba(91,92,95,1);
     border: 1px solid transparent;
     border-top-left-radius: 0px;
-    border-top-right-radius: 15px;
-    border-bottom-right-radius: 15px;
-    border-bottom-left-radius: 15px;
-    padding: 8px;
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 8px;
+    border-bottom-left-radius: 8px;
 }
 
 .border-w{
-    border-bottom: 1px solid #fff;
-    border-left: 1px solid #fff;
-    border-right: 1px solid #fff;
-    border-top: 1px solid #fff;
+    border-bottom: 1px solid #858585;
+    border-left: 1px solid #858585;
+    border-right: 1px solid #858585;
+    border-top: 1px solid #858585;
 }
 
 .nav-pills .nav-link {
+    margin-bottom: -1px;
     border: 1px solid transparent;
     border-top-left-radius: .50rem;
     border-top-right-radius: .50rem;
     border-bottom-right-radius: 0;
     border-bottom-left-radius: 0;
     background-color: rgba(91,92,95,0);
-    color: #fff;
 }
 
 .pilss-cl{
@@ -308,17 +308,42 @@ a:hover {
 
 .nav-link {
     display: block;
-    padding: 4px 12px;
+    padding: 4px;
+    width: 50%;
+    text-align: center;
+    color: rgba(239, 239, 239,0.8);
 }
 
 .nav-pills .nav-link.active {
-    margin-bottom: -1px;
+    color: #efefef;
     border-style: solid;
-    border-top: 1px solid #fff;
-    border-left: 1px solid #fff;
-    border-right: 1px solid #fff;
+    border-top: 1px solid #858585;
+    border-left: 1px solid #858585;
+    border-right: 1px solid #858585;
     border-bottom: rgba(91,92,95,0.0);
     background-color: rgba(91,92,95,1);
+}
+
+.nav-link_p {
+    display: block;
+    font-size: 17px;
+    text-transform: uppercase;
+    font-weight: 900;
+    color: rgba(239, 239, 239,0.8);
+    width: 50%;
+    text-align: center;
+    border: 1px solid #858585;
+}
+
+.nav-link_p:hover {
+    color: #efefef;
+}
+
+.nav-link_p.active {
+    border-style: solid;
+    border: 1px solid #858585;
+    background-color: #252A33;
+    color: #efefef;
 }
 
 .pilss-cl.active {
@@ -872,6 +897,7 @@ td.t-lv{
 
     .card-img-main{
         width: 800px;
+        padding: 5px;
     }
 
     .t-pc, .t-lv, .t-rarity, .t-type{

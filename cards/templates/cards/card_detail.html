@@ -20,35 +20,118 @@
 <div class="row mt-3">
     
     <div class="col-lg-4">
+
         <nav>
+            <div class="nav nav-pills">
+                {% if card.image_en %}
+                    <a class="nav-item nav-link cardh active" data-toggle="tab" href="#en" role="tab" aria-controls="en" aria-selected="true">
+                        {% if card.translated == True %} Translated {% else %} English {% endif %}
+                    </a>
+                {% endif %}
+                {% if card.image_jp %}
+                    <a class="nav-item nav-link cardh {% if not card.image_en %} active {% endif %}" data-toggle="tab" href="#jp" role="tab" aria-controls="jp" aria-selected="false">Japanese</a>
+                {% endif %}
+            </div>
+        </nav>
+
+        <div class="tab-content card-bg border-w p-0" id="nav-tabContent">
+            {% if card.image_en %}
+                <div class="tab-pane fade show active" id="en" role="tabpanel">
+                    {% if card.image_parallel_en %}
+                        <div class="show active" id="en" role="tabpanel">
+                            <div class="nav " id="nav-tab" role="tablist">
+                                <a class="nav-item nav-link_p active" data-toggle="tab" href="#en_standard" role="tab" aria-controls="en_standard" aria-selected="true">Standard</a>
+                                <a class="nav-item nav-link_p" data-toggle="tab" href="#en_parallel" role="tab" aria-controls="en_parallel" aria-selected="true">Parallel</a>
+                            </div>
+                        </div>
+                    {% endif %}
+
+                    <div class="tab-content" id="nav-tabContent">
+                        {% if card.image_en %}
+                            <div class="tab-pane fade show active" id="en_standard" role="tabpanel">
+                                <img class="img-fluid mx-auto d-block card-img-main" src="{{card.image_en.url}}">
+                            </div>
+                        {% endif %}
+                        {% if card.image_parallel_en %}
+                            <div class="tab-pane fade" id="en_parallel" role="tabpanel">
+                                <img class="img-fluid mx-auto d-block card-img-main" src="{{card.image_parallel_en.url}}">
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endif %}
+
+            {% if card.image_jp %}
+                <div class="tab-pane fade {% if not card.image_en %} show active {% endif %}" id="jp" role="tabpanel">
+                    {% if card.image_parallel_jp %}
+                        <div class="tab-pane fade show active" id="jp" role="tabpanel">
+                            <div class="nav" id="nav-tab" role="tablist">
+                                <a class="nav-item nav-link_p active" data-toggle="tab" href="#jp_standard" role="tab" aria-controls="jp_standard" aria-selected="true">Standard</a>
+                                <a class="nav-item nav-link_p" data-toggle="tab" href="#jp_parallel" role="tab" aria-controls="jp_parallel" aria-selected="true">Parallel</a>
+                            </div>
+                        </div>
+                    {% endif %}
+
+                    <div class="tab-content" id="nav-tabContent">
+                        {% if card.image_jp %}
+                        <div class="tab-pane fade show active" id="jp_standard" role="tabpanel">
+                            <img class="img-fluid mx-auto d-block card-img-main" src="{{card.image_jp.url}}">
+                        </div>
+                        {% endif %}
+                        {% if card.image_parallel_jp %}
+                            <div class="tab-pane fade" id="jp_parallel" role="tabpanel">
+                                <img class="img-fluid mx-auto d-block card-img-main" src="{{card.image_parallel_jp.url}}">
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endif %}
+            
+        </div>
+
+        <!-- <nav>
             <div class="nav nav-pills" id="nav-tab" role="tablist">
                 {% if card.image_en %}
-                <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Translated</a>
+                    {% if card.translated == False %}
+                        <a class="nav-item nav-link active" id="en" data-toggle="tab" href="#en" role="tab" aria-controls="en" aria-selected="true">English</a>
+                    {% else %}
+                        <a class="nav-item nav-link active" id="en" data-toggle="tab" href="#en" role="tab" aria-controls="en" aria-selected="true">Translated</a>
+                    {% endif %}
                 {% endif %}
-                {% if card.image_jp.url %}
-                <a class="nav-item nav-link {% if not card.image_en %} active {% endif %}" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Japanese</a>
-                {% endif %}
-                {% if card.image_parallel_jp %}
-                <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#parallel" role="tab" aria-controls="nav-profile" aria-selected="false">Parallel</a>
+                {% if card.image_jp %}
+                    <a class="nav-item nav-link {% if not card.image_en %} active {% endif %}" id="jp" data-toggle="tab" href="#jp" role="tab" aria-controls="jp" aria-selected="false">Japanese</a>
                 {% endif %}
             </div>
         </nav>
         <div class="card-bg border-w">
             <div class="tab-content" id="nav-tabContent">
                 {% if card.image_en %}
-                <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
-                    <img class="img-fluid mx-auto d-block card-img-main" src="{{card.image_en.url}}">
-                </div>
+                    <div class="nav nav-pills" id="nav-tab" role="tablist">
+                        {% if card.image_en %}
+                            <a class="nav-item nav-link active " id="jp" data-toggle="tab" href="#jp" role="tab" aria-controls="jp" aria-selected="false">Standard</a>
+                        {% endif %}
+                        {% if card.image_en %}
+                            <a class="nav-item nav-link" id="jp" data-toggle="tab" href="#jp" role="tab" aria-controls="jp" aria-selected="false">Parallel</a>
+                        {% endif %}
+                    </div>
+                    <div class="tab-pane fade show active" id="en" role="tabpanel" aria-labelledby="en">
+                        <img class="img-fluid mx-auto d-block card-img-main" src="{{card.image_en.url}}">
+                    </div>
+                    {% if card.image_parallel_en %}
+                        <div class="tab-pane fade" id="parallel" role="tabpanel" aria-labelledby="jp">
+                            <img class="img-fluid mx-auto d-block card-img-main" src="{{card.image_parallel_jp.url}}">
+                        </div>
+                    {% endif %}
                 {% endif %}
                 {% if card.image_jp.url %}
-                <div class="tab-pane fade {% if not card.image_en %} show active {% endif %}" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
-                    <img class="img-fluid mx-auto d-block card-img-main" src="{{card.image_jp.url}}">
-                </div>
+                    <div class="tab-pane fade {% if not card.image_en %} show active {% endif %}" id="jp" role="tabpanel" aria-labelledby="jp">
+                        <img class="img-fluid mx-auto d-block card-img-main" src="{{card.image_jp.url}}">
+                    </div>
                 {% endif %}
                 {% if card.image_parallel_jp %}
-                <div class="tab-pane fade" id="parallel" role="tabpanel" aria-labelledby="nav-profile-tab">
-                    <img class="img-fluid mx-auto d-block card-img-main" src="{{card.image_parallel_jp.url}}">
-                </div>
+                    <div class="tab-pane fade" id="parallel" role="tabpanel" aria-labelledby="jp">
+                        <img class="img-fluid mx-auto d-block card-img-main" src="{{card.image_parallel_jp.url}}">
+                    </div>
                 {% endif %}
             </div>
             <table>
@@ -57,8 +140,14 @@
                     <td><a href="/cards/search?artist={{card.artist}}#results">{{card.artist}}</a></td>
                 </tr>
             </table>
-        </div>
+        </div> -->
+
+
+
+
     </div>
+
+
     <div class="col-lg-8 pl-1 pr-1">
         <div class="color-{{card.color}} light-bg no-radius-bot p-0 dflex-mobile">
             <div class="d-inline-flex mb-less-3">
@@ -72,110 +161,6 @@
             </div>
         </div>
         
-        <!-- OLD
-        <div class="light-bg no-radius-tops">
-            <div class="d-inline-flex los-card bd-highlight"> 
-                <h3 class="mr-3 digimontext">{{card.card_type}}</h3>
-                {% if card.lv is not None %}
-                    <h2 class="lv-bg color-{{card.color}} mr-3">LV{{card.lv}}</h2>
-                {% endif %}
-                {% if card.dp is not None %}
-                    <div class="d-inline-flex">
-                        <h3 class="dptxt dpfull font-italic closer-letters mr-2">DP </h3><h2 class="dpn dpfull">{{card.dp}}</h2><h5 class="zeros dpfull mr-3">000</h5>
-                    </div>
-                {% endif %}
-                {% if card.play_cost is not None %}
-                    <div class="d-inline-flex">
-                        <h5 class="costtxt dpfull mr-1"><p>Play </p><p>Cost </p</h5>
-                        <h2 class="cost-bg cost-bg-play mr-3">{{card.play_cost}}</h2>
-                    </div>
-                {% endif %}
-                {% if card.evolution_cost_1 is not None %}
-                    <div class="d-inline-flex">
-                        <h5 class="costtxt dpfull mr-1"><p>Evo </p><p>Cost </p></h5>
-                        <h2 class="color-radial-{{card.evolution_cost_1_color}} cost-bg  mr-3">{{card.evolution_cost_1}}</h2>
-                    </div>
-                {% endif %}
-                {% if card.evolution_cost_2 is not None %}
-                    <div class="d-inline-flex">
-                        <h5 class="costtxt dpfull mr-1"><p>Evo </p><p>Cost 2</p></h5
-                        ><h2 class="color-radial-{{card.evolution_cost_2_color}} cost-bg  mr-3">{{card.evolution_cost_2}}</h2>
-                    </div>
-                {% endif %}
-            </div>
-            <div></div>
-            
-            <div class="row">
-                <div class="col-lg pl-2 pr-2">
-                    <table class="table table-dark ">
-                        <tr>
-                            <td class="w-30">Number:</td>
-                            <td>{{card.number}}</td>
-                        </tr>
-                        <tr>
-                            <td>Color:</td>
-                            <td class="font-italic font-weight-bold"><a class="color-{{card.color}}-txt" href="/cards/search?color={{card.color}}#results">{{card.color}}</a></td>
-                        </tr>
-                        <tr>
-                            <td>Rarity:</td>
-                            {% if card.rarity == 'C' %}<td><a href="/cards/search?rarity={{card.rarity}}#results">Common</a></td>
-                            {% elif card.rarity == 'U' %}<td><a href="/cards/search?rarity={{card.rarity}}#results">Uncommon</a></td>
-                            {% elif card.rarity == 'R' %}<td><a href="/cards/search?rarity={{card.rarity}}#results">Rare</a></td>
-                            {% elif card.rarity == 'SR' %}<td><a href="/cards/search?rarity={{card.rarity}}#results">Super Rare</a></td>
-                            {% elif card.rarity == 'SEC' %}<td><a href="/cards/search?rarity={{card.rarity}}#results">Secret Rare</a></td>
-                            {% elif card.rarity == 'P' %}<td><a href="/cards/search?rarity={{card.rarity}}#results">Promo</a></td>
-                            {% endif %}
-                        </tr>
-                    </table>
-                </div>
-                <div class="col-lg pl-2 pr-2">
-                    <table class="table table-dark ">
-                        <tr>
-                            <td>Set:</td>
-                            <td>
-                                <a href="/cards/{{card.set.slug}}">{{card.set}}</a>
-                                <h6 class="fz-promo-name">{% if card.promo_name %}({{card.promo_name}}){% endif %}</h6>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Card Type:</td>
-                            <td><a href="/cards/search?card_type={{card.card_type}}#results">{{card.card_type}}</a></td>
-                        </tr>
-                        {% if card.digimon %}
-                            <tr class="p-0 m-0">
-                                <td>Digimon:</td>
-                                <td class="p-0 m-0 ">
-                                    <div class="d-inline-flex p-0 m-0"> 
-                                        {% if card.digimon.image %}
-                                            <img class="digimon-icon mt-1" src="{{ card.digimon.image.url }}">
-                                        {% endif %}
-                                        <a href="/cards/search?digimon={{card.digimon.id}}#results" class="mt-2 ml-2">{{card.digimon}}</a>
-                                    </div>
-                                </td>
-                            </tr>
-                        {% endif %}
-                    </table>
-                </div>
-                {% if card.digimon %}
-                    <div class="col-lg pl-2 pr-2">
-                        <table class="table table-dark ">
-                                <tr>
-                                    <td>Stage:</td>
-                                    <td>{{card.digimon.stage}}</td>
-                                </tr>
-                                <tr>
-                                    <td>Attribute:</td>
-                                    <td>{{card.digimon.attribute}}</td>
-                                </tr>
-                                <tr>
-                                    <td>Digimon Type:</td>
-                                    <td>{{card.digimon.digimon_type}}</td>
-                                </tr>
-                        </table>
-                    </div>
-                {% endif %}
-            </div>
-        </div> -->
         
         <div class="light-bg no-radius-top">
             <div class="row p-0 m-0">
@@ -289,122 +274,47 @@
         </div>
 
 
-
-
-        {% if card.effect_blue_1 or card.effect_txt_1 or card.effect_keyword_1  %}
+        {% if effect_main %}
             <div class="light-bg mt-2 no-radius-bot effecth">
                 <h4 class="ml-2 font-italic font-weight-bolder">Main Effect</h4>
             </div>
             <div class="light-bg no-radius-top">
-                <h6 class="font-weight-normal">
-                    {% if card.effect_blue_1 %}<a class="effect-blue ml-1 mr-1" id="white-effect">{{card.effect_blue_1}}</a>{% endif %}
-                    {% if card.effect_purple_1 %}<a class="effect-purple ml-1 mr-1" id="white-effect">{{card.effect_purple_1}}</a>{% endif %}
-                    {% if card.effect_txt_1 %}<a class="effect-txt">{{card.effect_txt_1 | safe}}</a>{% endif %}
-                    {% if card.effect_keyword_1 %}
-                        {% if card.effect_keyword_1 == 'Pierce' %}
-                            <a class="effect-keyword ml-1 mr-1" id="white-effect">{{card.effect_keyword_1}}</a>
-                            <a class="effect-txt ml-1 mr-1 effect-txt">(When this Digimon attacks, if it destroys an opponent’s Digimon, it checks Security.)</a>
+                {% for effect_m in effect_main %}
+                    <h6 class="font-weight-normal">
+                        {% if effect_m.effect_blue %}<a class="effect-blue ml-1 mr-1" id="white-effect">{{effect_m.effect_blue}}</a>{% endif %}
+                        {% if effect_m.effect_purple %}<a class="effect-purple ml-1 mr-1" id="white-effect">{{effect_m.effect_purple}}</a>{% endif %}
+                        {% if effect_m.effect_txt %}<a class="effect-txt">{{effect_m.effect_txt | safe}}</a>{% endif %}
+                        {% if effect_m.effect_keyword %}
+                            {% if effect_m.effect_keyword.title == "Draw" %}
+                                <a class="effect-keyword ml-1 mr-1" id="white-effect">{{effect_m.effect_keyword.title}} {{effect_m.effect_keyword_mnt}}</a>
+                                <a class="effect-txt ml-1 mr-1 effect-txt">(Draw {{effect_m.effect_keyword_mnt}} card from your deck)</a>
+                            {% elif effect_m.effect_keyword.title == "Security Attack +" %}
+                                <a class="effect-keyword ml-1 mr-1" id="white-effect">{{effect_m.effect_keyword.title}}{{effect_m.effect_keyword_mnt}}</a>
+                                <a class="effect-txt ml-1 mr-1 effect-txt">(This Digimon checks {{effect_m.effect_keyword_mnt}} additional security card)</a>
+                            {% elif effect_m.effect_keyword.title == "Security Attack -" %}
+                                <a class="effect-keyword ml-1 mr-1" id="white-effect">{{effect_m.effect_keyword.title}}{{effect_m.effect_keyword_mnt}}</a>
+                                <a class="effect-txt ml-1 mr-1 effect-txt">(This Digimon checks {{effect_m.effect_keyword_mnt}} fewer security cards)</a>
+                            {% elif effect_m.effect_keyword.title == "Recovery (Deck) +" %}
+                                <a class="effect-keyword ml-1 mr-1" id="white-effect">Recovery +{{effect_m.effect_keyword_mnt}} (Deck)</a>
+                                {% if effect_m.effect_keyword_mnt == 1 %}
+                                    <a class="effect-txt ml-1 mr-1 effect-txt">(Place the top card of your deck on top of your security stack.)</a>
+                                {% else %}
+                                    <a class="effect-txt ml-1 mr-1 effect-txt">(Place the top {{effect_m.effect_keyword_mnt}} cards of your deck on top of your security stack.)</a>
+                                {% endif %}
+                            {% elif effect_m.effect_keyword.title == "De-Digivolve" %}
+                                <a class="effect-keyword ml-1 mr-1" id="white-effect">{{effect_m.effect_keyword.title}} {{effect_m.effect_keyword_mnt}}</a>
+                                <a class="effect-txt ml-1 mr-1 effect-txt">on {{effect_m.effect_keyword_mnt}} of your opponent's Digimon. (Trash up to {{effect_m.effect_keyword_mnt}} cards from the top of one of your opponent's Digimon. If it has no digivolution cards， or becomes a level 3 Digimon, you can't trash any more cards.)</a>
+                            {% else %}
+                                <a class="effect-keyword ml-1 mr-1" id="white-effect">{{effect_m.effect_keyword.title}}</a>
+                                <a class="effect-txt ml-1 mr-1 effect-txt">({{effect_m.effect_keyword.desc}})</a>
+                            {% endif %}
                         {% endif %}
-                        {% if card.effect_keyword_1 == 'Draw' %}
-                            <a class="effect-keyword ml-1 mr-1" id="white-effect">{{card.effect_keyword_1}} {{card.effect_keyword_int_1}}</a>
-                            <a class="effect-txt ml-1 mr-1 effect-txt">(Draw {{card.effect_keyword_int_1}} card from your deck.)</a>
-                        {% endif %}
-                        {% if card.effect_keyword_1 == 'Jamming' %}
-                            <a class="effect-keyword ml-1 mr-1" id="white-effect">{{card.effect_keyword_1}}</a>
-                            <a class="effect-txt ml-1 mr-1 effect-txt">(This Digimon cannot be destroyed by battles with Security Digimon.)</a>
-                        {% endif %}
-                        {% if card.effect_keyword_1 == 'Security Attack +' %}
-                        <a class="effect-keyword ml-1 mr-1" id="white-effect">{{card.effect_keyword_1}} {{card.effect_keyword_int_1}}</a>
-                            <a class="effect-txt ml-1 mr-1 effect-txt">(Increase the number of Security this Digimon checks by +{{card.effect_keyword_int_1}}.)</a>
-                        {% endif %}
-                        {% if card.effect_keyword_1 == 'Security Attack -' %}
-                        <a class="effect-keyword ml-1 mr-1" id="white-effect">{{card.effect_keyword_1}} {{card.effect_keyword_int_1}}</a>
-                            <a class="effect-txt ml-1 mr-1 effect-txt">(Decrease the number of Security this Digimon checks by -{{card.effect_keyword_int_1}}.)</a>
-                        {% endif %}
-                        {% if card.effect_keyword_1 == 'Blocker' %}
-                            <a class="effect-keyword ml-1 mr-1" id="white-effect">{{card.effect_keyword_1}}</a>
-                            <a class="effect-txt ml-1 mr-1 effect-txt">(When the opponent Digimon performs an attack, if this Digimon is in the Active position, you may Rest this Digimon and change the target of the attack to this Digimon.)</a>
-                        {% endif %}
-                        {% if card.effect_keyword_1 == 'Recovery (Deck) +' %}
-                        <a class="effect-keyword ml-1 mr-1" id="white-effect">{{card.effect_keyword_1}} {{card.effect_keyword_int_1}}</a>
-                            <a class="effect-txt ml-1 mr-1 effect-txt">(Place {{card.effect_keyword_int_1}} card from the top of your deck into the top of your Security.)</a>
-                        {% endif %}
-                    {% endif %}
-                </h6>
-                <h6 class="font-weight-normal">
-                    {% if card.effect_blue_2 %}<a class="effect-blue ml-1 mr-1" id="white-effect">{{card.effect_blue_2}}</a>{% endif %}
-                    {% if card.effect_purple_2 %}<a class="effect-purple ml-1 mr-1" id="white-effect">{{card.effect_purple_2}}</a>{% endif %}
-                    {% if card.effect_txt_2 %}<a class="effect-txt">{{card.effect_txt_2 | safe}}</a>{% endif %}
-                    {% if card.effect_keyword_2 %}
-                        {% if card.effect_keyword_2 == 'Pierce' %}
-                            <a class="effect-keyword ml-1 mr-1" id="white-effect">{{card.effect_keyword_2}}</a>
-                            <a class="effect-txt ml-1 mr-1 effect-txt">(When this Digimon attacks, if it destroys an opponent’s Digimon, it checks Security.)</a>
-                        {% endif %}
-                        {% if card.effect_keyword_2 == 'Draw' %}
-                            <a class="effect-keyword ml-1 mr-1" id="white-effect">{{card.effect_keyword_2}} {{card.effect_keyword_int_2}}</a>
-                            <a class="effect-txt ml-1 mr-1 effect-txt">(Draw {{card.effect_keyword_int_2}} card from your deck.)</a>
-                        {% endif %}
-                        {% if card.effect_keyword_2 == 'Jamming' %}
-                            <a class="effect-keyword ml-1 mr-1" id="white-effect">{{card.effect_keyword_2}}</a>
-                            <a class="effect-txt ml-1 mr-1 effect-txt">(This Digimon cannot be destroyed by battles with Security Digimon.)</a>
-                        {% endif %}
-                        {% if card.effect_keyword_2 == 'Security Attack +' %}
-                        <a class="effect-keyword ml-1 mr-1" id="white-effect">{{card.effect_keyword_2}} {{card.effect_keyword_int_2}}</a>
-                            <a class="effect-txt ml-1 mr-1 effect-txt">(Increase the number of Security this Digimon checks by +{{card.effect_keyword_int_2}}.)</a>
-                        {% endif %}
-                        {% if card.effect_keyword_2 == 'Security Attack -' %}
-                        <a class="effect-keyword ml-1 mr-1" id="white-effect">{{card.effect_keyword_2}} {{card.effect_keyword_int_2}}</a>
-                            <a class="effect-txt ml-1 mr-1 effect-txt">(Decrease the number of Security this Digimon checks by -{{card.effect_keyword_int_2}}.)</a>
-                        {% endif %}
-                        {% if card.effect_keyword_2 == 'Blocker' %}
-                            <a class="effect-keyword ml-1 mr-1" id="white-effect">{{card.effect_keyword_2}}</a>
-                            <a class="effect-txt ml-1 mr-1 effect-txt">(When the opponent Digimon performs an attack, if this Digimon is in the Active position, you may Rest this Digimon and change the target of the attack to this Digimon.)</a>
-                        {% endif %}
-                        {% if card.effect_keyword_2 == 'Recovery (Deck) +' %}
-                        <a class="effect-keyword ml-1 mr-1" id="white-effect">{{card.effect_keyword_2}} {{card.effect_keyword_int_2}}</a>
-                            <a class="effect-txt ml-1 mr-1 effect-txt">(Place {{card.effect_keyword_int_2}} card from the top of your deck into the top of your Security.)</a>
-                        {% endif %}
-                    {% endif %}
-                </h6>
-                <h6 class="font-weight-normal">
-                    {% if card.effect_blue_3 %}<a class="effect-blue ml-1 mr-1" id="white-effect">{{card.effect_blue_3}}</a>{% endif %}
-                    {% if card.effect_purple_3 %}<a class="effect-purple ml-1 mr-1" id="white-effect">{{card.effect_purple_3}}</a>{% endif %}
-                    {% if card.effect_txt_3 %}<a class="effect-txt">{{card.effect_txt_3 | safe}}</a>{% endif %}
-                    {% if card.effect_keyword_3 %}
-                        {% if card.effect_keyword_3 == 'Pierce' %}
-                            <a class="effect-keyword ml-1 mr-1" id="white-effect">{{card.effect_keyword_3}}</a>
-                            <a class="effect-txt ml-1 mr-1 effect-txt">(When this Digimon attacks, if it destroys an opponent’s Digimon, it checks Security.)</a>
-                        {% endif %}
-                        {% if card.effect_keyword_3 == 'Draw' %}
-                            <a class="effect-keyword ml-1 mr-1" id="white-effect">{{card.effect_keyword_3}} {{card.effect_keyword_int_3}}</a>
-                            <a class="effect-txt ml-1 mr-1 effect-txt">(Draw {{card.effect_keyword_int_3}} card from your deck.)</a>
-                        {% endif %}
-                        {% if card.effect_keyword_3 == 'Jamming' %}
-                            <a class="effect-keyword ml-1 mr-1" id="white-effect">{{card.effect_keyword_3}}</a>
-                            <a class="effect-txt ml-1 mr-1 effect-txt">(This Digimon cannot be destroyed by battles with Security Digimon.)</a>
-                        {% endif %}
-                        {% if card.effect_keyword_3 == 'Security Attack +' %}
-                        <a class="effect-keyword ml-1 mr-1" id="white-effect">{{card.effect_keyword_3}} {{card.effect_keyword_int_3}}</a>
-                            <a class="effect-txt ml-1 mr-1 effect-txt">(Increase the number of Security this Digimon checks by +{{card.effect_keyword_int_3}}.)</a>
-                        {% endif %}
-                        {% if card.effect_keyword_3 == 'Security Attack -' %}
-                        <a class="effect-keyword ml-1 mr-1" id="white-effect">{{card.effect_keyword_3}} {{card.effect_keyword_int_3}}</a>
-                            <a class="effect-txt ml-1 mr-1 effect-txt">(Decrease the number of Security this Digimon checks by -{{card.effect_keyword_int_3}}.)</a>
-                        {% endif %}
-                        {% if card.effect_keyword_3 == 'Blocker' %}
-                            <a class="effect-keyword ml-1 mr-1" id="white-effect">{{card.effect_keyword_3}}</a>
-                            <a class="effect-txt ml-1 mr-1 effect-txt">(When the opponent Digimon performs an attack, if this Digimon is in the Active position, you may Rest this Digimon and change the target of the attack to this Digimon.)</a>
-                        {% endif %}
-                        {% if card.effect_keyword_3 == 'Recovery (Deck) +' %}
-                        <a class="effect-keyword ml-1 mr-1" id="white-effect">{{card.effect_keyword_3}} {{card.effect_keyword_int_3}}</a>
-                            <a class="effect-txt ml-1 mr-1 effect-txt">(Place {{card.effect_keyword_int_3}} card from the top of your deck into the top of your Security.)</a>
-                        {% endif %}
-                    {% endif %}
-                </h6>            
+                    </h6>
+                {% endfor %}
             </div>
         {% endif %}
 
-        {% if card.evolutionary_effect_blue_1 or card.evolutionary_effect_txt_1 or card.evolutionary_effect_keyword_1  %}
+        {% if effect_inheritable %}
             <div class="effecth light-bg mt-2 no-radius-bot color-{{card.color}}">
                 {% if card.card_type == 'Digimon' or card.card_type == 'Digitama' %}
                     <h4 class="ml-2 font-italic font-weight-bolder">Inheritable Effect</h4>
@@ -415,109 +325,36 @@
             </div>
             <div class="color-{{card.color}} light-bg no-radius-top">
                 <h6 class="font-weight-normal">
-                    {% if card.evolutionary_effect_blue_1 %}<a class="effect-blue ml-1 mr-1" id="white-effect">{{card.evolutionary_effect_blue_1}}</a>{% endif %}
-                    {% if card.evolutionary_effect_purple_1 %}<a class="effect-purple ml-1 mr-1" id="white-effect">{{card.evolutionary_effect_purple_1}}</a>{% endif %}
-                    {% if card.evolutionary_effect_txt_1 %}<a class="effect-txt">{{card.evolutionary_effect_txt_1 | safe}}</a>{% endif %}
-                    {% if card.evolutionary_effect_keyword_1 %}
-                        {% if card.evolutionary_effect_keyword_1 == 'Pierce' %}
-                            <a class="effect-keyword ml-1 mr-1" id="white-effect">{{card.evolutionary_effect_keyword_1}}</a>
-                            <a class="effect-txt ml-1 mr-1 effect-txt">(When this Digimon attacks, if it destroys an opponent’s Digimon, it checks Security.)</a>
+                    {% for effect_i in effect_inheritable %}
+                        {% if effect_i.effect_blue %}<a class="effect-blue ml-1 mr-1" id="white-effect">{{effect_i.effect_blue}}</a>{% endif %}
+                        {% if effect_i.effect_purple %}<a class="effect-purple ml-1 mr-1" id="white-effect">{{effect_i.effect_purple}}</a>{% endif %}
+                        {% if effect_i.effect_txt %}<a class="effect-txt">{{effect_i.effect_txt | safe}}</a>{% endif %}
+                        {% if effect_i.effect_keyword %}
+                            {% if effect_i.effect_keyword.title == "Draw" %}
+                                <a class="effect-keyword ml-1 mr-1" id="white-effect">{{effect_i.effect_keyword.title}} {{effect_i.effect_keyword_int}}</a>
+                                <a class="effect-txt ml-1 mr-1 effect-txt">(Draw {{effect_i.effect_keyword_int}} card from your deck)</a>
+                            {% elif effect_i.effect_keyword.title == "Security Attack +" %}
+                                <a class="effect-keyword ml-1 mr-1" id="white-effect">{{effect_i.effect_keyword.title}}{{effect_i.effect_keyword_int}}</a>
+                                <a class="effect-txt ml-1 mr-1 effect-txt">(This Digimon checks {{effect_i.effect_keyword_int}} additional security card)</a>
+                            {% elif effect_i.effect_keyword.title == "Security Attack -" %}
+                                <a class="effect-keyword ml-1 mr-1" id="white-effect">{{effect_i.effect_keyword.title}}{{effect_i.effect_keyword_int}}</a>
+                                <a class="effect-txt ml-1 mr-1 effect-txt">(This Digimon checks {{effect_i.effect_keyword_int}} fewer security cards)</a>
+                            {% elif effect_i.effect_keyword.title == "Recovery (Deck) +" %}
+                                <a class="effect-keyword ml-1 mr-1" id="white-effect">Recovery +{{effect_i.effect_keyword_int}} (Deck)</a>
+                                {% if effect_i.effect_keyword_int == 1 %}
+                                    <a class="effect-txt ml-1 mr-1 effect-txt">(Place the top card of your deck on top of your security stack.)</a>
+                                {% else %}
+                                    <a class="effect-txt ml-1 mr-1 effect-txt">(Place the top {{effect_i.effect_keyword_int}} cards of your deck on top of your security stack.)</a>
+                                {% endif %}
+                            {% elif effect_i.effect_keyword.title == "De-Digivolve" %}
+                                <a class="effect-keyword ml-1 mr-1" id="white-effect">{{effect_i.effect_keyword.title}} {{effect_i.effect_keyword_int}}</a>
+                                <a class="effect-txt ml-1 mr-1 effect-txt">on {{effect_i.effect_keyword_int}} of your opponent's Digimon. (Trash up to {{effect_i.effect_keyword_int}} cards from the top of one of your opponent's Digimon. If it has no digivolution cards， or becomes a level 3 Digimon, you can't trash any more cards.)</a>
+                            {% else %}
+                                <a class="effect-keyword ml-1 mr-1" id="white-effect">{{effect_i.effect_keyword.title}}</a>
+                                <a class="effect-txt ml-1 mr-1 effect-txt">({{effect_i.effect_keyword.desc}})</a>
+                            {% endif %}
                         {% endif %}
-                        {% if card.evolutionary_effect_keyword_1 == 'Draw' %}
-                            <a class="effect-keyword ml-1 mr-1" id="white-effect">{{card.evolutionary_effect_keyword_1}} {{card.evolutionary_effect_keyword_int_1}}</a>
-                            <a class="effect-txt ml-1 mr-1 effect-txt">(Draw {{card.evolutionary_effect_keyword_int_1}} card from your deck.)</a>
-                        {% endif %}
-                        {% if card.evolutionary_effect_keyword_1 == 'Jamming' %}
-                            <a class="effect-keyword ml-1 mr-1" id="white-effect">{{card.evolutionary_effect_keyword_1}}</a>
-                            <a class="effect-txt ml-1 mr-1 effect-txt">(This Digimon cannot be destroyed by battles with Security Digimon.)</a>
-                        {% endif %}
-                        {% if card.evolutionary_effect_keyword_1 == 'Security Attack +' %}
-                        <a class="effect-keyword ml-1 mr-1" id="white-effect">{{card.evolutionary_effect_keyword_1}} {{card.evolutionary_effect_keyword_int_1}}</a>
-                            <a class="effect-txt ml-1 mr-1 effect-txt">(Increase the number of Security this Digimon checks by +{{card.evolutionary_effect_keyword_int_1}}.)</a>
-                        {% endif %}
-                        {% if card.evolutionary_effect_keyword_1 == 'Security Attack -' %}
-                        <a class="effect-keyword ml-1 mr-1" id="white-effect">{{card.evolutionary_effect_keyword_1}} {{card.evolutionary_effect_keyword_int_1}}</a>
-                            <a class="effect-txt ml-1 mr-1 effect-txt">(Decrease the number of Security this Digimon checks by -{{card.evolutionary_effect_keyword_int_1}}.)</a>
-                        {% endif %}
-                        {% if card.evolutionary_effect_keyword_1 == 'Blocker' %}
-                            <a class="effect-keyword ml-1 mr-1" id="white-effect">{{card.evolutionary_effect_keyword_1}}</a>
-                            <a class="effect-txt ml-1 mr-1 effect-txt">(When the opponent Digimon performs an attack, if this Digimon is in the Active position, you may Rest this Digimon and change the target of the attack to this Digimon.)</a>
-                        {% endif %}
-                        {% if card.evolutionary_effect_keyword_1 == 'Recovery (Deck) +' %}
-                        <a class="effect-keyword ml-1 mr-1" id="white-effect">{{card.evolutionary_effect_keyword_1}} {{card.evolutionary_effect_keyword_int_1}}</a>
-                            <a class="effect-txt ml-1 mr-1 effect-txt">(Place {{card.evolutionary_effect_keyword_int_1}} card from the top of your deck into the top of your Security.)</a>
-                        {% endif %}
-                    {% endif %}
-                </h6>
-                <h6 class="font-weight-normal">
-                    {% if card.evolutionary_effect_blue_2 %}<a class="effect-blue ml-1 mr-1" id="white-effect">{{card.evolutionary_effect_blue_2}}</a>{% endif %}
-                    {% if card.evolutionary_effect_purple_2 %}<a class="effect-purple ml-1 mr-1" id="white-effect">{{card.evolutionary_effect_purple_2}}</a>{% endif %}
-                    {% if card.evolutionary_effect_txt_2 %}<a class="effect-txt">{{card.evolutionary_effect_txt_2 | safe}}</a>{% endif %}
-                    {% if card.evolutionary_effect_keyword_2 %}
-                        {% if card.evolutionary_effect_keyword_2 == 'Pierce' %}
-                            <a class="effect-keyword ml-1 mr-1" id="white-effect">{{card.evolutionary_effect_keyword_2}}</a>
-                            <a class="effect-txt ml-1 mr-1 effect-txt">(When this Digimon attacks, if it destroys an opponent’s Digimon, it checks Security.)</a>
-                        {% endif %}
-                        {% if card.evolutionary_effect_keyword_2 == 'Draw' %}
-                            <a class="effect-keyword ml-1 mr-1" id="white-effect">{{card.evolutionary_effect_keyword_2}} {{card.evolutionary_effect_keyword_int_2}}</a>
-                            <a class="effect-txt ml-1 mr-1 effect-txt">(Draw {{card.evolutionary_effect_keyword_int_2}} card from your deck.)</a>
-                        {% endif %}
-                        {% if card.evolutionary_effect_keyword_2 == 'Jamming' %}
-                            <a class="effect-keyword ml-1 mr-1" id="white-effect">{{card.evolutionary_effect_keyword_2}}</a>
-                            <a class="effect-txt ml-1 mr-1 effect-txt">(This Digimon cannot be destroyed by battles with Security Digimon.)</a>
-                        {% endif %}
-                        {% if card.evolutionary_effect_keyword_2 == 'Security Attack +' %}
-                        <a class="effect-keyword ml-1 mr-1" id="white-effect">{{card.evolutionary_effect_keyword_2}} {{card.evolutionary_effect_keyword_int_2}}</a>
-                            <a class="effect-txt ml-1 mr-1 effect-txt">(Increase the number of Security this Digimon checks by +{{card.evolutionary_effect_keyword_int_2}}.)</a>
-                        {% endif %}
-                        {% if card.evolutionary_effect_keyword_2 == 'Security Attack -' %}
-                        <a class="effect-keyword ml-1 mr-1" id="white-effect">{{card.evolutionary_effect_keyword_2}} {{card.evolutionary_effect_keyword_int_2}}</a>
-                            <a class="effect-txt ml-1 mr-1 effect-txt">(Decrease the number of Security this Digimon checks by -{{card.evolutionary_effect_keyword_int_2}}.)</a>
-                        {% endif %}
-                        {% if card.evolutionary_effect_keyword_2 == 'Blocker' %}
-                            <a class="effect-keyword ml-1 mr-1" id="white-effect">{{card.evolutionary_effect_keyword_2}}</a>
-                            <a class="effect-txt ml-1 mr-1 effect-txt">(When the opponent Digimon performs an attack, if this Digimon is in the Active position, you may Rest this Digimon and change the target of the attack to this Digimon.)</a>
-                        {% endif %}
-                        {% if card.evolutionary_effect_keyword_2 == 'Recovery (Deck) +' %}
-                        <a class="effect-keyword ml-1 mr-1" id="white-effect">{{card.evolutionary_effect_keyword_2}} {{card.evolutionary_effect_keyword_int_2}}</a>
-                            <a class="effect-txt ml-1 mr-1 effect-txt">(Place {{card.evolutionary_effect_keyword_int_2}} card from the top of your deck into the top of your Security.)</a>
-                        {% endif %}
-                    {% endif %}
-                </h6>
-                <h6 class="font-weight-normal">
-                    {% if card.evolutionary_effect_blue_3 %}<a class="effect-blue ml-1 mr-1" id="white-effect">{{card.evolutionary_effect_blue_3}}</a>{% endif %}
-                    {% if card.evolutionary_effect_purple_3 %}<a class="effect-purple ml-1 mr-1" id="white-effect">{{card.evolutionary_effect_purple_3}}</a>{% endif %}
-                    {% if card.evolutionary_effect_txt_3 %}<a class="effect-txt">{{card.evolutionary_effect_txt_3 | safe}}</a>{% endif %}
-                    {% if card.evolutionary_effect_keyword_3 %}
-                        {% if card.evolutionary_effect_keyword_3 == 'Pierce' %}
-                            <a class="effect-keyword ml-1 mr-1" id="white-effect">{{card.evolutionary_effect_keyword_3}}</a>
-                            <a class="effect-txt ml-1 mr-1 effect-txt">(When this Digimon attacks, if it destroys an opponent’s Digimon, it checks Security.)</a>
-                        {% endif %}
-                        {% if card.evolutionary_effect_keyword_3 == 'Draw' %}
-                            <a class="effect-keyword ml-1 mr-1" id="white-effect">{{card.evolutionary_effect_keyword_3}} {{card.evolutionary_effect_keyword_int_1}}</a>
-                            <a class="effect-txt ml-1 mr-1 effect-txt">(Draw {{card.evolutionary_effect_keyword_int_1}} card from your deck.)</a>
-                        {% endif %}
-                        {% if card.evolutionary_effect_keyword_3 == 'Jamming' %}
-                            <a class="effect-keyword ml-1 mr-1" id="white-effect">{{card.evolutionary_effect_keyword_3}}</a>
-                            <a class="effect-txt ml-1 mr-1 effect-txt">(This Digimon cannot be destroyed by battles with Security Digimon.)</a>
-                        {% endif %}
-                        {% if card.evolutionary_effect_keyword_3 == 'Security Attack +' %}
-                        <a class="effect-keyword ml-1 mr-1" id="white-effect">{{card.evolutionary_effect_keyword_3}} {{card.evolutionary_effect_keyword_int_1}}</a>
-                            <a class="effect-txt ml-1 mr-1 effect-txt">(Increase the number of Security this Digimon checks by +{{card.evolutionary_effect_keyword_int_1}}.)</a>
-                        {% endif %}
-                        {% if card.evolutionary_effect_keyword_3 == 'Security Attack -' %}
-                        <a class="effect-keyword ml-1 mr-1" id="white-effect">{{card.evolutionary_effect_keyword_3}} {{card.evolutionary_effect_keyword_int_1}}</a>
-                            <a class="effect-txt ml-1 mr-1 effect-txt">(Decrease the number of Security this Digimon checks by -{{card.evolutionary_effect_keyword_int_1}}.)</a>
-                        {% endif %}
-                        {% if card.evolutionary_effect_keyword_3 == 'Blocker' %}
-                            <a class="effect-keyword ml-1 mr-1" id="white-effect">{{card.evolutionary_effect_keyword_3}}</a>
-                            <a class="effect-txt ml-1 mr-1 effect-txt">(When the opponent Digimon performs an attack, if this Digimon is in the Active position, you may Rest this Digimon and change the target of the attack to this Digimon.)</a>
-                        {% endif %}
-                        {% if card.evolutionary_effect_keyword_3 == 'Recovery (Deck) +' %}
-                        <a class="effect-keyword ml-1 mr-1" id="white-effect">{{card.evolutionary_effect_keyword_3}} {{card.evolutionary_effect_keyword_int_1}}</a>
-                            <a class="effect-txt ml-1 mr-1 effect-txt">(Place {{card.evolutionary_effect_keyword_int_1}} card from the top of your deck into the top of your Security.)</a>
-                        {% endif %}
-                    {% endif %}
+                    {% endfor %}
                 </h6>
             </div>
         {% endif %}

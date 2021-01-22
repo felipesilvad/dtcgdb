@@ -21,6 +21,8 @@ def setlist(request):
 def card_detail(request, card_slug, slug_set):
     set = Set.objects.get(slug=slug_set)
     card = Card.objects.get(set=set, slug=card_slug)
+    effect_main = card.effect.filter(effect_type="Main")
+    effect_inheritable = card.effect.filter(effect_type="Inheritable")
     page_title = card.number
     previous_card = set.card_set.filter(slug__lt=card_slug).order_by('-slug')
     next_card = set.card_set.filter(slug__gt=card_slug).order_by('slug')
@@ -108,7 +110,8 @@ def card_detail(request, card_slug, slug_set):
         form = Collection()
 
     return render(request, 'cards/card_detail.html', {
-        'page_title':page_title,'card':card,'previous_card':previous_card, 'next_card':next_card,
+        'page_title':page_title,'card':card, 'effect_main':effect_main, 'effect_inheritable':effect_inheritable,
+        'previous_card':previous_card, 'next_card':next_card,
         'jpy_yuyu_tei':jpy_yuyu_tei, 'jpy_suruga_ya':jpy_suruga_ya, 'jpy_amazon_jp':jpy_amazon_jp, 'usd_price_ebay':usd_price_ebay,
         'usd_yuyu_tei':usd_yuyu_tei, 'usd_suruga_ya':usd_suruga_ya, 'usd_amazon_jp':usd_amazon_jp, 'jpy_price_ebay':jpy_price_ebay,
         'usd_average':usd_average,

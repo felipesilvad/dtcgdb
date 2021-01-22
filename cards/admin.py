@@ -1,7 +1,11 @@
 from django.contrib import admin
-from .models import Card, Set, Digimon, New
+from .models import Card, Set, Digimon, New, Effect, EffectKeyword
 
 admin.site.register(Card)
+
+admin.site.register(Effect)
+
+admin.site.register(EffectKeyword)
 
 class SetAdmin(admin.ModelAdmin):
     pass
