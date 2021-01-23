@@ -63,38 +63,6 @@ class Card(models.Model):
 
     effect = models.ManyToManyField("Effect", blank=True)
 
-    effect_blue_1 = models.CharField(max_length=100, null=True, blank=True)
-    effect_purple_1 = models.CharField(max_length=100, null=True, blank=True)
-    effect_txt_1 = models.TextField(blank=True, null=True)
-    effect_keyword_1 = models.CharField(choices=KEYWORDSEFFECTS, max_length=100, blank=True, null=True)
-    effect_keyword_int_1 = models.IntegerField(blank=True, null=True)
-    effect_blue_2 = models.CharField(max_length=100, null=True, blank=True)
-    effect_purple_2 = models.CharField(max_length=100, null=True, blank=True)
-    effect_txt_2 = models.TextField(blank=True, null=True)
-    effect_keyword_2 = models.CharField(choices=KEYWORDSEFFECTS, max_length=100, blank=True, null=True)
-    effect_keyword_int_2 = models.IntegerField(blank=True, null=True)
-    effect_blue_3 = models.CharField(max_length=100, null=True, blank=True)
-    effect_purple_3 = models.CharField(max_length=100, null=True, blank=True)
-    effect_txt_3 = models.TextField(blank=True, null=True)
-    effect_keyword_3 = models.CharField(choices=KEYWORDSEFFECTS, max_length=100, blank=True, null=True)
-    effect_keyword_int_3 = models.IntegerField(blank=True, null=True)
-
-    evolutionary_effect_blue_1 = models.CharField(max_length=100, null=True, blank=True)
-    evolutionary_effect_purple_1 = models.CharField(max_length=100, null=True, blank=True)
-    evolutionary_effect_txt_1 = models.TextField(blank=True, null=True)
-    evolutionary_effect_keyword_1 = models.CharField(choices=KEYWORDSEFFECTS, max_length=100, blank=True, null=True)
-    evolutionary_effect_keyword_int_1 = models.IntegerField(blank=True, null=True)
-    evolutionary_effect_blue_2 = models.CharField(max_length=100, null=True, blank=True)
-    evolutionary_effect_purple_2 = models.CharField(max_length=100, null=True, blank=True)
-    evolutionary_effect_txt_2 = models.TextField(blank=True, null=True)
-    evolutionary_effect_keyword_2 = models.CharField(choices=KEYWORDSEFFECTS, max_length=100, blank=True, null=True)
-    evolutionary_effect_keyword_int_2 = models.IntegerField(blank=True, null=True)
-    evolutionary_effect_blue_3 = models.CharField(max_length=100, null=True, blank=True)
-    evolutionary_effect_purple_3 = models.CharField(max_length=100, null=True, blank=True)
-    evolutionary_effect_txt_3 = models.TextField(blank=True, null=True)
-    evolutionary_effect_keyword_3 = models.CharField(choices=KEYWORDSEFFECTS, max_length=100, blank=True, null=True)
-    evolutionary_effect_keyword_int_3 = models.IntegerField(blank=True, null=True)
-
     in_deck_quantity = models.IntegerField(blank=True, null=True)
     promo_name = models.CharField(max_length=100, null=True, blank=True)
     promo_release_date = models.DateField(blank=True, null=True)
@@ -111,7 +79,7 @@ class Card(models.Model):
     date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.number
+        return f'{self.number} - {self.title}'
 
 class Effect(models.Model):
     EFFECT_TYPES = [
@@ -145,7 +113,7 @@ class Effect(models.Model):
     effect_keyword_int = models.IntegerField(blank=True, null=True)
 
     def __str__(self):
-        return f'{self.effect_type} - {self.effect_blue} - {self.effect_purple}'
+        return f'{self.effect_type} - {self.effect_blue} - {self.effect_purple} - {self.effect_keyword}'
 
 class EffectKeyword(models.Model):
     title = models.CharField(max_length=100, blank=True, null=True)
