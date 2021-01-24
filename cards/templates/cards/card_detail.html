@@ -152,7 +152,6 @@
         <div class="color-{{card.color}} light-bg no-radius-bot p-0 dflex-mobile">
             <div class="d-inline-flex mb-less-3">
                 <h1 class="card-title ml-4 pt-1">{{ card.title }}</h1>
-                <h5 class="card-rarity-{{card.color}} ml-2 mt-2 color-{{card.color}}-txt">{{card.rarity}}</h5>
             </div>
             <div></div>
             <div class="d-inline-flex mt-less-3">
@@ -203,13 +202,18 @@
                 {% if card.rarity is not None %}
                     <div class="col-lg p-0">
                         <div class="th cardh card-info">Rarity</div>
-                        <div class="td cardtd card-info">
+                        <div class="td cardtd card-info d-flex justify-content-center">
                             {% if card.rarity == 'C' %}<a href="/cards/search?rarity={{card.rarity}}#results">Common</a>
                             {% elif card.rarity == 'U' %}<a href="/cards/search?rarity={{card.rarity}}#results">Uncommon</a>
                             {% elif card.rarity == 'R' %}<a href="/cards/search?rarity={{card.rarity}}#results">Rare</a>
                             {% elif card.rarity == 'SR' %}<a href="/cards/search?rarity={{card.rarity}}#results">Super Rare</a>
                             {% elif card.rarity == 'SEC' %}<a href="/cards/search?rarity={{card.rarity}}#results">Secret Rare</a>
                             {% elif card.rarity == 'P' %}<a href="/cards/search?rarity={{card.rarity}}#results">Promo</a>
+                            {% endif %}
+                            {% if card.rarity == 'SEC' %}
+                                <h6 class="card-rarity-sec ml-2 d-flex justify-content-center">{{card.rarity}}</h6>
+                            {% else %}
+                                <h6 class="card-rarity ml-2 d-flex justify-content-center">{{card.rarity}}</h6>
                             {% endif %}
                         </div>
                     </div>
@@ -276,37 +280,37 @@
 
         {% if effect_main %}
             <div class="light-bg mt-2 no-radius-bot effecth">
-                <h4 class="ml-2 font-italic font-weight-bolder">Main Effect</h4>
+                <h4 class="ml-2 font-italic font-weight-bolder text-light">Main Effect</h4>
             </div>
             <div class="light-bg no-radius-top">
                 {% for effect_m in effect_main %}
                     <h6 class="font-weight-normal">
-                        {% if effect_m.effect_blue %}<a class="effect-blue ml-1 mr-1" id="white-effect">{{effect_m.effect_blue}}</a>{% endif %}
-                        {% if effect_m.effect_purple %}<a class="effect-purple ml-1 mr-1" id="white-effect">{{effect_m.effect_purple}}</a>{% endif %}
+                        {% if effect_m.effect_blue %}<a class="effect-blue" id="white-effect">{{effect_m.effect_blue}}</a>{% endif %}
+                        {% if effect_m.effect_purple %}<a class="effect-purple" id="white-effect">{{effect_m.effect_purple}}</a>{% endif %}
                         {% if effect_m.effect_txt %}<a class="effect-txt">{{effect_m.effect_txt | safe}}</a>{% endif %}
                         {% if effect_m.effect_keyword %}
                             {% if effect_m.effect_keyword.title == "Draw" %}
-                                <a class="effect-keyword ml-1 mr-1" id="white-effect">{{effect_m.effect_keyword.title}} {{effect_m.effect_keyword_mnt}}</a>
-                                <a class="effect-txt ml-1 mr-1 effect-txt">(Draw {{effect_m.effect_keyword_mnt}} card from your deck)</a>
+                                <a class="effect-keyword" id="white-effect">{{effect_m.effect_keyword.title}} {{effect_m.effect_keyword_mnt}}</a>
+                                <a class="effect-txt effect-txt">(Draw {{effect_m.effect_keyword_mnt}} card from your deck)</a>
                             {% elif effect_m.effect_keyword.title == "Security Attack +" %}
-                                <a class="effect-keyword ml-1 mr-1" id="white-effect">{{effect_m.effect_keyword.title}}{{effect_m.effect_keyword_mnt}}</a>
-                                <a class="effect-txt ml-1 mr-1 effect-txt">(This Digimon checks {{effect_m.effect_keyword_mnt}} additional security card)</a>
+                                <a class="effect-keyword" id="white-effect">{{effect_m.effect_keyword.title}}{{effect_m.effect_keyword_mnt}}</a>
+                                <a class="effect-txt effect-txt">(This Digimon checks {{effect_m.effect_keyword_mnt}} additional security card)</a>
                             {% elif effect_m.effect_keyword.title == "Security Attack -" %}
-                                <a class="effect-keyword ml-1 mr-1" id="white-effect">{{effect_m.effect_keyword.title}}{{effect_m.effect_keyword_mnt}}</a>
-                                <a class="effect-txt ml-1 mr-1 effect-txt">(This Digimon checks {{effect_m.effect_keyword_mnt}} fewer security cards)</a>
+                                <a class="effect-keyword" id="white-effect">{{effect_m.effect_keyword.title}}{{effect_m.effect_keyword_mnt}}</a>
+                                <a class="effect-txt effect-txt">(This Digimon checks {{effect_m.effect_keyword_mnt}} fewer security cards)</a>
                             {% elif effect_m.effect_keyword.title == "Recovery (Deck) +" %}
-                                <a class="effect-keyword ml-1 mr-1" id="white-effect">Recovery +{{effect_m.effect_keyword_mnt}} (Deck)</a>
+                                <a class="effect-keyword" id="white-effect">Recovery +{{effect_m.effect_keyword_mnt}} (Deck)</a>
                                 {% if effect_m.effect_keyword_mnt == 1 %}
-                                    <a class="effect-txt ml-1 mr-1 effect-txt">(Place the top card of your deck on top of your security stack.)</a>
+                                    <a class="effect-txt effect-txt">(Place the top card of your deck on top of your security stack.)</a>
                                 {% else %}
-                                    <a class="effect-txt ml-1 mr-1 effect-txt">(Place the top {{effect_m.effect_keyword_mnt}} cards of your deck on top of your security stack.)</a>
+                                    <a class="effect-txt effect-txt">(Place the top {{effect_m.effect_keyword_mnt}} cards of your deck on top of your security stack.)</a>
                                 {% endif %}
                             {% elif effect_m.effect_keyword.title == "De-Digivolve" %}
-                                <a class="effect-keyword ml-1 mr-1" id="white-effect">{{effect_m.effect_keyword.title}} {{effect_m.effect_keyword_mnt}}</a>
-                                <a class="effect-txt ml-1 mr-1 effect-txt">on {{effect_m.effect_keyword_mnt}} of your opponent's Digimon. (Trash up to {{effect_m.effect_keyword_mnt}} cards from the top of one of your opponent's Digimon. If it has no digivolution cards， or becomes a level 3 Digimon, you can't trash any more cards.)</a>
+                                <a class="effect-keyword" id="white-effect">{{effect_m.effect_keyword.title}} {{effect_m.effect_keyword_mnt}}</a>
+                                <a class="effect-txt effect-txt">on {{effect_m.effect_keyword_mnt}} of your opponent's Digimon. (Trash up to {{effect_m.effect_keyword_mnt}} cards from the top of one of your opponent's Digimon. If it has no digivolution cards， or becomes a level 3 Digimon, you can't trash any more cards.)</a>
                             {% else %}
-                                <a class="effect-keyword ml-1 mr-1" id="white-effect">{{effect_m.effect_keyword.title}}</a>
-                                <a class="effect-txt ml-1 mr-1 effect-txt">({{effect_m.effect_keyword.desc}})</a>
+                                <a class="effect-keyword" id="white-effect">{{effect_m.effect_keyword.title}}</a>
+                                <a class="effect-txt effect-txt">({{effect_m.effect_keyword.desc}})</a>
                             {% endif %}
                         {% endif %}
                     </h6>
@@ -317,41 +321,41 @@
         {% if effect_inheritable %}
             <div class="effecth light-bg mt-2 no-radius-bot color-{{card.color}}">
                 {% if card.card_type == 'Digimon' or card.card_type == 'Digitama' %}
-                    <h4 class="ml-2 font-italic font-weight-bolder">Inheritable Effect</h4>
+                    <h4 class="ml-2 font-italic font-weight-bolder text-light">Inheritable Effect</h4>
                 {% endif %}
                 {% if card.card_type == 'Tamer' or card.card_type == 'Option' %}
-                    <h4 class="ml-2 font-italic font-weight-bolder">Security Effect</h4>
+                    <h4 class="ml-2 font-italic font-weight-bolder text-light">Security Effect</h4>
                 {% endif %}
             </div>
             <div class="color-{{card.color}} light-bg no-radius-top">
                 <h6 class="font-weight-normal">
                     {% for effect_i in effect_inheritable %}
-                        {% if effect_i.effect_blue %}<a class="effect-blue ml-1 mr-1" id="white-effect">{{effect_i.effect_blue}}</a>{% endif %}
-                        {% if effect_i.effect_purple %}<a class="effect-purple ml-1 mr-1" id="white-effect">{{effect_i.effect_purple}}</a>{% endif %}
+                        {% if effect_i.effect_blue %}<a class="effect-blue" id="white-effect">{{effect_i.effect_blue}}</a>{% endif %}
+                        {% if effect_i.effect_purple %}<a class="effect-purple" id="white-effect">{{effect_i.effect_purple}}</a>{% endif %}
                         {% if effect_i.effect_txt %}<a class="effect-txt">{{effect_i.effect_txt | safe}}</a>{% endif %}
                         {% if effect_i.effect_keyword %}
                             {% if effect_i.effect_keyword.title == "Draw" %}
-                                <a class="effect-keyword ml-1 mr-1" id="white-effect">{{effect_i.effect_keyword.title}} {{effect_i.effect_keyword_int}}</a>
-                                <a class="effect-txt ml-1 mr-1 effect-txt">(Draw {{effect_i.effect_keyword_int}} card from your deck)</a>
+                                <a class="effect-keyword" id="white-effect">{{effect_i.effect_keyword.title}} {{effect_i.effect_keyword_int}}</a>
+                                <a class="effect-txt effect-txt">(Draw {{effect_i.effect_keyword_int}} card from your deck)</a>
                             {% elif effect_i.effect_keyword.title == "Security Attack +" %}
-                                <a class="effect-keyword ml-1 mr-1" id="white-effect">{{effect_i.effect_keyword.title}}{{effect_i.effect_keyword_int}}</a>
-                                <a class="effect-txt ml-1 mr-1 effect-txt">(This Digimon checks {{effect_i.effect_keyword_int}} additional security card)</a>
+                                <a class="effect-keyword" id="white-effect">{{effect_i.effect_keyword.title}}{{effect_i.effect_keyword_int}}</a>
+                                <a class="effect-txt effect-txt">(This Digimon checks {{effect_i.effect_keyword_int}} additional security card)</a>
                             {% elif effect_i.effect_keyword.title == "Security Attack -" %}
-                                <a class="effect-keyword ml-1 mr-1" id="white-effect">{{effect_i.effect_keyword.title}}{{effect_i.effect_keyword_int}}</a>
-                                <a class="effect-txt ml-1 mr-1 effect-txt">(This Digimon checks {{effect_i.effect_keyword_int}} fewer security cards)</a>
+                                <a class="effect-keyword" id="white-effect">{{effect_i.effect_keyword.title}}{{effect_i.effect_keyword_int}}</a>
+                                <a class="effect-txt effect-txt">(This Digimon checks {{effect_i.effect_keyword_int}} fewer security cards)</a>
                             {% elif effect_i.effect_keyword.title == "Recovery (Deck) +" %}
-                                <a class="effect-keyword ml-1 mr-1" id="white-effect">Recovery +{{effect_i.effect_keyword_int}} (Deck)</a>
+                                <a class="effect-keyword" id="white-effect">Recovery +{{effect_i.effect_keyword_int}} (Deck)</a>
                                 {% if effect_i.effect_keyword_int == 1 %}
-                                    <a class="effect-txt ml-1 mr-1 effect-txt">(Place the top card of your deck on top of your security stack.)</a>
+                                    <a class="effect-txt effect-txt">(Place the top card of your deck on top of your security stack.)</a>
                                 {% else %}
-                                    <a class="effect-txt ml-1 mr-1 effect-txt">(Place the top {{effect_i.effect_keyword_int}} cards of your deck on top of your security stack.)</a>
+                                    <a class="effect-txt effect-txt">(Place the top {{effect_i.effect_keyword_int}} cards of your deck on top of your security stack.)</a>
                                 {% endif %}
                             {% elif effect_i.effect_keyword.title == "De-Digivolve" %}
-                                <a class="effect-keyword ml-1 mr-1" id="white-effect">{{effect_i.effect_keyword.title}} {{effect_i.effect_keyword_int}}</a>
-                                <a class="effect-txt ml-1 mr-1 effect-txt">on {{effect_i.effect_keyword_int}} of your opponent's Digimon. (Trash up to {{effect_i.effect_keyword_int}} cards from the top of one of your opponent's Digimon. If it has no digivolution cards， or becomes a level 3 Digimon, you can't trash any more cards.)</a>
+                                <a class="effect-keyword" id="white-effect">{{effect_i.effect_keyword.title}} {{effect_i.effect_keyword_int}}</a>
+                                <a class="effect-txt effect-txt">on {{effect_i.effect_keyword_int}} of your opponent's Digimon. (Trash up to {{effect_i.effect_keyword_int}} cards from the top of one of your opponent's Digimon. If it has no digivolution cards， or becomes a level 3 Digimon, you can't trash any more cards.)</a>
                             {% else %}
-                                <a class="effect-keyword ml-1 mr-1" id="white-effect">{{effect_i.effect_keyword.title}}</a>
-                                <a class="effect-txt ml-1 mr-1 effect-txt">({{effect_i.effect_keyword.desc}})</a>
+                                <a class="effect-keyword" id="white-effect">{{effect_i.effect_keyword.title}}</a>
+                                <a class="effect-txt effect-txt">({{effect_i.effect_keyword.desc}})</a>
                             {% endif %}
                         {% endif %}
                     {% endfor %}

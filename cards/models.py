@@ -142,7 +142,7 @@ class Set(models.Model):
     set_type = models.CharField(choices=SETTYPES, max_length=20, default='Deck')
 
     def __str__(self):
-        return self.title
+        return f'{self.slug} - {self.title}'
 
 class Digimon(models.Model):
     title = models.CharField(max_length=255)

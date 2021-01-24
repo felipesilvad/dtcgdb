@@ -145,6 +145,32 @@ a:hover {
     padding-left: 10px;
 }
 
+.card-rarity {
+    font-weight: bolder;
+    background-color: white;
+    color: black;
+    text-align: center;
+    margin-top: 3px;
+    margin-bottom: 3px;
+    width: 20px;
+    height: fit-content;
+    border-radius: 50%;
+    font-size: 16px;
+}
+
+.card-rarity-sec {
+    font-weight: bolder;
+    background-color: white;
+    color: black;
+    text-align: center;
+    margin-top: 3px;
+    margin-bottom: 3px;
+    width: 30px;
+    height: fit-content;
+    border-radius: 50%;
+    font-size: 16px;
+}
+
 .card-rarity-Colorless, .card-rarity-Yellow  {
     font-weight: bolder;
     background-color: black;
@@ -404,8 +430,6 @@ a:hover {
     color: #fff;
 }
 
-
-
 .news-img{
     width: 300px;
 }
@@ -464,7 +488,6 @@ body {
     background-color: #252A33;
     color: #fff;
 }
-
 
 .card-main {
     width: 300px;;
@@ -800,6 +823,8 @@ td.t-lv{
         justify-content: space-between !important;
     }
 
+    
+
     .card-rarity-Colorless, .card-rarity-Yellow {
         font-weight: bolder;
         background-color: black;
@@ -1014,4 +1039,12 @@ td.t-lv{
     border-color: #858585;
     border-style: solid;
     border-bottom: none;
+}
+
+
+.profile-pic {
+    object-fit: cover;
+    width:150px;
+    height:150px;
+    border-radius: 20%;
 }

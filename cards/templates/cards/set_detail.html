@@ -225,47 +225,11 @@
             <h2 class="text-uppercase font-italic font-weight-bold">Cards List</h2>
             <nav>
                 <div class="nav nav-pills m-2" id="nav-tab" role="tablist">
-                    <a class="pilss-cl btn active" id="nav-home-tab" data-toggle="tab" href="#gallery" role="tab" aria-controls="gallery" aria-selected="true">
-                        Gallery
-                    </a>
-                    <a class="pilss-cl btn" id="nav-profile-tab" data-toggle="tab" href="#list" role="tab" aria-controls="list" aria-selected="false">List</a>
+                    <a class="pilss-cl btn active" id="nav-profile-tab" data-toggle="tab" href="#list" role="tab" aria-controls="list" aria-selected="false">List</a>
+                    <a class="pilss-cl btn" id="nav-home-tab" data-toggle="tab" href="#gallery" role="tab" aria-controls="gallery" aria-selected="true">Gallery</a>
                 </div>
             </nav>
             <div class="tab-content" id="nav-tabContent">
-                <div class="tab-pane fade show active" id="gallery" role="tabpanel" aria-labelledby="gallery">
-                    {% if set.set_type == "Promo" %}
-                        {% for card in cards %}
-                            {% ifchanged card.promo_name %}
-                                {% with var=card.promo_name %}
-                                    <h3 class="border-g p-2 m-1 font-italic font-weight-bold" id="{{var}}">{{var}} - {{card.promo_release_date}}</h3>
-                                    <div class="list">
-                                        {% for card in cards %}
-                                            {% if var == card.promo_name %}
-                                                <div class="hover_img">
-                                                    <a href="/cards/{{set.slug}}/{{card.slug}}">
-                                                        <img class="card-thumb" id="promo-w" src="{% if card.image_en %}{{card.image_en.url}}{% else %}{{card.image_jp.url}}{% endif %}">
-                                                        <img class="hidden-large" src="{% if card.image_en %}{{card.image_en.url}}{% else %}{{card.image_jp.url}}{% endif %}">
-                                                    </a>
-                                                </div>
-                                            {% endif %}
-                                        {% endfor %}
-                                    </div>
-                                {% endwith %}
-                            {% endifchanged %}
-                        {% endfor %}
-                    {% else %}
-                        <div class="list">
-                            {% for card in cards %}
-                                <div class="hover_img">
-                                    <a href="/cards/{{set.slug}}/{{card.slug}}">
-                                        <img class="card-thumb" src="{% if card.image_en %}{{card.image_en.url}}{% else %}{{card.image_jp.url}}{% endif %}">
-                                        <img class="hidden-large" src="{% if card.image_en %}{{card.image_en.url}}{% else %}{{card.image_jp.url}}{% endif %}">
-                                    </a>
-                                </div>
-                            {% endfor %}
-                        </div>
-                    {% endif %}
-                </div>
                 <div class="tab-pane fade" id="list" role="tabpanel" aria-labelledby="nav-profile-tab">
                     <table class="table table-sm table-dark">
                         <tr class="bg-p">
@@ -360,6 +324,41 @@
                             </tr>
                         {% endfor %}
                     </table>
+                </div>
+
+                <div class="tab-pane fade show active" id="gallery" role="tabpanel" aria-labelledby="gallery">
+                    {% if set.set_type == "Promo" %}
+                        {% for card in cards %}
+                            {% ifchanged card.promo_name %}
+                                {% with var=card.promo_name %}
+                                    <h3 class="border-g p-2 m-1 font-italic font-weight-bold" id="{{var}}">{{var}} - {{card.promo_release_date}}</h3>
+                                    <div class="list">
+                                        {% for card in cards %}
+                                            {% if var == card.promo_name %}
+                                                <div class="hover_img">
+                                                    <a href="/cards/{{set.slug}}/{{card.slug}}">
+                                                        <img class="card-thumb" id="promo-w" src="{% if card.image_en %}{{card.image_en.url}}{% else %}{{card.image_jp.url}}{% endif %}">
+                                                        <img class="hidden-large" src="{% if card.image_en %}{{card.image_en.url}}{% else %}{{card.image_jp.url}}{% endif %}">
+                                                    </a>
+                                                </div>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </div>
+                                {% endwith %}
+                            {% endifchanged %}
+                        {% endfor %}
+                    {% else %}
+                        <div class="list">
+                            {% for card in cards %}
+                                <div class="hover_img">
+                                    <a href="/cards/{{set.slug}}/{{card.slug}}">
+                                        <img class="card-thumb" src="{% if card.image_en %}{{card.image_en.url}}{% else %}{{card.image_jp.url}}{% endif %}">
+                                        <img class="hidden-large" src="{% if card.image_en %}{{card.image_en.url}}{% else %}{{card.image_jp.url}}{% endif %}">
+                                    </a>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
                 </div>
             </div>
         </div>

@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
+from django.db.models import Sum, Count
 from django.contrib.auth.decorators import login_required
 from .forms import userRegisterForm, UserUpdateForm, ProfileUpdateForm, Collection
 from cards.models import Card, Set
@@ -57,3 +58,36 @@ def profile(request):
     }
     
     return render(request, 'users/profile.html', context)
+
+@login_required
+def collection(request):
+    usercards = UserCard.objects.all().filter(profile=request.user.profile)
+    usercards_c = usercards.count()
+    usercards_q = usercards.aggregate(Sum('quantity'))
+    sets = Set.objects.all().order_by('slug')
+    cards = Card.objects.all().order_by('slug')
+
+    usercards_set_c = usercards.values('card__set').annotate(total=Count('id'))
+    
+
+
+    context = {'usercards':usercards, 'usercards_c':usercards_c, 'usercards_q':usercards_q,
+    'sets':sets, 'cards':cards, 'usercards_set_c':usercards_set_c
+    }
+    
+    return render(request, 'users/collection.html', context)
+
+@login_required
+def collection_set(request, slug_set):
+    set = Set.objects.get(slug=slug_set)
+    cards = set.card_set.all().order_by('slug')
+    usercards = UserCard.objects.all().filter(profile=request.user.profile).filter(card__set=set)
+    usercards_c = usercards.count()
+    cards_c = cards.count()
+    set_percent = round((usercards_c / cards_c)  * 100, 2)
+
+    context = {'usercards':usercards,'set':set, 'cards':cards,
+    'usercards_c':usercards_c, 'cards_c':cards_c, 'set_percent':set_percent
+    }
+    
+    return render(request, 'users/collection_set.html', context)

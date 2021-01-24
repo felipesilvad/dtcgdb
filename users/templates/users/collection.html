@@ -1,0 +1,62 @@
+{% extends 'base_layout.html' %}
+{% load filters %}
+{% block content %}
+    <div class="content">
+        <h1 class="card-title">Collection</h1>
+        <div class="row light-bg">
+            <div class="col-2">
+                <img class="profile-pic mx-auto d-block" src="{{user.profile.image.url}}">
+                <h2 class="">{{user.username}}</h2>
+            </div>
+            <div class="col-10 light-bg">
+                <div class="row p-0 m-0">
+                    <div class="col-lg p-0">
+                        <div class="th cardh card-info">Total Cards:</div>
+                        <div class="td cardtd card-info"><h6>{{usercards_q.quantity__sum}}</h6></div>
+                    </div>
+                    <div class="col-lg p-0">
+                        <div class="th cardh card-info">Unique Cards:</div>
+                        <div class="td cardtd card-info"><h6>{{usercards_c}}</h6></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {% for usercard in usercards %}
+            <a class="nav-link cardh">{{usercard.card.number}} {{usercard.card.title}} - {{usercard.quantity}}</a>
+        {% endfor %}
+
+        <div class="light-bg mt-3">
+            <nav>
+                <div class="nav d-flex justify-content-around" id="nav-tab" role="tablist">
+                  <a class="nav-item cardh active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Sets</a>
+                  <a class="nav-item cardh" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Starter Decks</a>
+                  <a class="nav-item cardh" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">Promos</a>
+                </div>
+            </nav>
+            <div class="tab-content" id="nav-tabContent">
+                <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+                    {% for set in sets %}
+                        {% if set.set_type == "Booster" %}
+                            <div class="row">
+                                <div class="col">
+                                    <h4 class="text-uppercase">{{set.slug}} - {{ set.title }}</h4>
+                                </div>
+                                <div class="col">
+                                    {% for cards in usercards_set_c %}
+                                        {% if cards.card__set == set.id%}
+                                            {{cards.total}} / {{set.total_unique}} | {{ cards.total | percent:set.total_unique }}%
+                                        {% endif %}
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+                <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">Starter Decks</div>
+                <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">Promos</div>
+            </div>
+        </div>
+        
+    </div>
+{% endblock %}
