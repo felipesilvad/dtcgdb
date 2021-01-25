@@ -38,18 +38,20 @@
                 <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
                     {% for set in sets %}
                         {% if set.set_type == "Booster" %}
-                            <div class="row">
-                                <div class="col">
-                                    <h4 class="text-uppercase">{{set.slug}} - {{ set.title }}</h4>
+                            <a href="/collection/{{set.slug}}">
+                                <div class="row">
+                                    <div class="col">
+                                        <h4 class="text-uppercase">{{set.slug}} - {{ set.title }}</h4>
+                                    </div>
+                                    <div class="col">
+                                        {% for cards in usercards_set_c %}
+                                            {% if cards.card__set == set.id%}
+                                                {{cards.total}} / {{set.total_unique}} | {{ cards.total | percent:set.total_unique }}%
+                                            {% endif %}
+                                        {% endfor %}
+                                    </div>
                                 </div>
-                                <div class="col">
-                                    {% for cards in usercards_set_c %}
-                                        {% if cards.card__set == set.id%}
-                                            {{cards.total}} / {{set.total_unique}} | {{ cards.total | percent:set.total_unique }}%
-                                        {% endif %}
-                                    {% endfor %}
-                                </div>
-                            </div>
+                            </a>
                         {% endif %}
                     {% endfor %}
                 </div>
