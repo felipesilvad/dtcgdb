@@ -1,16 +1,24 @@
 {% extends 'base_layout.html' %}
 {% block content %}
     <div class="content">
-        <h1>{{set.title}}</h1>
-        <div class="media">
-            <h1>{{user.username}}</h1>
+        <div class="row">
+            <div class="">
+
+            </div>
+
         </div>
+        <h1 class="card-title">{{set.slug}} - {{ set.title }}</h1>
 
         
+        <div class="progress">
+            <div class="progress-bar" {% if set_percent %}style = "width: {{set_percent}}%;"{% endif %}>
+            </div>
+        </div>
+
+        <p>{{usercards_c}}/{{set.total_unique}}</p>
+        <p><h2 class="card-title">{{set_percent}}%</h2></p>
+
         {{usercards}}
-
-        {{usercards_c}}/{{set.total_unique}} - {{set_percent}}%
-
         <div class="card card-body mt-3">
             <table class="table table-sm table-dark">
                 <tr class="bg-p">

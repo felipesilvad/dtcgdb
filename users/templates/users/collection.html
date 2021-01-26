@@ -22,30 +22,49 @@
             </div>
         </div>
 
-        {% for usercard in usercards %}
-            <a class="nav-link cardh">{{usercard.card.number}} {{usercard.card.title}} - {{usercard.quantity}}</a>
-        {% endfor %}
+        {{set_percentages}}
 
-        <div class="light-bg mt-3">
+        <div class="light-bg mt-3 p-0">
             <nav>
-                <div class="nav d-flex justify-content-around" id="nav-tab" role="tablist">
-                  <a class="nav-item cardh active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Sets</a>
-                  <a class="nav-item cardh" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Starter Decks</a>
-                  <a class="nav-item cardh" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">Promos</a>
+                <div class="nav nav-tabs d-flex justify-content" id="nav-tab" role="tablist">
+                  <a class="nav-item c-tabs active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Sets</a>
+                  <a class="nav-item c-tabs" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Starter Decks</a>
+                  <a class="nav-item c-tabs" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">Promos</a>
                 </div>
             </nav>
-            <div class="tab-content" id="nav-tabContent">
+        </div>
+        <div class="tab-content" id="nav-tabContent">
+            <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+                {% for set in sets %}
+                    {% if set.set_type == "Booster" %}
+                        <a href="/collection/{{set.slug}}">
+                            <div class="row c-set" {% if set_percentages.bt1 %}style = "background: linear-gradient(110deg,  {{set.color_1}} {{ set_percentages.bt1 }}%, {{set.color_2}} 0%);"{% endif %}>
+                                <div class="col-10">
+                                    <h3 class="card-title mb-1">{{set.slug}} - {{ set.title }}</h3>
+                                </div>
+                                <div class="col-2">
+                                    <h3 class="card-title mb-1">{{ set_percentages.bt1 }}%</h3>
+                                </div>
+                            </div>
+                        </a>
+                    {% endif %}
+                {% endfor %}
+            </div>
+            <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
                 <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
                     {% for set in sets %}
-                        {% if set.set_type == "Booster" %}
+                        {% if set.set_type == "Deck" %}
                             <a href="/collection/{{set.slug}}">
-                                <div class="row">
-                                    <div class="col">
-                                        <h4 class="text-uppercase">{{set.slug}} - {{ set.title }}</h4>
+                                <div class="row c-set">
+                                    <div class="col-2">
+                                        <img class="set-list-img" src="{{set.image.url}}" />
                                     </div>
-                                    <div class="col">
+                                    <div class="col-8">
+                                        <h4 class="c-set__title">{{set.slug}} - {{ set.title }} {{set.set_percent}}</h4>
+                                    </div>
+                                    <div class="col-2">
                                         {% for cards in usercards_set_c %}
-                                            {% if cards.card__set == set.id%}
+                                            {% if cards.card__set__slug == set.slug %}
                                                 {{cards.total}} / {{set.total_unique}} | {{ cards.total | percent:set.total_unique }}%
                                             {% endif %}
                                         {% endfor %}
@@ -55,9 +74,8 @@
                         {% endif %}
                     {% endfor %}
                 </div>
-                <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">Starter Decks</div>
-                <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">Promos</div>
             </div>
+            <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">Promos</div>
         </div>
         
     </div>

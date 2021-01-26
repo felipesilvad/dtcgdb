@@ -67,12 +67,19 @@ def collection(request):
     sets = Set.objects.all().order_by('slug')
     cards = Card.objects.all().order_by('slug')
 
-    usercards_set_c = usercards.values('card__set').annotate(total=Count('id'))
-    
+    usercards_set_c = usercards.values('card__set__slug').annotate(total=Count('id'))
+    sets_total_cards = sets.values('slug', 'total_unique')
 
+    set_percentages = {}
 
+    for setcards in sets_total_cards:
+        for usercards in usercards_set_c:
+            if usercards['card__set__slug'] == setcards['slug']:
+                set_percentages[setcards['slug']] = round((usercards['total'] / setcards['total_unique']) * 100, 2)
+                
     context = {'usercards':usercards, 'usercards_c':usercards_c, 'usercards_q':usercards_q,
-    'sets':sets, 'cards':cards, 'usercards_set_c':usercards_set_c
+    'sets':sets, 'cards':cards, 'usercards_set_c':usercards_set_c, 'sets_total_cards':sets_total_cards,
+    'set_percentages':set_percentages
     }
     
     return render(request, 'users/collection.html', context)

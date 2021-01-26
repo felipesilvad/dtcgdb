@@ -314,24 +314,24 @@
                         {% if effect_m.effect_txt %}<a class="effect-txt">{{effect_m.effect_txt | safe}}</a>{% endif %}
                         {% if effect_m.effect_keyword %}
                             {% if effect_m.effect_keyword.title == "Draw" %}
-                                <a class="effect-keyword" id="white-effect">{{effect_m.effect_keyword.title}} {{effect_m.effect_keyword_mnt}}</a>
-                                <a class="effect-txt effect-txt">(Draw {{effect_m.effect_keyword_mnt}} card from your deck)</a>
+                                <a class="effect-keyword" id="white-effect">{{effect_m.effect_keyword.title}} {{effect_m.effect_keyword_int}}</a>
+                                <a class="effect-txt effect-txt">(Draw {{effect_m.effect_keyword_int}} card from your deck)</a>
                             {% elif effect_m.effect_keyword.title == "Security Attack +" %}
-                                <a class="effect-keyword" id="white-effect">{{effect_m.effect_keyword.title}}{{effect_m.effect_keyword_mnt}}</a>
-                                <a class="effect-txt effect-txt">(This Digimon checks {{effect_m.effect_keyword_mnt}} additional security card)</a>
+                                <a class="effect-keyword" id="white-effect">{{effect_m.effect_keyword.title}}{{effect_m.effect_keyword_int}}</a>
+                                <a class="effect-txt effect-txt">(This Digimon checks {{effect_m.effect_keyword_int}} additional security card)</a>
                             {% elif effect_m.effect_keyword.title == "Security Attack -" %}
-                                <a class="effect-keyword" id="white-effect">{{effect_m.effect_keyword.title}}{{effect_m.effect_keyword_mnt}}</a>
-                                <a class="effect-txt effect-txt">(This Digimon checks {{effect_m.effect_keyword_mnt}} fewer security cards)</a>
+                                <a class="effect-keyword" id="white-effect">{{effect_m.effect_keyword.title}}{{effect_m.effect_keyword_int}}</a>
+                                <a class="effect-txt effect-txt">(This Digimon checks {{effect_m.effect_keyword_int}} fewer security cards)</a>
                             {% elif effect_m.effect_keyword.title == "Recovery (Deck) +" %}
-                                <a class="effect-keyword" id="white-effect">Recovery +{{effect_m.effect_keyword_mnt}} (Deck)</a>
-                                {% if effect_m.effect_keyword_mnt == 1 %}
+                                <a class="effect-keyword" id="white-effect">Recovery +{{effect_m.effect_keyword_int}} (Deck)</a>
+                                {% if effect_m.effect_keyword_int == 1 %}
                                     <a class="effect-txt effect-txt">(Place the top card of your deck on top of your security stack.)</a>
                                 {% else %}
-                                    <a class="effect-txt effect-txt">(Place the top {{effect_m.effect_keyword_mnt}} cards of your deck on top of your security stack.)</a>
+                                    <a class="effect-txt effect-txt">(Place the top {{effect_m.effect_keyword_int}} cards of your deck on top of your security stack.)</a>
                                 {% endif %}
                             {% elif effect_m.effect_keyword.title == "De-Digivolve" %}
-                                <a class="effect-keyword" id="white-effect">{{effect_m.effect_keyword.title}} {{effect_m.effect_keyword_mnt}}</a>
-                                <a class="effect-txt effect-txt">on {{effect_m.effect_keyword_mnt}} of your opponent's Digimon. (Trash up to {{effect_m.effect_keyword_mnt}} cards from the top of one of your opponent's Digimon. If it has no digivolution cards， or becomes a level 3 Digimon, you can't trash any more cards.)</a>
+                                <a class="effect-keyword" id="white-effect">{{effect_m.effect_keyword.title}} {{effect_m.effect_keyword_int}}</a>
+                                <a class="effect-txt effect-txt">on {{effect_m.effect_keyword_int}} of your opponent's Digimon. (Trash up to {{effect_m.effect_keyword_int}} cards from the top of one of your opponent's Digimon. If it has no digivolution cards， or becomes a level 3 Digimon, you can't trash any more cards.)</a>
                             {% else %}
                                 <a class="effect-keyword" id="white-effect">{{effect_m.effect_keyword.title}}</a>
                                 <a class="effect-txt effect-txt">({{effect_m.effect_keyword.desc}})</a>

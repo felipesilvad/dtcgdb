@@ -127,19 +127,20 @@ class Set(models.Model):
     image = models.ImageField(blank=True, upload_to="sets/")
     slug = models.SlugField(null=True)
     release_date = models.DateField(blank=True, null=True)
-    total_unique = models.IntegerField(blank=True, null=True)
-    total_cards = models.IntegerField(blank=True, null=True)
-    produc_image_1 = models.ImageField(blank=True, upload_to="sets/")
-    produc_image_2 = models.ImageField(blank=True, upload_to="sets/")
-    price_1 = models.CharField(max_length=255, blank=True, null=True)
-    price_2 = models.CharField(max_length=255, blank=True, null=True)
-
     SETTYPES = [
         ('Deck', 'Deck'),
         ('Booster', 'Booster'),
         ('Promo', 'Promo'),
     ]
     set_type = models.CharField(choices=SETTYPES, max_length=20, default='Deck')
+
+    color_1 = models.CharField(max_length=255, blank=True, null=True)
+    color_2 = models.CharField(max_length=255, blank=True, null=True)
+
+    total_unique = models.IntegerField(blank=True, null=True)
+    total_cards = models.IntegerField(blank=True, null=True)
+    produc_image_1 = models.ImageField(blank=True, upload_to="sets/")
+    produc_image_2 = models.ImageField(blank=True, upload_to="sets/")
 
     def __str__(self):
         return f'{self.slug} - {self.title}'
