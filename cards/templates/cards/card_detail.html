@@ -338,6 +338,7 @@
                                 <a class="effect-txt effect-txt">({{effect_m.effect_keyword.desc}})</a>
                             {% endif %}
                         {% endif %}
+                        {% if effect_m.effect_txt_2 %}<a class="effect-txt">{{effect_m.effect_txt_2 | safe}}</a>{% endif %}
                     </h6>
                 {% endfor %}
             </div>
