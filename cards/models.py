@@ -111,9 +111,10 @@ class Effect(models.Model):
     effect_txt = models.TextField(blank=True, null=True)
     effect_keyword = models.ForeignKey("EffectKeyword", blank=True, null=True, on_delete=models.CASCADE)
     effect_keyword_int = models.IntegerField(blank=True, null=True)
+    effect_txt_2 = models.TextField(blank=True, null=True)
 
     def __str__(self):
-        return f'{self.effect_type} - {self.effect_blue} - {self.effect_purple} - {self.effect_keyword}'
+        return f'{self.id} | {self.effect_type} - {self.effect_blue} - {self.effect_keyword}'
 
 class EffectKeyword(models.Model):
     title = models.CharField(max_length=100, blank=True, null=True)

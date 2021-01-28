@@ -1081,3 +1081,11 @@ td.t-lv{
     border-radius: 8px;
     padding: 0;
 }
+
+.d-none{
+    display: none;
+}
+
+.form-q{
+    text-align: middle;
+}

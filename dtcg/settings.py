@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'cards',
+    'widget_tweaks',
     'django_filters',
     'bootstrapform',
     'users'

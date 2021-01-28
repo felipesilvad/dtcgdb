@@ -35,7 +35,7 @@ for setcards in sets_total_cards:
         if usercards['card__set__slug'] == setcards['slug']:
             set_percentages[setcards['slug']] = round((usercards['total'] / setcards['total_unique']) * 100, 2)
 
-print(set_percentages['bt2'])
+print(set_percentages)
 # for setcards in sets_total_cards:
 #     for usercards in usercards_set_c:
 #         if usercards['card__set__slug'] == setcards['slug']:

@@ -29,3 +29,12 @@ class Collection(forms.ModelForm):
     class Meta:
         model = UserCard
         fields = ['quantity']
+
+class Collection_Set(forms.ModelForm):
+    class Meta:
+        model = UserCard
+        fields = ['quantity', 'card']
+
+        widgets = {
+            'card': forms.TextInput()
+        }

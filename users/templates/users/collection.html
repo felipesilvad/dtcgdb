@@ -22,8 +22,6 @@
             </div>
         </div>
 
-        {{set_percentages}}
-
         <div class="light-bg mt-3 p-0">
             <nav>
                 <div class="nav nav-tabs d-flex justify-content" id="nav-tab" role="tablist">
@@ -38,12 +36,21 @@
                 {% for set in sets %}
                     {% if set.set_type == "Booster" %}
                         <a href="/collection/{{set.slug}}">
-                            <div class="row c-set" {% if set_percentages.bt1 %}style = "background: linear-gradient(110deg,  {{set.color_1}} {{ set_percentages.bt1 }}%, {{set.color_2}} 0%);"{% endif %}>
+                            <div class="row c-set" {% if set_percentages.bt1 %}style = "background: linear-gradient(110deg,  {{set.color_1}} {% for key, value in set_percentages.items %}{% if key == set.slug %}{{ value }}{% endif %}{% endfor %}{% if set.slug not in set_percentages %}0{% endif %}%, {{set.color_2}} 0%);"{% endif %}>
                                 <div class="col-10">
                                     <h3 class="card-title mb-1">{{set.slug}} - {{ set.title }}</h3>
                                 </div>
                                 <div class="col-2">
-                                    <h3 class="card-title mb-1">{{ set_percentages.bt1 }}%</h3>
+                                    <h3 class="card-title mb-1">
+                                        {% for key, value in set_percentages.items %}
+                                            {% if key == set.slug %}
+                                                {{ value }}%
+                                            {% endif %}
+                                        {% endfor %}
+                                        {% if set.slug not in set_percentages %}
+                                            0.00%
+                                        {% endif %}
+                                    </h3>
                                 </div>
                             </div>
                         </a>
@@ -55,19 +62,21 @@
                     {% for set in sets %}
                         {% if set.set_type == "Deck" %}
                             <a href="/collection/{{set.slug}}">
-                                <div class="row c-set">
-                                    <div class="col-2">
-                                        <img class="set-list-img" src="{{set.image.url}}" />
-                                    </div>
-                                    <div class="col-8">
-                                        <h4 class="c-set__title">{{set.slug}} - {{ set.title }} {{set.set_percent}}</h4>
+                                <div class="row c-set" {% if set_percentages.bt1 %}style = "background: linear-gradient(110deg,  {{set.color_1}} {% for key, value in set_percentages.items %}{% if key == set.slug %}{{ value }}{% endif %}{% endfor %}{% if set.slug not in set_percentages %}0{% endif %}%, {{set.color_2}} 0%);"{% endif %}>
+                                    <div class="col-10">
+                                        <h3 class="card-title mb-1">{{set.slug}} - {{ set.title }}</h3>
                                     </div>
                                     <div class="col-2">
-                                        {% for cards in usercards_set_c %}
-                                            {% if cards.card__set__slug == set.slug %}
-                                                {{cards.total}} / {{set.total_unique}} | {{ cards.total | percent:set.total_unique }}%
+                                        <h3 class="card-title mb-1">
+                                            {% for key, value in set_percentages.items %}
+                                                {% if key == set.slug %}
+                                                    {{ value }}%
+                                                {% endif %}
+                                            {% endfor %}
+                                            {% if set.slug not in set_percentages %}
+                                                0.00%
                                             {% endif %}
-                                        {% endfor %}
+                                        </h3>
                                     </div>
                                 </div>
                             </a>

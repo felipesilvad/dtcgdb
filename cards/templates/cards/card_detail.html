@@ -1,5 +1,6 @@
 {% extends 'base_layout.html' %}
 {% load crispy_forms_tags %}
+{% load widget_tweaks %}
 {% block content %}
 
 {% if card.yuyu_tei %}
@@ -392,7 +393,7 @@
                 {% csrf_token %}
                 <fieldset class="form-group">
                     <legend class="border-bottom mb-4">Add card</legend>
-                    {{ form|crispy }}
+                    {% render_field form.quantity  value=usercards.quantity  %}
                 </fieldset>
                 <div class="form-group">
                     <button class="pilss-cl btn" type="submit">Add</button>

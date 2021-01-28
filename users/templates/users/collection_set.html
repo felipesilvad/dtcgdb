@@ -1,4 +1,6 @@
 {% extends 'base_layout.html' %}
+{% load crispy_forms_tags %}
+{% load widget_tweaks %}
 {% block content %}
     <div class="content">
         <div class="row">
@@ -19,68 +21,56 @@
         <p><h2 class="card-title">{{set_percent}}%</h2></p>
 
         {{usercards}}
-        <div class="card card-body mt-3">
-            <table class="table table-sm table-dark">
-                <tr class="bg-p">
-                    <th class="t-number">Number</th>
-                    <th class="t-rarity">Rarity</th>
-                    <th class="t-name pl-3">Name</th>
-                    <th class="t-pc">Quantity</th>
-                    <th class="t-pc">Parallel</th>
-                    <th class="t-type">Type</th>
-                </tr>               
+
+        
+        <!-- <form method="POST">
+            {% csrf_token %}
                 {% for card in cards %}
-                    <tr>
-                        <td class="color-{{card.color}} t-number">{{card.number}}</td>
-                        <td class="t-rarity">
-                            {% if card.rarity == "SEC" %}
-                                <h6 class="card-rarity-list m-lr-pc-sec">
-                                    {{card.rarity}}
-                                </h6>
-                            {% else %}
-                                <h6 class="card-rarity-list m-lr-pc">
-                                    {{card.rarity}}
-                                </h6>
+                <div class="row">
+                    <div class="col">{{card}}</div>
+                    <div class="col">{% render_field form.card value=card.id %}</div>
+                    <div class="col">
+                        {% for usercard in usercards %}
+                            {% if usercard.card == card %}
+                                {% render_field form.quantity  value=usercard.quantity  %}
                             {% endif %}
-                        </td>
-                        <td class="t-name card-thumb align-middle m-0 p-0 border-g">
-                            <table class="m-0 p-0">
-                                <tr class="m-0 p-0">
-                                    <td class="m-0 p-0 bb-none  pl-2">
-                                        {% if card.in_deck_quantity %}
-                                            <h6 class="font-italic mr-2">{{card.in_deck_quantity}}x</h6>
-                                        {% endif %}
-                                    </td>
-                                    <td class="m-0 p-0 bb-none  pl-2">
-                                        <a href="/cards/{{set.slug}}/{{card.slug}}">
-                                            <div class="hover_img hovertxt">
-                                                <h6 class="font-weight-bold">{{card.title}}</h6>
-                                                <img class="hidden-large" id="list-thumb" src="{% if card.image_en %}{{card.image_en.url}}{% else %}{{card.image_jp.url}}{% endif %}">
-                                            </div>
-                                        </a>
-                                    </td>
-                                </tr>
-                            </table>
-                        </td>
-                        <td class="t-pc order-g align-middle text-center">
-                            {% for usercard in usercards %}
-                                {% if usercard.card == card %}
-                                    <input type="number" name="quantity" value="{{usercard.quantity}}" class="numberinput form-control" id="id_quantity">
-                                {% endif %}
-                            {% endfor %}
-                        </td>
-                        {% if set.set_type == "Booster" %}
-                            <td class="t-rarity border-g">
-                                {% if card.image_parallel %}
-                                    <img class="m-lr-pc" width="20px" src="/static/check.png">
-                                {% endif %}
-                            </td>
-                        {% endif %}
-                        <td class="t-type border-g">{{card.card_type}}</td>
-                    </tr>
+                        {% endfor %}
+                   </div>
+                </div>
                 {% endfor %}
-            </table>
-        </div>
+            <button class="pilss-cl btn" type="submit">Save</button>
+        </form> -->
+        <table>
+        {% for card in cards %}
+        <form method="POST">
+        {% csrf_token %}
+                <tr class="w-100 border-w">
+                    <td class= "color-radial-{{card.color}} align-middle text-center font-weight-bold">{{card.number}}</td>
+                    <td class= "font-weight-bold">{{card.title}}</td>
+                    <div class="d-none">{% render_field form.card value=card.id %}</div>
+                    <td class="t-pc cost-bg-play align-middle text-center font-weight-bold">
+                        {% for usercard in usercards %}
+                            {% if usercard.card == card %}
+                                {% render_field form.quantity class='form-control' value=usercard.quantity %}
+                            {% endif %}
+                        {% endfor %}
+                        {% if card.id not in usercards_ids %}
+                            {% render_field form.quantity %}
+                        {% endif %}
+                    </td>
+                    <td>
+                        <button class="pilss-cl btn" type="submit">
+                            {% if card.id not in usercards_ids %}
+                                Add
+                            {% else %}
+                                Save
+                            {% endif %}
+                        </button>
+                    </td>
+                </tr>
+        </form>
+        {% endfor %}
+    </table>
 
     </div>
 {% endblock %}
