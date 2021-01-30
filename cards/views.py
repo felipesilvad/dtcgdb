@@ -27,11 +27,6 @@ def card_detail(request, card_slug, slug_set):
     previous_card = set.card_set.filter(slug__lt=card_slug).order_by('-slug')
     next_card = set.card_set.filter(slug__gt=card_slug).order_by('slug')
 
-    x=datetime.today()
-    y=x.replace(day=x.day+1, hour=1, minute=0, second=0, microsecond=0)
-    delta_t=y-x
-    secs=delta_t.seconds+1
-
     headers = {"User-Agent": 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36'}
     c = CurrencyRates()
 
@@ -137,11 +132,12 @@ def set_detail(request, slug_set):
     tDigitama = set.card_set.filter(card_type='Digitama').count()
     tTamer = set.card_set.filter(card_type='Tamer').count()
     tOption = set.card_set.filter(card_type='Option').count()
+    tParallel = set.card_set.filter(image_parallel_jp__icontains='.png').count()
 
     return render(request, 'cards/set_detail.html', {'page_title':page_title, 'cards': cards, 'set': set,
     'tRed': tRed, 'tBlue':tBlue, 'tYellow':tYellow, 'tGreen':tGreen, 'tColorless':tColorless,
     'tC':tC, 'tU':tU,'tR':tR, 'tSR':tSR, 'tSEC':tSEC, 'tDigimon':tDigimon, 'tDigitama':tDigitama,
-    'tTamer':tTamer, 'tOption':tOption })
+    'tTamer':tTamer, 'tOption':tOption, 'tParallel':tParallel  })
 
 def cardslist(request):
     page_title = 'Advanced Search'

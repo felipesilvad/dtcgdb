@@ -1,7 +1,118 @@
 {% extends 'base_layout.html' %}
 {% block content %}
 
-<div class="row mt-3">
+<div class="c-set" {% if set.color_1 %}style = "background: {{set.color_1}};"{% endif %}>
+    <h1 class="text-uppercase text-center card-title mb-1">{{set.slug}} - {{set.title}}</h1>
+</div>
+
+{{test }}
+
+<div class="row">
+    <div class="col-lg-2 light-bg m-2">
+        {% if set.produc_image_1 %}
+            <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="booster">
+                <img class="set-thumb mx-auto d-block" src="{{set.produc_image_1.url}}">
+            </div>
+        {% endif %}
+    </div>
+    <!-- <div class="col-lg-2 border-g ">
+        {% if set.set_type == "Deck" %}
+            {% if set.produc_image_1 %}
+                <img class="set-thumb mx-auto d-block" src="{{set.produc_image_1.url}}">
+            {% endif %}
+        {% endif %}
+        {% if set.set_type == "Booster" %}
+            <nav>
+                <div class="nav" id="nav-tab" role="tablist">
+                    {% if set.produc_image_1 %}
+                    <a class="nav-link active" id="booster" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Booster</a>
+                    {% endif %}
+                    {% if set.produc_image_2 %}
+                    <a class="nav-link" id="box" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Box</a>
+                    {% endif %}
+                </div>
+            </nav>
+            <div class="tab-content" id="nav-tabContent">
+                {% if set.produc_image_1 %}
+                <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="booster">
+                    <img class="set-thumb mx-auto d-block" src="{{set.produc_image_1.url}}">
+                </div>
+                {% endif %}
+                {% if set.produc_image_2 %}
+                <div class="tab-pane fade show" id="nav-profile" role="tabpanel" aria-labelledby="box">
+                    <img class="set-thumb mx-auto d-block" src="{{set.produc_image_2.url}}">
+                </div>
+                {% endif %}
+            </div>
+        {% endif %}
+        {% if set.set_type == "Promo" %}
+            <img class="set-thumb mx-auto d-block" src="{{set.produc_image_1.url}}">
+        {% endif %}
+    </div> -->
+    <div class="col-lg light-bg m-2">
+        <div class="row p-0 m-0">
+            <div class="col-lg p-0">
+                <div class="th cardh card-info">Release Date</div>
+                <div class="td cardtd card-info">{{set.release_date}}</div>
+            </div>
+            <div class="col-lg p-0">
+                <div class="th cardh card-info">Set Type</div>
+                <div class="td cardtd card-info">{{set.set_type}}</div>
+            </div>
+            <div class="col-lg p-0">
+                <div class="th cardh card-info">Total Cards</div>
+                <div class="td cardtd card-info">{{set.total_unique}}</div>
+            </div>
+        </div>
+        <div class="row p-0 m-0">
+            <div class="col-lg p-0">
+                <div class="th cardh card-info">Common</div>
+                <div class="td cardtd card-info">x{{tC}}</div>
+            </div>
+            <div class="col-lg p-0">
+                <div class="th cardh card-info">Uncommon</div>
+                <div class="td cardtd card-info">x{{tU}}</div>
+            </div>
+            <div class="col-lg p-0">
+                <div class="th cardh card-info">Rare</div>
+                <div class="td cardtd card-info">x{{tR}}</div>
+            </div>
+            <div class="col-lg p-0">
+                <div class="th cardh card-info">Super Rare</div>
+                <div class="td cardtd card-info">x{{tSR}}</div>
+            </div>
+            <div class="col-lg p-0">
+                <div class="th cardh card-info">Secret Rare</div>
+                <div class="td cardtd card-info">x{{tSEC}}</div>
+            </div>
+        </div>
+    
+        <div class="row p-0 m-0">
+            <div class="col-lg p-0">
+                <div class="th cardh card-info">Digimon</div>
+                <div class="td cardtd card-info">x{{tDigimon}}</div>
+            </div>
+            <div class="col-lg p-0">
+                <div class="th cardh card-info">Digi-Egg</div>
+                <div class="td cardtd card-info">x{{tDigitama}}</div>
+            </div>
+            <div class="col-lg p-0">
+                <div class="th cardh card-info">Tamer</div>
+                <div class="td cardtd card-info">x{{tTamer}}</div>
+            </div>
+            <div class="col-lg p-0">
+                <div class="th cardh card-info">Option</div>
+                <div class="td cardtd card-info">x{{tOption}}</div>
+            </div>
+            <div class="col-lg p-0">
+                <div class="th cardh card-info">Parallel Art</div>
+                <div class="td cardtd card-info">x{{tParallel}}</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- <div class="row mt-3">
     <div class="col-lg">
         {% if set.set_type == "Promo" %}
         <div class="card card-body">
@@ -217,45 +328,44 @@
         </div>
         {% endif %}
     </div>
-</div>
+</div> -->
 
-<div class="row mt-3">
+<h2 class="text-center card-title m-3 txt-shadow dark-bg">Cards List</h2>
+
+<div class="row">
     <div class="col-lg">
         <div class="card card-body">
-            <h2 class="text-uppercase font-italic font-weight-bold">Cards List</h2>
-            <nav>
-                <div class="nav nav-pills m-2" id="nav-tab" role="tablist">
-                    <a class="pilss-cl btn active" id="nav-profile-tab" data-toggle="tab" href="#list" role="tab" aria-controls="list" aria-selected="false">List</a>
-                    <a class="pilss-cl btn" id="nav-home-tab" data-toggle="tab" href="#gallery" role="tab" aria-controls="gallery" aria-selected="true">Gallery</a>
-                </div>
-            </nav>
+            <div class="nav nav-pills mb-3" id="nav-tab" role="tablist">
+                <a class="nav-item c-list-i active" id="nav-profile-tab" data-toggle="tab" href="#list" role="tab" aria-controls="list" aria-selected="false">List</a>
+                <a class="nav-item c-list-i" id="nav-home-tab" data-toggle="tab" href="#gallery" role="tab" aria-controls="gallery" aria-selected="true">Gallery</a>
+            </div>
             <div class="tab-content" id="nav-tabContent">
                 <div class="tab-pane fade show active" id="list" role="tabpanel" aria-labelledby="nav-profile-tab">
-                    <table class="table table-sm table-dark">
+                    <table class="table table-sm list-table">
                         <tr class="bg-p">
-                            <th class="t-number">Number</th>
-                            <th class="t-pc">PC</th>
-                            <th class="t-pc">EC</th>
-                            <th class="t-lv">LV</th>
-                            <th class="t-rarity">Rarity</th>
-                            <th class="t-name pl-3">Name</th>
-                            <th class="t-pc">DP</th>
-                            {% if set.set_type == "Booster" %}<th class="t-pc">Parallel</th>{% endif %}
-                            <th class="t-type">Type</th>
+                            <th class="t-number border-w">No.</th>
+                            <th class="t-pc border-w">PC</th>
+                            <th class="t-pc border-w">EC</th>
+                            <th class="t-lv border-w">LV</th>
+                            <th class="t-name pl-3 border-w">Name</th>
+                            <th class="t-rarity border-w">Rarity</th>
+                            <th class="t-pc border-w">DP</th>
+                            <th class="t-pc border-w">Parallel</th>
+                            <th class="t-type border-w">Type</th>
                         </tr>               
                         {% for card in cards %}
                             <tr>
-                                <td class="color-{{card.color}} t-number">{{card.number}}</td>
-                                <td class="t-pc cost-bg-play align-middle text-center font-weight-bold">
+                                <td class="color-{{card.color}} t-number border-w">{{card.number}}</td>
+                                <td class="t-pc cost-bg-play align-middle text-center font-weight-bold border-w">
                                     {% if card.play_cost is None %}-
                                     {% else %}{{card.play_cost}}
                                     {% endif %}
                                 </td>
                                 {% if card.evolution_cost_1 is None %}
-                                    <td class="align-middle text-center t-pc">-</td>
+                                    <td class="align-middle text-center t-pc border-w">-</td>
                                 {% else %}
                                     {% if card.evolution_cost_2 %}
-                                        <td class="m-0 p-0 t-pc">
+                                        <td class="m-0 p-0 t-pc border-w">
                                             <table clasclass="m-0 p-0">
                                                 <tr class="m-0 p-0">
                                                     <td class="color-radial-{{card.evolution_cost_1_color}} align-middle text-center evo-2-td font-weight-bold">
@@ -268,28 +378,17 @@
                                             </table>
                                         </td>
                                     {% else %}
-                                        <td class="t-pc color-radial-{{card.evolution_cost_1_color}} align-middle text-center font-weight-bold">
+                                        <td class="t-pc border-w color-radial-{{card.evolution_cost_1_color}} align-middle text-center font-weight-bold">
                                             {{card.evolution_cost_1}}
                                         </td>
                                     {% endif %}
                                 {% endif %}
-                                <td class="t-lv font-weight-bold">
+                                <td class="t-lv font-weight-bold border-w">
                                     {% if card.lv is None %}-
                                     {% else %}{{card.lv}}
                                     {% endif %}
                                 </td>
-                                <td class="t-rarity">
-                                    {% if card.rarity == "SEC" %}
-                                        <h6 class="card-rarity-list m-lr-pc-sec">
-                                            {{card.rarity}}
-                                        </h6>
-                                    {% else %}
-                                        <h6 class="card-rarity-list m-lr-pc">
-                                            {{card.rarity}}
-                                        </h6>
-                                    {% endif %}
-                                </td>
-                                <td class="t-name card-thumb align-middle m-0 p-0 border-g">
+                                <td class="t-name t-name-i card-thumb align-middle border-w m-0 p-0">
                                     <table class="m-0 p-0">
                                         <tr class="m-0 p-0">
                                             <td class="m-0 p-0 bb-none  pl-2">
@@ -308,34 +407,43 @@
                                         </tr>
                                     </table>
                                 </td>
-                                <td class="t-pc order-g align-middle text-center">
+                                <td class="t-rarity border-w">
+                                    {% if card.rarity == "SEC" %}
+                                        <h6 class="card-rarity-list m-lr-pc-sec">
+                                            {{card.rarity}}
+                                        </h6>
+                                    {% else %}
+                                        <h6 class="card-rarity-list m-lr-pc">
+                                            {{card.rarity}}
+                                        </h6>
+                                    {% endif %}
+                                </td>
+                                <td class="t-pc order-g align-middle text-center border-w">
                                     {% if card.dp %}{{card.dp}}000
                                     {% else %} - 
                                     {% endif %}
                                 </td>
-                                {% if set.set_type == "Booster" %}
-                                    <td class="t-rarity border-g">
-                                        {% if card.image_parallel %}
-                                            <img class="m-lr-pc" width="20px" src="/static/check.png">
-                                        {% endif %}
-                                    </td>
-                                {% endif %}
-                                <td class="t-type border-g">{{card.card_type}}</td>
+                                <td class="t-rarity border-w">
+                                    {% if card.image_parallel_jp or card.image_parallel_en %}
+                                        <img class="m-lr-pc" width="20px" src="/static/check.png">
+                                    {% endif %}
+                                </td>
+                                <td class="t-type border-w">{{card.card_type}}</td>
                             </tr>
                         {% endfor %}
                     </table>
                 </div>
 
-                <div class="tab-pane fade" id="gallery" role="tabpanel" aria-labelledby="gallery">
+                <div class="tab-pane fade " id="gallery" role="tabpanel" aria-labelledby="gallery">
                     {% if set.set_type == "Promo" %}
                         {% for card in cards %}
                             {% ifchanged card.promo_name %}
                                 {% with var=card.promo_name %}
                                     <h3 class="border-g p-2 m-1 font-italic font-weight-bold" id="{{var}}">{{var}} - {{card.promo_release_date}}</h3>
-                                    <div class="list">
+                                    <div class="list justify-content-center">
                                         {% for card in cards %}
                                             {% if var == card.promo_name %}
-                                                <div class="hover_img">
+                                                <div class="hover_img list justify-content-center">
                                                     <a href="/cards/{{set.slug}}/{{card.slug}}">
                                                         <img class="card-thumb" id="promo-w" src="{% if card.image_en %}{{card.image_en.url}}{% else %}{{card.image_jp.url}}{% endif %}">
                                                         <img class="hidden-large" src="{% if card.image_en %}{{card.image_en.url}}{% else %}{{card.image_jp.url}}{% endif %}">

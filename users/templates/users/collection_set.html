@@ -2,75 +2,183 @@
 {% load crispy_forms_tags %}
 {% load widget_tweaks %}
 {% block content %}
-    <div class="content">
-        <div class="row">
-            <div class="">
-
-            </div>
+<div class="content">
+    <div class="row">
+        <div class="">
 
         </div>
-        <h1 class="card-title">{{set.slug}} - {{ set.title }}</h1>
-
-        
-        <div class="progress">
-            <div class="progress-bar" {% if set_percent %}style = "width: {{set_percent}}%;"{% endif %}>
-            </div>
-        </div>
-
-        <p>{{usercards_c}}/{{set.total_unique}}</p>
-        <p><h2 class="card-title">{{set_percent}}%</h2></p>
-
-        {{usercards}}
-
-        
-        <!-- <form method="POST">
-            {% csrf_token %}
-                {% for card in cards %}
-                <div class="row">
-                    <div class="col">{{card}}</div>
-                    <div class="col">{% render_field form.card value=card.id %}</div>
-                    <div class="col">
-                        {% for usercard in usercards %}
-                            {% if usercard.card == card %}
-                                {% render_field form.quantity  value=usercard.quantity  %}
-                            {% endif %}
-                        {% endfor %}
-                   </div>
-                </div>
-                {% endfor %}
-            <button class="pilss-cl btn" type="submit">Save</button>
-        </form> -->
-        <table>
-        {% for card in cards %}
-        <form method="POST">
-        {% csrf_token %}
-                <tr class="w-100 border-w">
-                    <td class= "color-radial-{{card.color}} align-middle text-center font-weight-bold">{{card.number}}</td>
-                    <td class= "font-weight-bold">{{card.title}}</td>
-                    <div class="d-none">{% render_field form.card value=card.id %}</div>
-                    <td class="t-pc cost-bg-play align-middle text-center font-weight-bold">
-                        {% for usercard in usercards %}
-                            {% if usercard.card == card %}
-                                {% render_field form.quantity class='form-control' value=usercard.quantity %}
-                            {% endif %}
-                        {% endfor %}
-                        {% if card.id not in usercards_ids %}
-                            {% render_field form.quantity %}
-                        {% endif %}
-                    </td>
-                    <td>
-                        <button class="pilss-cl btn" type="submit">
-                            {% if card.id not in usercards_ids %}
-                                Add
-                            {% else %}
-                                Save
-                            {% endif %}
-                        </button>
-                    </td>
-                </tr>
-        </form>
-        {% endfor %}
-    </table>
 
     </div>
+    <h1 class="card-title">{{set.slug}} - {{ set.title }}</h1>
+
+    
+    <div class="progress">
+        <div class="progress-bar" {% if set_percent %}style = "width: {{set_percent}}%;"{% endif %}>
+        </div>
+    </div>
+
+    <p>{{usercards_c}}/{{set.total_unique}}</p>
+    <p><h2 class="card-title">{{set_percent}}%</h2></p>
+
+
+    <div class="card p-2">
+        <table>
+            <tr class="bg-p">
+                <th class="t-number border-w">No.</th>
+                <th class="t-pc border-w">PC</th>
+                <th class="t-pc border-w">EC</th>
+                <th class="t-lv border-w">LV</th>
+                <th class="c-set__title pl-3 border-w">Name</th>
+                <th class="t-pc border-w">EN</th>
+                <th class="t-pc border-w">EN Parallel</th>
+                <th class="t-pc border-w">JP</th>
+                <th class="t-pc border-w">JP Parallel</th>
+                <th class="t-type border-w">Save</th>
+            </tr>  
+            {% for card in cards %}
+                <form method="POST">
+                    {% csrf_token %}
+                    <tr class="border-w">
+                        <td class="color-{{card.color}} t-number border-w">{{card.number}}</td>
+                        <td class="t-pc cost-bg-play align-middle text-center font-weight-bold border-w">
+                            {% if card.play_cost is None %}-
+                            {% else %}{{card.play_cost}}
+                            {% endif %}
+                        </td>
+                        {% if card.evolution_cost_1 is None %}
+                            <td class="align-middle text-center t-pc border-w">-</td>
+                        {% else %}
+                            {% if card.evolution_cost_2 %}
+                                <td class="m-0 p-0 t-pc border-w">
+                                    <table clasclass="m-0 p-0">
+                                        <tr class="m-0 p-0">
+                                            <td class="color-radial-{{card.evolution_cost_1_color}} align-middle text-center evo-2-td font-weight-bold">
+                                                {{card.evolution_cost_1}}
+                                            </td>
+                                            <td class="color-radial-{{card.evolution_cost_2_color}} align-middle text-center evo-2-td font-weight-bold">
+                                                {{card.evolution_cost_2}}
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            {% else %}
+                                <td class="t-pc border-w color-radial-{{card.evolution_cost_1_color}} align-middle text-center font-weight-bold">
+                                    {{card.evolution_cost_1}}
+                                </td>
+                            {% endif %}
+                        {% endif %}
+                        <td class="t-lv font-weight-bold border-w">
+                            {% if card.lv is None %}-
+                            {% else %}{{card.lv}}
+                            {% endif %}
+                        </td>
+                        <td class="c-set__title t-name-i">
+                            <a href="/cards/{{set.slug}}/{{card.slug}}">
+                                {{card.title}}
+                            </a>
+                        </td>
+
+                        <td class="d-none">{% render_field form.card value=card.id %}</td>
+                        <!-- EN -->
+                        <td class="c-set__form cost-bg-play align-middle">
+                            {% for usercard in usercards %}
+                                {% if usercard.card == card %}
+                                    {% if usercard.quantity == 0 %}
+                                        {% render_field form.quantity class='form-n' min=0 value=usercard.quantity %}
+                                    {% else %}
+                                        {% render_field form.quantity class='form-q' min=0 value=usercard.quantity %}
+                                    {% endif %}
+                                {% endif %}
+                            {% endfor %}
+                            {% if card.id not in usercards_ids %}
+                                {% render_field form.quantity class='form-n' min=0 value=0 %}
+                            {% endif %}
+                        </td>
+                        <!-- EN parallel -->
+                        {% if card.image_parallel_jp or card.image_parallel_en %}
+                            <td class="c-set__form cost-bg-play align-middle">
+                                {% for usercard in usercards %}
+                                    {% if usercard.card == card %}
+                                        {% if usercard.quantity_parallel == 0 %}
+                                            {% render_field form.quantity_parallel class='form-n' min=0 value=usercard.quantity_parallel %}
+                                        {% else %}
+                                            {% render_field form.quantity_parallel class='form-q' min=0 value=usercard.quantity_parallel %}
+                                        {% endif %}
+                                    {% endif %}
+                                {% endfor %}
+                                {% if card.id not in usercards_ids %}
+                                    {% render_field form.quantity_parallel class='form-n' min=0 value=0 %}
+                                {% endif %}
+                            </td>
+                        {% else %}
+                            <td class="c-set__form bg-black align-middle">
+                                <div class="d-none">
+                                    {% for usercard in usercards %}
+                                        {% if usercard.card == card %}
+                                            {% render_field form.quantity_parallel class='form-q' min=0 value=0 %}
+                                        {% endif %}
+                                    {% endfor %}
+                                    {% if card.id not in usercards_ids %}
+                                        {% render_field form.quantity_parallel class='form-n' min=0 value=0 %}
+                                    {% endif %}
+                                </div>
+                            </td>
+                        {% endif %}
+                        <!-- JP -->
+                        <td class="c-set__form cost-bg-play align-middle">
+                            {% for usercard in usercards %}
+                                {% if usercard.card == card %}
+                                    {% if usercard.quantity_jp == 0 %}
+                                        {% render_field form.quantity_jp class='form-n' min=0 value=usercard.quantity_jp %}
+                                    {% else %}
+                                        {% render_field form.quantity_jp class='form-q' min=0 value=usercard.quantity_jp %}
+                                    {% endif %}
+                                {% endif %}
+                            {% endfor %}
+                            {% if card.id not in usercards_ids %}
+                                {% render_field form.quantity_jp class='form-n' min=0 value=0 %}
+                            {% endif %}
+                        </td>
+                        <!-- JP Paralell -->
+                        {% if card.image_parallel_jp or card.image_parallel_en %}
+                            <td class="c-set__form cost-bg-play align-middle">
+                                {% for usercard in usercards %}
+                                    {% if usercard.card == card %}
+                                        {% if usercard.quantity_parallel_jp == 0 %}
+                                            {% render_field form.quantity_parallel_jp class='form-n' min=0 value=usercard.quantity_parallel_jp %}
+                                        {% else %}
+                                            {% render_field form.quantity_parallel_jp class='form-q' min=0 value=usercard.quantity_parallel_jp %}
+                                        {% endif %}
+                                    {% endif %}
+                                {% endfor %}
+                                {% if card.id not in usercards_ids %}
+                                    {% render_field form.quantity_parallel_jp class='form-n' min=0 value=0 %}
+                                {% endif %}
+                            </td>
+                        {% else %}
+                            <td class="c-set__form bg-black align-middle">
+                                <div class="d-none">
+                                    {% for usercard in usercards %}
+                                        {% if usercard.card == card %}
+                                            {% render_field form.quantity_parallel_jp class='form-n' min=0 value=0 %}
+                                        {% endif %}
+                                    {% endfor %}
+                                    {% if card.id not in usercards_ids %}
+                                        {% render_field form.quantity_parallel_jp class='form-n' min=0 value=0 %}
+                                    {% endif %}
+                                </div>
+                            </td>
+                        {% endif %}
+                        <td>
+                            <button class="update-btn" type="submit">
+                                Update Card
+                            </button>
+                        </td>
+                    </tr>
+                </form>
+            {% endfor %}
+        </table>
+    </div>
+
+</div>
 {% endblock %}

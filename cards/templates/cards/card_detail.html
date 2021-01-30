@@ -51,23 +51,27 @@
                         {% if card.image_en %}
                             <div class="tab-pane fade show active" id="en_standard" role="tabpanel">
                                 <img class="img-fluid mx-auto d-block card-img-main" src="{{card.image_en.url}}">
-                                <div class="col-lg p-0 d-inline-flex card-bg">
-                                    <div class="th cardh card-info flex-fill center rounded">Artist</div>
-                                    <div class="td cardtd card-info flex-fill rounded">
-                                        <a href="/cards/search?artist={{card.artist}}#results">{{card.artist}}</a>
+                                {% if card.artist %}
+                                    <div class="col-lg p-0 d-inline-flex card-bg">
+                                        <div class="th cardh card-info flex-fill center rounded">Artist</div>
+                                        <div class="td cardtd card-info flex-fill rounded">
+                                            <a href="/cards/search?artist={{card.artist}}#results">{{card.artist}}</a>
+                                        </div>
                                     </div>
-                                </div>
+                                {% endif %}
                             </div>
                         {% endif %}
                         {% if card.image_parallel_en %}
                             <div class="tab-pane fade" id="en_parallel" role="tabpanel">
                                 <img class="img-fluid mx-auto d-block card-img-main" src="{{card.image_parallel_en.url}}">
-                                <div class="col-lg p-0 d-inline-flex card-bg">
-                                    <div class="th cardh card-info flex-fill center rounded">Artist</div>
-                                    <div class="td cardtd card-info flex-fill rounded">
-                                        <a href="/cards/search?artist={{card.artist}}#results">{{card.artist_parallel}}</a>
+                                {% if card.artist_parallel %}
+                                    <div class="col-lg p-0 d-inline-flex card-bg">
+                                        <div class="th cardh card-info flex-fill center rounded">Artist</div>
+                                        <div class="td cardtd card-info flex-fill rounded">
+                                            <a href="/cards/search?artist={{card.artist_parallel}}#results">{{card.artist_parallel}}</a>
+                                        </div>
                                     </div>
-                                </div>
+                                {% endif %}
                             </div>
                         {% endif %}
                     </div>
@@ -87,25 +91,29 @@
 
                     <div class="tab-content" id="nav-tabContent">
                         {% if card.image_jp %}
-                        <div class="tab-pane fade show active" id="jp_standard" role="tabpanel">
-                            <img class="img-fluid mx-auto d-block card-img-main" src="{{card.image_jp.url}}">
-                            <div class="col-lg p-0 d-inline-flex card-bg">
-                                <div class="th cardh card-info flex-fill center rounded">Artist</div>
-                                <div class="td cardtd card-info flex-fill rounded">
-                                    <a href="/cards/search?artist={{card.artist}}#results">{{card.artist}}</a>
-                                </div>
+                            <div class="tab-pane fade show active" id="jp_standard" role="tabpanel">
+                                <img class="img-fluid mx-auto d-block card-img-main" src="{{card.image_jp.url}}">
+                                {% if card.artist %}
+                                    <div class="col-lg p-0 d-inline-flex card-bg">
+                                        <div class="th cardh card-info flex-fill center rounded">Artist</div>
+                                        <div class="td cardtd card-info flex-fill rounded">
+                                            <a href="/cards/search?artist={{card.artist}}#results">{{card.artist}}</a>
+                                        </div>
+                                    </div>
+                                {% endif %}
                             </div>
-                        </div>
                         {% endif %}
                         {% if card.image_parallel_jp %}
                             <div class="tab-pane fade" id="jp_parallel" role="tabpanel">
                                 <img class="img-fluid mx-auto d-block card-img-main" src="{{card.image_parallel_jp.url}}">
-                                <div class="col-lg p-0 d-inline-flex card-bg">
-                                    <div class="th cardh card-info flex-fill center rounded">Artist</div>
-                                    <div class="td cardtd card-info flex-fill rounded">
-                                        <a href="/cards/search?artist={{card.artist}}#results">{{card.artist_parallel}}</a>
+                                {% if card.artist_parallel %}
+                                    <div class="col-lg p-0 d-inline-flex card-bg">
+                                        <div class="th cardh card-info flex-fill center rounded">Artist</div>
+                                        <div class="td cardtd card-info flex-fill rounded">
+                                            <a href="/cards/search?artist={{card.artist_parallel}}#results">{{card.artist_parallel}}</a>
+                                        </div>
                                     </div>
-                                </div>
+                                {% endif %}
                             </div>
                         {% endif %}
                     </div>
@@ -113,63 +121,6 @@
             {% endif %}
             
         </div>
-
-        <!-- <nav>
-            <div class="nav nav-pills" id="nav-tab" role="tablist">
-                {% if card.image_en %}
-                    {% if card.translated == False %}
-                        <a class="nav-item nav-link active" id="en" data-toggle="tab" href="#en" role="tab" aria-controls="en" aria-selected="true">English</a>
-                    {% else %}
-                        <a class="nav-item nav-link active" id="en" data-toggle="tab" href="#en" role="tab" aria-controls="en" aria-selected="true">Translated</a>
-                    {% endif %}
-                {% endif %}
-                {% if card.image_jp %}
-                    <a class="nav-item nav-link {% if not card.image_en %} active {% endif %}" id="jp" data-toggle="tab" href="#jp" role="tab" aria-controls="jp" aria-selected="false">Japanese</a>
-                {% endif %}
-            </div>
-        </nav>
-        <div class="card-bg border-w">
-            <div class="tab-content" id="nav-tabContent">
-                {% if card.image_en %}
-                    <div class="nav nav-pills" id="nav-tab" role="tablist">
-                        {% if card.image_en %}
-                            <a class="nav-item nav-link active " id="jp" data-toggle="tab" href="#jp" role="tab" aria-controls="jp" aria-selected="false">Standard</a>
-                        {% endif %}
-                        {% if card.image_en %}
-                            <a class="nav-item nav-link" id="jp" data-toggle="tab" href="#jp" role="tab" aria-controls="jp" aria-selected="false">Parallel</a>
-                        {% endif %}
-                    </div>
-                    <div class="tab-pane fade show active" id="en" role="tabpanel" aria-labelledby="en">
-                        <img class="img-fluid mx-auto d-block card-img-main" src="{{card.image_en.url}}">
-                    </div>
-                    {% if card.image_parallel_en %}
-                        <div class="tab-pane fade" id="parallel" role="tabpanel" aria-labelledby="jp">
-                            <img class="img-fluid mx-auto d-block card-img-main" src="{{card.image_parallel_jp.url}}">
-                        </div>
-                    {% endif %}
-                {% endif %}
-                {% if card.image_jp.url %}
-                    <div class="tab-pane fade {% if not card.image_en %} show active {% endif %}" id="jp" role="tabpanel" aria-labelledby="jp">
-                        <img class="img-fluid mx-auto d-block card-img-main" src="{{card.image_jp.url}}">
-                    </div>
-                {% endif %}
-                {% if card.image_parallel_jp %}
-                    <div class="tab-pane fade" id="parallel" role="tabpanel" aria-labelledby="jp">
-                        <img class="img-fluid mx-auto d-block card-img-main" src="{{card.image_parallel_jp.url}}">
-                    </div>
-                {% endif %}
-            </div>
-            <table>
-                <tr>
-                    <td>Artist:</td>
-                    <td><a href="/cards/search?artist={{card.artist}}#results">{{card.artist}}</a></td>
-                </tr>
-            </table>
-        </div> -->
-
-
-
-
     </div>
 
 

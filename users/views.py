@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
-from django.db.models import Sum, Count
+from django.db.models import Sum, Count, F
 from django.contrib.auth.decorators import login_required
 from .forms import userRegisterForm, UserUpdateForm, ProfileUpdateForm, Collection, Collection_Set
 from cards.models import Card, Set
@@ -88,7 +88,9 @@ def collection_set(request, slug_set):
     set = Set.objects.get(slug=slug_set)
     cards = set.card_set.all().order_by('slug')
     usercards = UserCard.objects.all().filter(profile=request.user.profile).filter(card__set=set)
-    usercards_c = usercards.filter(quantity__gt=0).count()
+    usercards_c = usercards.annotate(total=Sum(F('quantity') + F('quantity_parallel') + F('quantity_jp')  + F('quantity_parallel_jp'))).filter(total__gt=0).count()
+
+    # usercards_c = usercards.filter(quantity__gt=0).count()
     cards_c = cards.count()
     set_percent = round((usercards_c / cards_c)  * 100, 2)
     

@@ -25,6 +25,10 @@ class UserCard(models.Model):
     card = models.ForeignKey(Card, on_delete=models.CASCADE)
     profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
     quantity = models.IntegerField(blank=True, null=True)
+    quantity_parallel = models.IntegerField(blank=True, null=True)
+    quantity_jp = models.IntegerField(blank=True, null=True)
+    quantity_parallel_jp = models.IntegerField(blank=True, null=True)
+
 
     def __str__(self):
         return f'{self.profile} - {self.card}'

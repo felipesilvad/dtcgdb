@@ -33,7 +33,8 @@ class Collection(forms.ModelForm):
 class Collection_Set(forms.ModelForm):
     class Meta:
         model = UserCard
-        fields = ['quantity', 'card']
+        fields = ['quantity', 'quantity_parallel', 'quantity_jp', 'quantity_parallel_jp', 'card']
+        quantity = forms.IntegerField(widget=forms.HiddenInput(), initial=123)
 
         widgets = {
             'card': forms.TextInput()
