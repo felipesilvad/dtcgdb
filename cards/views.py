@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.db.models import Q
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib import messages
@@ -85,22 +85,25 @@ def card_detail(request, card_slug, slug_set):
     if usd_res != []:
         usd_average = round(sum(usd_res) / len(usd_res), 2)
 
-    usercards=None
-    usercards_count=None
+    usercard=None
+    usercard_sc = 0
+    usercard_pc = 0
     if request.user.is_authenticated:
-        usercards = UserCard.objects.all().filter(profile=request.user.profile).filter(card=card).first()
-        usercards_count = UserCard.objects.all().filter(profile=request.user.profile).filter(card=card).count()
+        usercard = UserCard.objects.all().filter(profile=request.user.profile).filter(card=card).first()
+        # usercard_sc = usercard.annotate(total=Sum(F('quantity') + F('quantity_jp'))).filter(total__gt=0).count()
+        # usercard_pc = usercard.annotate(total=Sum(F('quantity_parallel') + F('quantity_parallel_jp'))).filter(total__gt=0).count()
+        if usercard != None:
+            usercard_sc = usercard.quantity + usercard.quantity_jp
+            usercard_pc = usercard.quantity_parallel + usercard.quantity_parallel_jp
 
     if request.method == 'POST':
-        form = Collection(request.POST, instance=usercards)
+        form = Collection(request.POST, instance=usercard)
         if form.is_valid():
             form.instance.profile = request.user.profile
             form.instance.card = card
             form.save()
-            if usercards_count == 0:
-                messages.success(request, 'Card added to Collection')
-            else:
-                messages.success(request, 'Card Updated')
+            messages.success(request, 'Collection Updated')
+            return redirect(request.META.get('HTTP_REFERER', 'redirect_if_referer_not_found'))
     else:
         form = Collection()
 
@@ -110,7 +113,7 @@ def card_detail(request, card_slug, slug_set):
         'jpy_yuyu_tei':jpy_yuyu_tei, 'jpy_suruga_ya':jpy_suruga_ya, 'jpy_amazon_jp':jpy_amazon_jp, 'usd_price_ebay':usd_price_ebay,
         'usd_yuyu_tei':usd_yuyu_tei, 'usd_suruga_ya':usd_suruga_ya, 'usd_amazon_jp':usd_amazon_jp, 'jpy_price_ebay':jpy_price_ebay,
         'usd_average':usd_average,
-        'form': form, 'usercards':usercards
+        'form': form, 'usercard':usercard , 'usercard_sc':usercard_sc, 'usercard_pc':usercard_pc
     })
 
 

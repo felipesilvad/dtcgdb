@@ -32,6 +32,9 @@ body {
 .hide-desk{
     display: none!important;
 }
+.Orbitron {
+    font-family: 'Orbitron', sans-serif;
+}
 
 .nav-header {
     color: #fff;
@@ -1169,6 +1172,10 @@ td.t-lv{
     box-shadow: 1px 1px black;
 }
 
+.update-btn:hover{
+    color: #BB86FC;
+}
+
 .c-list-i {
     font-family: 'Orbitron', sans-serif;
     display: block;
@@ -1193,4 +1200,52 @@ td.t-lv{
 
 .txt-shadow {
     text-shadow: 2px 2px 2px #000000;
+}
+
+.add-card__bg {
+    margin: 3px;
+    padding: 5px;
+    border-radius: 4px;
+    border: 1px solid #858585;
+    background-color: rgba(91,92,95,0.7)
+}
+
+.add-card__h{
+    font-weight: bold;
+    font-size: 18px;
+    text-transform: uppercase;
+}
+
+.modal {
+    color: black;
+}
+
+.modal-footer {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    -ms-flex-align: center;
+    align-items: center;
+    -ms-flex-pack: end;
+    justify-content: flex-end;
+    padding: .75rem;
+    border-top: none;
+    border-bottom-right-radius: calc(.3rem - 1px);
+    border-bottom-left-radius: calc(.3rem - 1px);
+}
+
+.close {
+    float: right;
+    font-size: 1.5rem;
+    font-weight: 700;
+    line-height: 1;
+    color: #fff;
+    text-shadow: 0 1px 0 #000;
+    opacity: .5;
+}
+
+.close:hover {
+    color: #fff;
+    opacity: .7;
 }

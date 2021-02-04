@@ -28,13 +28,13 @@ class ProfileUpdateForm(forms.ModelForm):
 class Collection(forms.ModelForm):
     class Meta:
         model = UserCard
-        fields = ['quantity']
+        fields = ['quantity', 'quantity_parallel', 'quantity_jp', 'quantity_parallel_jp']
 
 class Collection_Set(forms.ModelForm):
     class Meta:
         model = UserCard
         fields = ['quantity', 'quantity_parallel', 'quantity_jp', 'quantity_parallel_jp', 'card']
-        quantity = forms.IntegerField(widget=forms.HiddenInput(), initial=123)
+        quantity = forms.IntegerField(widget=forms.HiddenInput())
 
         widgets = {
             'card': forms.TextInput()

@@ -86,7 +86,7 @@ class Effect(models.Model):
         ('Main', 'Main'),
         ('Inheritable', 'Inheritable'),
     ]
-    effect_type = models.CharField(choices=EFFECT_TYPES, max_length=100, blank=True, null=True)
+    effect_type = models.CharField(choices=EFFECT_TYPES, max_length=100, default='Main')
     BLUE_EFFECTS = [
         ("Main", "Main"),
         ("Security", "Security"),
