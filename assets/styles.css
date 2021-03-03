@@ -707,6 +707,11 @@ img.hidden-large:hover::after {
     text-align: center;
 }
 
+.t-number-home{
+    width: 28%;
+    text-align: center;
+}
+
 .t-name {
     width: 60%;
 }

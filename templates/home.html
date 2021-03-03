@@ -3,27 +3,56 @@
 
 <div class="container">
     <div class="row">
-        <div class="col">
-            <div class="light-bg mt-2">
-                <h2 class="font-italic font-weight-bold d-flex justify-content-center">Lastest News</h2>
-                <div class="tab-pane fade show active" id="gallery" role="tabpanel" aria-labelledby="gallery">
-                    <div class="list d-flex justify-content-left">
-                    {% for new in news %}
-                        <div class="border-g news-home p-2">
+        <div class="col-9 p-1">
+            <div class="light-bg">
+                {% for new in news %}
+                    <div class="row border-g p-2">
+                        <div class="col-4">
                             <a href="/news/{{new.id}}/">
                                 <img class="news-home-img mx-auto d-block" src="{{new.thumbnail.url}}">
-                                <h4>{{new.title}}<h4>
                             </a>
                         </div>
+                        <div class="col p-1">
+                            <a href="/news/{{new.id}}/">
+                                <h4 class="card-title">{{new.title}}<h4>
+                            </a>
+                            <div>
+                                <h6 class="newscontent">{{new.content | safe}}</h6>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="col-3 p-1">
+            <div class="light-bg">
+                <h6 class="card-title">Last Revealed Cards</h6>
+                <!-- {% for card in new_cards %}
+                    <div class="hover_img hover_img-home">
+                        <a href="/cards/{{card.set.slug}}/{{card.slug}}">
+                            {% if card.new_parallel == True %}
+                                <img class="card-thumb home-w" src="{% if card.image_parallel %}{{card.image_parallel.url}}{% else %}{{card.image_jp.url}}{% endif %}">
+                            {% else %}
+                                <img class="card-thumb home-w" src="{% if card.image_en %}{{card.image_en.url}}{% else %}{{card.image_jp.url}}{% endif %}">
+                            {% endif %}
+                            <img class="hidden-large" src="{% if card.image_en %}{{card.image_en.url}}{% else %}{{card.image_jp.url}}{% endif %}">
+                        </a>
+                    </div>
+                {% endfor %} -->
+                <table class="table table-sm list-table ">
+                    {% for card in new_cards %}
+                            <tr class="bg-p">
+                                <td class="color-{{card.color}} t-number-home border-w">{{card.number}}</td>
+                                <td class="border-w"><a href="/cards/{{card.set.slug}}/{{card.slug}}">{{card.title}}</a></td>
+                            </tr>
                     {% endfor %}
-                </div>
+                </table>
             </div>
         </div>
     </div>
    
 
-
-    <div class="row">
+    <!-- <div class="row">
         <div class="col">
             <div class="light-bg m-3">
                 <h2 class="font-italic font-weight-bold d-flex justify-content-center">Last Revealed Cards</h2>
@@ -65,7 +94,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
 
 </div>
 
