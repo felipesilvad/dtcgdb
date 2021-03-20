@@ -1,5 +1,4 @@
 from datetime import datetime
-from apscheduler.schedulers.background import BackgroundScheduler
 from prices import prices
 from cards.models import Card
 
