@@ -29,6 +29,12 @@ body {
     width: 25px;
 }
 
+.search-l{
+  text-align: center;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
 .hide-desk{
     display: none!important;
 }

@@ -1,0 +1,282 @@
+{% extends 'base_layout.html' %}
+{% block content %}
+{% load bootstrap %}
+
+{{usercards}}
+<div class="card card-body">
+  <form method="get">
+    <div class="form-group">
+      <div class="row">
+        <div class="col-lg-3 pl-1 pr-1">
+          <div class="th cardh card-info"><label class="control-label" for="id_title">Card Title</label></div>
+          <input value="{{request.GET.title}}" type="text" name="title" class=" form-control" id="id_title">
+        </div>
+        <div class="col-lg-2 pl-1 pr-1">
+          <div class="th cardh card-info"><label class="control-label" for="id_title">Card Number</label></div>
+          <input value="{{request.GET.number}}" type="text" name="number" class=" form-control" id="id_number">
+        </div>
+        <div class="col-lg pl-1 pr-1">
+          <div class="th cardh card-info"><label class="control-label" for="id_title">Card Type</label></div>
+          <div>
+              <select name="card_type" class="form-control" id="id_card_type">
+                  <option value="">---------</option>
+                  <option value="Digimon" {% if request.GET.card_type == 'Digimon' %} selected {% endif %}>Digimon</option>
+                  <option value="Digitama" {% if request.GET.card_type == 'Digitama' %} selected {% endif %}>Digitama</option>
+                  <option value="Tamer" {% if request.GET.card_type == 'Tamer' %} selected {% endif %}>Tamer</option>
+                  <option value="Option" {% if request.GET.card_type == 'Option' %} selected {% endif %}>Option</option>
+              </select>
+          </div>
+        </div>
+        <div class="col-lg pl-1 pr-1">
+          <div class="th cardh card-info"><label class="control-label" for="id_title">Color</label></div>
+          <div>
+            <select name="color" class="form-control" id="id_color">
+              <option value="">---------</option>
+              <option value="Red" {% if request.GET.color == 'Red' %} selected {% endif %}>Red</option>
+              <option value="Blue" {% if request.GET.color == 'Blue' %} selected {% endif %}>Blue</option>
+              <option value="Yellow" {% if request.GET.color == 'Yellow' %} selected {% endif %}>Yellow</option>
+              <option value="Green" {% if request.GET.color == 'Green' %} selected {% endif %}>Green</option>
+              <option value="Black" {% if request.GET.color == 'Black' %} selected {% endif %}>Black</option>
+              <option value="Purple" {% if request.GET.color == 'Purple' %} selected {% endif %}>Purple</option>
+              <option value="Colorless" {% if request.GET.color == 'Colorless' %} selected {% endif %}>Colorless</option>
+            </select>
+          </div>
+        </div> 
+        <div class="col-lg pl-1 pr-1">
+          <div class="th cardh card-info"><label class="control-label" for="id_title">Rarity</label></div>
+          <select name="rarity" class="form-control" id="id_rarity">
+            <option value="">---------</option>
+            <option value="C" {% if request.GET.rarity == 'C' %} selected {% endif %}>Common</option>
+            <option value="U" {% if request.GET.rarity == 'U' %} selected {% endif %}>Uncommon</option>
+            <option value="R" {% if request.GET.rarity == 'R' %} selected {% endif %}>Rare</option>
+            <option value="SR" {% if request.GET.rarity == 'SR' %} selected {% endif %}>Super Rare</option>
+            <option value="SEC" {% if request.GET.rarity == 'SEC' %} selected {% endif %}>Secret Rare</option>
+            <option value="P" {% if request.GET.rarity == 'P' %} selected {% endif %}>Promo</option>
+          </select>
+        </div>
+      </div>
+    
+      <!-- <div class="row mt-1">
+        <div class="col-lg-4">
+          <h6 class="search-l"><label class="control-label" for="id_title">Set Type</label></h6>
+          <input value="{{request.GET.title}}" type="text" name="title" class=" form-control" id="id_title">
+        </div>
+        <div class="col-lg-2">
+          <h6 class="search-l"><label class="control-label" for="id_title">Set</label></h6>
+          <div class=" ">
+            <select name="set" class=" form-control" id="id_set"  b="request.GET.set">
+              <option value="">---------</option>
+              {% for set in sets %}
+                  <option class="text-uppercase" value="{{set.id}}" {% if request.GET.set|add:"0" == set.id %} selected {% endif %}>{{set}}</option>
+              {% endfor %}
+            </select>
+          </div>
+        </div>
+      </div> -->
+
+    </div>
+
+    <a class="text-uppercase">{{myFilter.form.o|bootstrap}}</a>
+    <button class="btn btn-primary" type="submit">Filter</button>
+    <a class="ml-5 btn btn-danger" href="/cards/search">Reset</a>
+  </form>
+</div>
+<br>
+
+<div class="row mt-3">
+    <div class="col-md">
+        <div class="card card-body">
+            <nav>
+                <nav aria-label="Page navigation example">
+                    <a id="results">Results: {{cards_count}}</a>
+                    <ul class="pagination justify-content-center">
+                        {% if page_obj.has_previous %}
+                            <li class="page-item">
+                                <a class="page-link" 
+                                    href="?page=1{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}{% if request.GET.title %}&title={{ request.GET.title }}{% endif %}{% if request.GET.number %}&number={{ request.GET.number }}{% endif %}{% if request.GET.artist %}&artist={{ request.GET.artist }}{% endif %}{% if request.GET.dp_min %}&dp_min={{ request.GET.dp_min }}{% endif %}{% if request.GET.dp_max %}&dp_max={{ request.GET.dp_max }}{% endif %}{% if request.GET.dp_min %}&dp_min={{ request.GET.dp_min }}{% endif %}{% if request.GET.dp_max %}&dp_max={{ request.GET.dp_max }}{% endif %}{% if request.GET.lv_min %}&lv_min={{ request.GET.lv_min }}{% endif %}{% if request.GET.lv_max %}&lv_max={{ request.GET.lv_max }}{% endif %}{% if request.GET.play_cost_min %}&play_cost_min={{ request.GET.play_cost_min }}{% endif %}{% if request.GET.play_cost_max %}&play_cost_max={{ request.GET.play_cost_max }}{% endif %}{% if request.GET.evolution_cost_1 %}&evolution_cost_1={{ request.GET.evolution_cost_1 }}{% endif %}{% if request.GET.set %}&set={{ request.GET.set }}{% endif %}{% if request.GET.card_type %}&card_type={{ request.GET.card_type }}{% endif %}{% if request.GET.color %}&color={{ request.GET.color }}{% endif %}{% if request.GET.rarity %}&rarity={{ request.GET.rarity }}{% endif %}{% if request.GET.digimon %}&digimon={{ request.GET.digimon }}{% endif %}{% if request.GET.effect_keyword %}&effect_keyword={{ request.GET.effect_keyword }}{% endif %}{% if request.GET.effect %}&effect={{ request.GET.effect }}{% endif %}{% if request.GET.o %}&o={{ request.GET.o }}{% endif %}">
+                                    &laquo; First
+                                </a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ page_obj.previous_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}{% if request.GET.title %}&title={{ request.GET.title }}{% endif %}{% if request.GET.number %}&number={{ request.GET.number }}{% endif %}{% if request.GET.artist %}&artist={{ request.GET.artist }}{% endif %}{% if request.GET.dp_min %}&dp_min={{ request.GET.dp_min }}{% endif %}{% if request.GET.dp_max %}&dp_max={{ request.GET.dp_max }}{% endif %}{% if request.GET.dp_min %}&dp_min={{ request.GET.dp_min }}{% endif %}{% if request.GET.dp_max %}&dp_max={{ request.GET.dp_max }}{% endif %}{% if request.GET.lv_min %}&lv_min={{ request.GET.lv_min }}{% endif %}{% if request.GET.lv_max %}&lv_max={{ request.GET.lv_max }}{% endif %}{% if request.GET.play_cost_min %}&play_cost_min={{ request.GET.play_cost_min }}{% endif %}{% if request.GET.play_cost_max %}&play_cost_max={{ request.GET.play_cost_max }}{% endif %}{% if request.GET.evolution_cost_1 %}&evolution_cost_1={{ request.GET.evolution_cost_1 }}{% endif %}{% if request.GET.set %}&set={{ request.GET.set }}{% endif %}{% if request.GET.card_type %}&card_type={{ request.GET.card_type }}{% endif %}{% if request.GET.color %}&color={{ request.GET.color }}{% endif %}{% if request.GET.rarity %}&rarity={{ request.GET.rarity }}{% endif %}{% if request.GET.digimon %}&digimon={{ request.GET.digimon }}{% endif %}{% if request.GET.effect_keyword %}&effect_keyword={{ request.GET.effect_keyword }}{% endif %}{% if request.GET.effect %}&effect={{ request.GET.effect }}{% endif %}{% if request.GET.o %}&o={{ request.GET.o }}{% endif %}">
+                                Previous
+                                </a>
+                            </li>
+                        {% endif %}
+                        <li class="page-item disabled">
+                            <span class="page-link">
+                                Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+                            </span>
+                        </li>
+                        {% if page_obj.has_next %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ page_obj.next_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}{% if request.GET.title %}&title={{ request.GET.title }}{% endif %}{% if request.GET.number %}&number={{ request.GET.number }}{% endif %}{% if request.GET.artist %}&artist={{ request.GET.artist }}{% endif %}{% if request.GET.dp_min %}&dp_min={{ request.GET.dp_min }}{% endif %}{% if request.GET.dp_max %}&dp_max={{ request.GET.dp_max }}{% endif %}{% if request.GET.dp_min %}&dp_min={{ request.GET.dp_min }}{% endif %}{% if request.GET.dp_max %}&dp_max={{ request.GET.dp_max }}{% endif %}{% if request.GET.lv_min %}&lv_min={{ request.GET.lv_min }}{% endif %}{% if request.GET.lv_max %}&lv_max={{ request.GET.lv_max }}{% endif %}{% if request.GET.play_cost_min %}&play_cost_min={{ request.GET.play_cost_min }}{% endif %}{% if request.GET.play_cost_max %}&play_cost_max={{ request.GET.play_cost_max }}{% endif %}{% if request.GET.evolution_cost_1 %}&evolution_cost_1={{ request.GET.evolution_cost_1 }}{% endif %}{% if request.GET.set %}&set={{ request.GET.set }}{% endif %}{% if request.GET.card_type %}&card_type={{ request.GET.card_type }}{% endif %}{% if request.GET.color %}&color={{ request.GET.color }}{% endif %}{% if request.GET.rarity %}&rarity={{ request.GET.rarity }}{% endif %}{% if request.GET.digimon %}&digimon={{ request.GET.digimon }}{% endif %}{% if request.GET.effect_keyword %}&effect_keyword={{ request.GET.effect_keyword }}{% endif %}{% if request.GET.effect %}&effect={{ request.GET.effect }}{% endif %}{% if request.GET.o %}&o={{ request.GET.o }}{% endif %}">Next</a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}{% if request.GET.title %}&title={{ request.GET.title }}{% endif %}{% if request.GET.number %}&number={{ request.GET.number }}{% endif %}{% if request.GET.artist %}&artist={{ request.GET.artist }}{% endif %}{% if request.GET.dp_min %}&dp_min={{ request.GET.dp_min }}{% endif %}{% if request.GET.dp_max %}&dp_max={{ request.GET.dp_max }}{% endif %}{% if request.GET.dp_min %}&dp_min={{ request.GET.dp_min }}{% endif %}{% if request.GET.dp_max %}&dp_max={{ request.GET.dp_max }}{% endif %}{% if request.GET.lv_min %}&lv_min={{ request.GET.lv_min }}{% endif %}{% if request.GET.lv_max %}&lv_max={{ request.GET.lv_max }}{% endif %}{% if request.GET.play_cost_min %}&play_cost_min={{ request.GET.play_cost_min }}{% endif %}{% if request.GET.play_cost_max %}&play_cost_max={{ request.GET.play_cost_max }}{% endif %}{% if request.GET.evolution_cost_1 %}&evolution_cost_1={{ request.GET.evolution_cost_1 }}{% endif %}{% if request.GET.set %}&set={{ request.GET.set }}{% endif %}{% if request.GET.card_type %}&card_type={{ request.GET.card_type }}{% endif %}{% if request.GET.color %}&color={{ request.GET.color }}{% endif %}{% if request.GET.rarity %}&rarity={{ request.GET.rarity }}{% endif %}{% if request.GET.digimon %}&digimon={{ request.GET.digimon }}{% endif %}{% if request.GET.effect_keyword %}&effect_keyword={{ request.GET.effect_keyword }}{% endif %}{% if request.GET.effect %}&effect={{ request.GET.effect }}{% endif %}{% if request.GET.o %}&o={{ request.GET.o }}{% endif %}">Last &raquo;</a>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </nav>
+                <div class="nav nav-pills m-2" id="nav-tab" role="tablist">
+                    <a class="pilss-cl active" id="nav-home-tab" data-toggle="tab" href="#gallery" role="tab" aria-controls="gallery" aria-selected="true">Gallery</a>
+                    <a class="pilss-cl" id="nav-profile-tab" data-toggle="tab" href="#list" role="tab" aria-controls="list" aria-selected="false">List</a>
+                </div>
+            </nav>
+            <div class="tab-content" id="nav-tabContent">
+                <div class="tab-pane fade show active" id="gallery" role="tabpanel" aria-labelledby="gallery">
+                    <div class="list">
+                        {% for card in page_obj %}
+                            <div class="hover_img">
+                                <a href="/cards/{{card.set.slug}}/{{card.slug}}">
+                                    <img class="card-thumb" src="{% if card.image_en %}{{card.image_en.url}}{% else %}{{card.image_jp.url}}{% endif %}">
+                                    <img class="hidden-large" src="{% if card.image_en %}{{card.image_en.url}}{% else %}{{card.image_jp.url}}{% endif %}">
+                                </a>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="list" role="tabpanel" aria-labelledby="nav-profile-tab">
+                    <table class="table table-sm table-dark">
+                        <tr class="bg-p">
+                            <th class="t-number">Number</th>
+                            <th class="t-pc">PC</th>
+                            <th class="t-pc">EC</th>
+                            <th class="t-lv">LV</th>
+                            <th class="t-rarity">Rarity</th>
+                            <th class="t-name pl-3">Name</th>
+                            <th class="t-pc">DP</th>
+                            <th class="t-pc">Parallel</th>
+                            <th class="t-type">Type</th>
+                        </tr>               
+                        {% for card in page_obj %}
+                            <tr>
+                                <td class="color-{{card.color}} t-number">{{card.number}}</td>
+                                <td class="t-pc cost-bg-play align-middle text-center font-weight-bold">
+                                    {% if card.play_cost is None %}-
+                                    {% else %}{{card.play_cost}}
+                                    {% endif %}
+                                </td>
+                                {% if card.evolution_cost_1 is None %}
+                                    <td class="t-pc align-middle text-center">-</td>
+                                {% else %}
+                                    {% if card.evolution_cost_2 %}
+                                        <td class="t-pc m-0 p-0">
+                                            <table clasclass="m-0 p-0">
+                                                <tr class="m-0 p-0">
+                                                    <td class="color-radial-{{card.evolution_cost_1_color}} align-middle text-center evo-2-td font-weight-bold">
+                                                        {{card.evolution_cost_1}}
+                                                    </td>
+                                                    <td class="color-radial-{{card.evolution_cost_2_color}} align-middle text-center evo-2-td font-weight-bold">
+                                                        {{card.evolution_cost_2}}
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    {% else %}
+                                        <td class="t-pc color-radial-{{card.evolution_cost_1_color}} align-middle text-center font-weight-bold">
+                                            {{card.evolution_cost_1}}
+                                        </td>
+                                    {% endif %}
+                                {% endif %}
+                                <td class="t-lv font-weight-bold">
+                                    {% if card.lv is None %}-
+                                    {% else %}{{card.lv}}
+                                    {% endif %}
+                                </td>
+                                <td class="t-rarity">
+                                    {% if card.rarity == "SEC" %}
+                                        <h6 class="card-rarity-list m-lr-pc-sec">
+                                            {{card.rarity}}
+                                        </h6>
+                                    {% else %}
+                                        <h6 class="card-rarity-list m-lr-pc">
+                                            {{card.rarity}}
+                                        </h6>
+                                    {% endif %}
+                                </td>
+                                <td class="t-name card-thumb align-middle m-0 p-0">
+                                    <table class="m-0 p-0">
+                                        <tr class="m-0 p-0">
+                                            <td class="m-0 p-0 bb-none">
+                                                <a href="/cards/{{card.set.slug}}/{{card.slug}}">
+                                                    <div class="hover_img hovertxt">
+                                                        <h6 class="font-weight-bold">{{card.title}}</h6>
+                                                        <img class="hidden-large" id="list-thumb" src="{% if card.image_en %}{{card.image_en.url}}{% else %}{{card.image_jp.url}}{% endif %}">
+                                                    </div>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                                <td class="t-pc border-g align-middle text-center">
+                                    {% if card.dp %}{{card.dp}}000
+                                    {% else %} - 
+                                    {% endif %}
+                                </td>
+                                <td class="border-g t-rarity">
+                                    {% if card.image_parallel %}
+                                        <img class="m-lr-pc" width="20px" src="/static/check.png">
+                                    {% endif %}
+                                </td>
+                                <td class="border-g t-type">{{card.card_type}}</td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+            </div>
+            
+            <nav aria-label="Page navigation example">
+                <ul class="pagination justify-content-center">
+                    {% if page_obj.has_previous %}
+                        <li class="page-item">
+                            <a class="page-link" 
+                                href="?page=1{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}{% if request.GET.title %}&title={{ request.GET.title }}{% endif %}{% if request.GET.number %}&number={{ request.GET.number }}{% endif %}{% if request.GET.artist %}&artist={{ request.GET.artist }}{% endif %}{% if request.GET.dp_min %}&dp_min={{ request.GET.dp_min }}{% endif %}{% if request.GET.dp_max %}&dp_max={{ request.GET.dp_max }}{% endif %}{% if request.GET.dp_min %}&dp_min={{ request.GET.dp_min }}{% endif %}{% if request.GET.dp_max %}&dp_max={{ request.GET.dp_max }}{% endif %}{% if request.GET.lv_min %}&lv_min={{ request.GET.lv_min }}{% endif %}{% if request.GET.lv_max %}&lv_max={{ request.GET.lv_max }}{% endif %}{% if request.GET.play_cost_min %}&play_cost_min={{ request.GET.play_cost_min }}{% endif %}{% if request.GET.play_cost_max %}&play_cost_max={{ request.GET.play_cost_max }}{% endif %}{% if request.GET.evolution_cost_1 %}&evolution_cost_1={{ request.GET.evolution_cost_1 }}{% endif %}{% if request.GET.set %}&set={{ request.GET.set }}{% endif %}{% if request.GET.card_type %}&card_type={{ request.GET.card_type }}{% endif %}{% if request.GET.color %}&color={{ request.GET.color }}{% endif %}{% if request.GET.rarity %}&rarity={{ request.GET.rarity }}{% endif %}{% if request.GET.digimon %}&digimon={{ request.GET.digimon }}{% endif %}{% if request.GET.effect_keyword %}&effect_keyword={{ request.GET.effect_keyword }}{% endif %}{% if request.GET.effect %}&effect={{ request.GET.effect }}{% endif %}{% if request.GET.o %}&o={{ request.GET.o }}{% endif %}">
+                                &laquo; First
+                            </a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ page_obj.previous_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}{% if request.GET.title %}&title={{ request.GET.title }}{% endif %}{% if request.GET.number %}&number={{ request.GET.number }}{% endif %}{% if request.GET.artist %}&artist={{ request.GET.artist }}{% endif %}{% if request.GET.dp_min %}&dp_min={{ request.GET.dp_min }}{% endif %}{% if request.GET.dp_max %}&dp_max={{ request.GET.dp_max }}{% endif %}{% if request.GET.dp_min %}&dp_min={{ request.GET.dp_min }}{% endif %}{% if request.GET.dp_max %}&dp_max={{ request.GET.dp_max }}{% endif %}{% if request.GET.lv_min %}&lv_min={{ request.GET.lv_min }}{% endif %}{% if request.GET.lv_max %}&lv_max={{ request.GET.lv_max }}{% endif %}{% if request.GET.play_cost_min %}&play_cost_min={{ request.GET.play_cost_min }}{% endif %}{% if request.GET.play_cost_max %}&play_cost_max={{ request.GET.play_cost_max }}{% endif %}{% if request.GET.evolution_cost_1 %}&evolution_cost_1={{ request.GET.evolution_cost_1 }}{% endif %}{% if request.GET.set %}&set={{ request.GET.set }}{% endif %}{% if request.GET.card_type %}&card_type={{ request.GET.card_type }}{% endif %}{% if request.GET.color %}&color={{ request.GET.color }}{% endif %}{% if request.GET.rarity %}&rarity={{ request.GET.rarity }}{% endif %}{% if request.GET.digimon %}&digimon={{ request.GET.digimon }}{% endif %}{% if request.GET.effect_keyword %}&effect_keyword={{ request.GET.effect_keyword }}{% endif %}{% if request.GET.effect %}&effect={{ request.GET.effect }}{% endif %}{% if request.GET.o %}&o={{ request.GET.o }}{% endif %}">
+                            Previous
+                            </a>
+                        </li>
+                    {% endif %}
+                    <li class="page-item disabled">
+                        <span class="page-link">
+                            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+                        </span>
+                    </li>
+                    {% if page_obj.has_next %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ page_obj.next_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}{% if request.GET.title %}&title={{ request.GET.title }}{% endif %}{% if request.GET.number %}&number={{ request.GET.number }}{% endif %}{% if request.GET.artist %}&artist={{ request.GET.artist }}{% endif %}{% if request.GET.dp_min %}&dp_min={{ request.GET.dp_min }}{% endif %}{% if request.GET.dp_max %}&dp_max={{ request.GET.dp_max }}{% endif %}{% if request.GET.dp_min %}&dp_min={{ request.GET.dp_min }}{% endif %}{% if request.GET.dp_max %}&dp_max={{ request.GET.dp_max }}{% endif %}{% if request.GET.lv_min %}&lv_min={{ request.GET.lv_min }}{% endif %}{% if request.GET.lv_max %}&lv_max={{ request.GET.lv_max }}{% endif %}{% if request.GET.play_cost_min %}&play_cost_min={{ request.GET.play_cost_min }}{% endif %}{% if request.GET.play_cost_max %}&play_cost_max={{ request.GET.play_cost_max }}{% endif %}{% if request.GET.evolution_cost_1 %}&evolution_cost_1={{ request.GET.evolution_cost_1 }}{% endif %}{% if request.GET.set %}&set={{ request.GET.set }}{% endif %}{% if request.GET.card_type %}&card_type={{ request.GET.card_type }}{% endif %}{% if request.GET.color %}&color={{ request.GET.color }}{% endif %}{% if request.GET.rarity %}&rarity={{ request.GET.rarity }}{% endif %}{% if request.GET.digimon %}&digimon={{ request.GET.digimon }}{% endif %}{% if request.GET.effect_keyword %}&effect_keyword={{ request.GET.effect_keyword }}{% endif %}{% if request.GET.effect %}&effect={{ request.GET.effect }}{% endif %}{% if request.GET.o %}&o={{ request.GET.o }}{% endif %}">Next</a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}{% if request.GET.title %}&title={{ request.GET.title }}{% endif %}{% if request.GET.number %}&number={{ request.GET.number }}{% endif %}{% if request.GET.artist %}&artist={{ request.GET.artist }}{% endif %}{% if request.GET.dp_min %}&dp_min={{ request.GET.dp_min }}{% endif %}{% if request.GET.dp_max %}&dp_max={{ request.GET.dp_max }}{% endif %}{% if request.GET.dp_min %}&dp_min={{ request.GET.dp_min }}{% endif %}{% if request.GET.dp_max %}&dp_max={{ request.GET.dp_max }}{% endif %}{% if request.GET.lv_min %}&lv_min={{ request.GET.lv_min }}{% endif %}{% if request.GET.lv_max %}&lv_max={{ request.GET.lv_max }}{% endif %}{% if request.GET.play_cost_min %}&play_cost_min={{ request.GET.play_cost_min }}{% endif %}{% if request.GET.play_cost_max %}&play_cost_max={{ request.GET.play_cost_max }}{% endif %}{% if request.GET.evolution_cost_1 %}&evolution_cost_1={{ request.GET.evolution_cost_1 }}{% endif %}{% if request.GET.set %}&set={{ request.GET.set }}{% endif %}{% if request.GET.card_type %}&card_type={{ request.GET.card_type }}{% endif %}{% if request.GET.color %}&color={{ request.GET.color }}{% endif %}{% if request.GET.rarity %}&rarity={{ request.GET.rarity }}{% endif %}{% if request.GET.digimon %}&digimon={{ request.GET.digimon }}{% endif %}{% if request.GET.effect_keyword %}&effect_keyword={{ request.GET.effect_keyword }}{% endif %}{% if request.GET.effect %}&effect={{ request.GET.effect }}{% endif %}{% if request.GET.o %}&o={{ request.GET.o }}{% endif %}">Last &raquo;</a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    $(function(){
+        $('.card-thumb').hover( function() {
+
+            b = this.parentElement.getElementsByClassName("hidden-large")[0]
+
+            b.style['display']="block";
+
+        });
+        $('.card-thumb').mouseleave( function() {
+            
+            b = this.parentElement.getElementsByClassName("hidden-large")[0]
+
+            b.style['display']="none";
+            })
+    })
+</script>
+
+{% endblock %}

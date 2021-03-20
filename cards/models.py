@@ -4,6 +4,9 @@ class Card(models.Model):
     title = models.CharField(max_length=100, null=True)
     title_jp = models.CharField(max_length=100, null=True)
     slug = models.SlugField(null=True)
+    number = models.CharField(max_length=100, null=True)
+    set = models.ForeignKey("Set", blank=True, null=True, on_delete=models.CASCADE)
+    
     image_jp = models.ImageField(blank=True, upload_to="jp/")
     image_en = models.ImageField(blank=True, upload_to="en/")
     translated = models.BooleanField(null=True, blank=True, default='False')
@@ -11,8 +14,7 @@ class Card(models.Model):
     image_parallel_jp = models.ImageField(blank=True, upload_to="parallel-jp/")
     image_parallel_en = models.ImageField(blank=True, upload_to="parallel-en/")
     artist_parallel = models.CharField(max_length=100, null=True, blank=True)
-    set = models.ForeignKey("Set", blank=True, null=True, on_delete=models.CASCADE)
-    number = models.CharField(max_length=100, null=True)
+    
     CARDTYPE = [
         ('Digitama', 'Digitama'),
         ('Digimon', 'Digimon'),

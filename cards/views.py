@@ -142,6 +142,50 @@ def set_detail(request, slug_set):
     'tC':tC, 'tU':tU,'tR':tR, 'tSR':tSR, 'tSEC':tSEC, 'tDigimon':tDigimon, 'tDigitama':tDigitama,
     'tTamer':tTamer, 'tOption':tOption, 'tParallel':tParallel  })
 
+def search(request):
+    page_title = 'Advanced Search'
+    cards = Card.objects.all().order_by('card_type', 'lv', '-color', 'play_cost')
+    sets = Set.objects.all().order_by('slug')
+    digimons = Digimon.objects.all().order_by('title')
+    query = request.GET.get("q")
+    if query:
+        cards = cards.filter(
+            Q(title__icontains=query)|
+            Q(title_jp__icontains=query)|
+            Q(artist__icontains=query)|
+            Q(number__icontains=query)|
+            Q(card_type__icontains=query)|
+            Q(color__icontains=query)|
+            Q(rarity__icontains=query)|
+            Q(lv__icontains=query)|
+            Q(dp__icontains=query)|
+            Q(play_cost__icontains=query)|
+            Q(evolution_cost_1__icontains=query)|
+            Q(evolution_cost_1_color__icontains=query)|
+            Q(evolution_cost_2__icontains=query)|
+            Q(evolution_cost_2_color__icontains=query)|
+            Q(promo_name__icontains=query)
+        ).distinct()
+
+    myFilter = CardFilter(request.GET, queryset=cards)
+    cards = myFilter.qs
+
+    paginator = Paginator(cards, 80)
+
+    page = request.GET.get('page')
+    try:
+        queryset = paginator.page(page)
+    except PageNotAnInteger:
+        queryset = paginator.page(1)
+    except EmptyPage:
+        queryset = paginator.page(paginator.num_pages)
+
+    cards_count = cards.count()
+    
+    return render(request, 'cards/search.html', 
+    {'page_title':page_title, 'cards': cards, 'myFilter': myFilter, 'page_obj': queryset, 'cards_count':cards_count,
+    'sets':sets, 'digimons':digimons})
+
 def cardslist(request):
     page_title = 'Advanced Search'
     cards = Card.objects.all().order_by('card_type', 'lv', '-color', 'play_cost')
@@ -164,30 +208,30 @@ def cardslist(request):
             Q(evolution_cost_1_color__icontains=query)|
             Q(evolution_cost_2__icontains=query)|
             Q(evolution_cost_2_color__icontains=query)|
-            Q(effect_blue_1__icontains=query)|
-            Q(effect_purple_1__icontains=query)|
-            Q(effect_txt_1__icontains=query)|
-            Q(effect_keyword_1__icontains=query)|
-            Q(effect_blue_2__icontains=query)|
-            Q(effect_purple_2__icontains=query)|
-            Q(effect_txt_2__icontains=query)|
-            Q(effect_keyword_2__icontains=query)|
-            Q(effect_blue_3__icontains=query)|
-            Q(effect_purple_3__icontains=query)|
-            Q(effect_txt_3__icontains=query)|
-            Q(effect_keyword_3__icontains=query)|
-            Q(evolutionary_effect_blue_1__icontains=query)|
-            Q(evolutionary_effect_purple_1__icontains=query)|
-            Q(evolutionary_effect_txt_1__icontains=query)|
-            Q(evolutionary_effect_keyword_1__icontains=query)|
-            Q(evolutionary_effect_blue_2__icontains=query)|
-            Q(evolutionary_effect_purple_2__icontains=query)|
-            Q(evolutionary_effect_txt_2__icontains=query)|
-            Q(evolutionary_effect_keyword_2__icontains=query)|
-            Q(evolutionary_effect_blue_3__icontains=query)|
-            Q(evolutionary_effect_purple_3__icontains=query)|
-            Q(evolutionary_effect_txt_3__icontains=query)|
-            Q(evolutionary_effect_keyword_3__icontains=query)|
+            # Q(effect_blue_1__icontains=query)|
+            # Q(effect_purple_1__icontains=query)|
+            # Q(effect_txt_1__icontains=query)|
+            # Q(effect_keyword_1__icontains=query)|
+            # Q(effect_blue_2__icontains=query)|
+            # Q(effect_purple_2__icontains=query)|
+            # Q(effect_txt_2__icontains=query)|
+            # Q(effect_keyword_2__icontains=query)|
+            # Q(effect_blue_3__icontains=query)|
+            # Q(effect_purple_3__icontains=query)|
+            # Q(effect_txt_3__icontains=query)|
+            # Q(effect_keyword_3__icontains=query)|
+            # Q(evolutionary_effect_blue_1__icontains=query)|
+            # Q(evolutionary_effect_purple_1__icontains=query)|
+            # Q(evolutionary_effect_txt_1__icontains=query)|
+            # Q(evolutionary_effect_keyword_1__icontains=query)|
+            # Q(evolutionary_effect_blue_2__icontains=query)|
+            # Q(evolutionary_effect_purple_2__icontains=query)|
+            # Q(evolutionary_effect_txt_2__icontains=query)|
+            # Q(evolutionary_effect_keyword_2__icontains=query)|
+            # Q(evolutionary_effect_blue_3__icontains=query)|
+            # Q(evolutionary_effect_purple_3__icontains=query)|
+            # Q(evolutionary_effect_txt_3__icontains=query)|
+            # Q(evolutionary_effect_keyword_3__icontains=query)|
             Q(promo_name__icontains=query)
         ).distinct()
 
