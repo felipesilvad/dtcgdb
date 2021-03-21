@@ -102,6 +102,9 @@ class Effect(models.Model):
     effect_keyword_int_2 = models.IntegerField(blank=True, null=True)
     effect_txt_2 = models.TextField(blank=True, null=True)
 
+    # def __str__(self):
+    #     return f'{id} | {self.effect_type} - {self.effect_blue} - {self.effect_keyword}'
+
 
 class EffectKeyword(models.Model):
     title = models.CharField(max_length=100, blank=True, null=True)
@@ -143,7 +146,8 @@ class Digimon(models.Model):
         ('Ultimate', 'Ultimate'),
         ('Champion', 'Champion'),
         ('Rookie', 'Rookie'),
-        ('Baby', 'Baby'),
+        ('In-Training', 'In-Training'),
+        ('Hybrid', 'Hybrid'),
     ]
     stage = models.CharField(choices=STAGES, max_length=20, default='Rookie')
     attribute = models.CharField(max_length=100, blank=True, null=True)
