@@ -49,20 +49,6 @@ class Card(models.Model):
     evolution_cost_1_color = models.CharField(choices=COLORS, max_length=20, default='Red')
     evolution_cost_2 = models.IntegerField(blank=True, null=True)
     evolution_cost_2_color = models.CharField(choices=COLORS, max_length=20, default='Red')
-
-    KEYWORDSEFFECTS = [
-        ('Pierce', 'Pierce'),
-        ('Blocker', 'Blocker'),
-        ('Jamming', 'Jamming'),
-        ('Draw', 'Draw'),
-        ('Recovery (Deck) +', 'Recovery (Deck) +'),
-        ('Security Attack +', 'Security Attack +'),
-        ('Security Attack -', 'Security Attack -'),
-        ('Vengeance', 'Vengeance'),
-        ('Download', 'Download'),
-        ('De-Digivolve', 'De-Digivolve')
-    ]
-
     effect = models.ManyToManyField("Effect", blank=True)
 
     in_deck_quantity = models.IntegerField(blank=True, null=True)
@@ -113,10 +99,9 @@ class Effect(models.Model):
     effect_txt = models.TextField(blank=True, null=True)
     effect_keyword = models.ForeignKey("EffectKeyword", blank=True, null=True, on_delete=models.CASCADE)
     effect_keyword_int = models.IntegerField(blank=True, null=True)
+    effect_keyword_int_2 = models.IntegerField(blank=True, null=True)
     effect_txt_2 = models.TextField(blank=True, null=True)
 
-    def __str__(self):
-        return f'{id} | {self.effect_type} - {self.effect_blue} - {self.effect_keyword}'
 
 class EffectKeyword(models.Model):
     title = models.CharField(max_length=100, blank=True, null=True)

@@ -164,6 +164,13 @@ def search(request):
             Q(evolution_cost_1_color__icontains=query)|
             Q(evolution_cost_2__icontains=query)|
             Q(evolution_cost_2_color__icontains=query)|
+            Q(effect__effect_type__icontains=query)|
+            Q(effect__effect_blue__icontains=query)|
+            Q(effect__effect_purple__icontains=query)|
+            Q(effect__effect_txt__icontains=query)|
+            Q(effect__effect_txt_2__icontains=query)|
+            Q(effect__effect_keyword__title__icontains=query)|
+            Q(effect__effect_keyword__desc__icontains=query)|
             Q(promo_name__icontains=query)
         ).distinct()
 

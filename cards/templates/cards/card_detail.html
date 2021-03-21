@@ -380,18 +380,24 @@
             {% endif %}
             {% if card.digimon %}
                 <div class="row p-0 m-0">
-                    <div class="col-lg p-0">
+                    {% if card.digimon.stage %}
+                      <div class="col-lg p-0">
                         <div class="th cardh card-info">Stage</div>
                         <div class="td cardtd card-info">{{card.digimon.stage}}</div>
-                    </div>
-                    <div class="col-lg p-0">
+                      </div>
+                    {% endif %}
+                    {% if card.digimon.attribute %}
+                      <div class="col-lg p-0">
                         <div class="th cardh card-info">Attribute</div>
                         <div class="td cardtd card-info">{{card.digimon.attribute}}</div>
-                    </div>
-                    <div class="col-lg p-0">
+                      </div>
+                    {% endif %}
+                    {% if card.digimon.digimon_type %}
+                      <div class="col-lg p-0">
                         <div class="th cardh card-info">Digimon Type</div>
                         <div class="td cardtd card-info">{{card.digimon.digimon_type}}</div>
-                    </div>
+                      </div>
+                    {% endif %}
                 </div>
             {% endif %}
         </div>
@@ -426,7 +432,7 @@
                                 {% endif %}
                             {% elif effect_m.effect_keyword.title == "De-Digivolve" %}
                                 <a class="effect-keyword" id="white-effect">{{effect_m.effect_keyword.title}} {{effect_m.effect_keyword_int}}</a>
-                                <a class="effect-txt effect-txt">on {{effect_m.effect_keyword_int}} of your opponent's Digimon. (Trash up to {{effect_m.effect_keyword_int}} cards from the top of one of your opponent's Digimon. If it has no digivolution cards, or becomes a level 3 Digimon, you can't trash any more cards.)</a>
+                                <a class="effect-txt effect-txt">on {{effect_m.effect_keyword_int_2}} of your opponent's Digimon. (Trash up to {{effect_m.effect_keyword_int}} cards from the top of one of your opponent's Digimon. If it has no digivolution cards, or becomes a level 3 Digimon, you can't trash any more cards.)</a>
                             {% elif effect_m.effect_keyword.title == "Digisorption -" %}
                                 <a class="effect-keyword" id="white-effect">{{effect_m.effect_keyword.title}} {{effect_m.effect_keyword_int}}</a>
                                 <a class="effect-txt effect-txt">(When one of your Digimon digivolves into this card from your hand, you may suspend 1 of your Digimon to reduce the memory cost of the digivolution by {{effect_m.effect_keyword_int}}.)</a>
