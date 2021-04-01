@@ -99,7 +99,6 @@ class Effect(models.Model):
     effect_txt = models.TextField(blank=True, null=True)
     effect_keyword = models.ForeignKey("EffectKeyword", blank=True, null=True, on_delete=models.CASCADE)
     effect_keyword_int = models.IntegerField(blank=True, null=True)
-    effect_keyword_int_2 = models.IntegerField(blank=True, null=True)
     effect_txt_2 = models.TextField(blank=True, null=True)
 
     # def __str__(self):
