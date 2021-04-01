@@ -27,7 +27,7 @@ def card_detail(request, card_slug, slug_set):
   previous_card = set.card_set.filter(slug__lt=card_slug).order_by('-slug')
   next_card = set.card_set.filter(slug__gt=card_slug).order_by('slug')
 
-  gs = gspread.service_account(filename='cards\creds.json')
+  gs = gspread.service_account(filename='/home/ubuntu/dtcgdb/prices/creds.json')
   spreadsheet = gs.open('DTCGprices')
   sheet1 = spreadsheet.sheet1
   cell = sheet1.find(card.number)
