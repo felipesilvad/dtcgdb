@@ -1,7 +1,9 @@
 from django.contrib import admin
-from .models import Card, Set, Digimon, New, Effect, EffectKeyword
+from .models import Card, Set, Digimon, New, AlternateArt, Effect, EffectKeyword
 
 admin.site.register(Card)
+
+admin.site.register(AlternateArt)
 
 admin.site.register(Effect)
 

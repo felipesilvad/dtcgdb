@@ -3,525 +3,540 @@
 {% load widget_tweaks %}
 {% block content %}
 
-{% if card.yuyu_tei %}
-    yuyu_tei: {{usd_yuyu_tei}}
-{% endif %}
-{% if card.suruga_ya %}
-    suruga_ya: {{usd_suruga_ya}}
-{% endif %}
-{% if card.amazon_jp %}
-    amazon_jp: {{usd_amazon_jp}}
-{% endif %}
-{% if card.ebay %}
-    ebay: {{usd_price_ebay}}
-{% endif %}
-{% if usd_average != None %}
-    avarage: {{usd_average}}
-{% endif %}
 <div class="row mt-3">
-    
-    <div class="col-lg-4">
 
-        <nav>
-            <div class="nav nav-pills">
-                {% if card.image_en %}
-                    <a class="nav-item nav-link cardh active" data-toggle="tab" href="#en" role="tab" aria-controls="en" aria-selected="true">
-                        {% if card.translated == True %} Translated {% else %} English {% endif %}
-                    </a>
-                {% endif %}
-                {% if card.image_jp %}
-                    <a class="nav-item nav-link cardh {% if not card.image_en %} active {% endif %}" data-toggle="tab" href="#jp" role="tab" aria-controls="jp" aria-selected="false">Japanese</a>
-                {% endif %}
-            </div>
-        </nav>
+  <div class="col-lg-4">
+    <nav class="nav nav-tabs">
+      {% if card.image_en %}
+        <a class="card-tab-out w-50 cardh-nobg active" href="#en" data-toggle="tab">
+          {% if card.translated == True %} Translated {% else %} English {% endif %}
+        </a>
+      {% endif %}
+      {% if card.image_jp %}
+        <a class="card-tab-out w-50 cardh-nobg {% if not card.image_en %} active {% endif %}" href="#jp" data-toggle="tab">Japanese</a>
+      {% endif %}
+    </nav>
 
-        <div class="tab-content card-bg border-w p-0" id="nav-tabContent">
-            {% if card.image_en %}
-                <div class="tab-pane fade show active" id="en" role="tabpanel">
-                    {% if card.image_parallel_en %}
-                        <div class="show active" id="en" role="tabpanel">
-                            <div class="nav " id="nav-tab" role="tablist">
-                                <a class="nav-item nav-link_p active" data-toggle="tab" href="#en_standard" role="tab" aria-controls="en_standard" aria-selected="true">Standard</a>
-                                <a class="nav-item nav-link_p" data-toggle="tab" href="#en_parallel" role="tab" aria-controls="en_parallel" aria-selected="true">Parallel</a>
-                            </div>
-                        </div>
-                    {% endif %}
-
-                    <div class="tab-content" id="nav-tabContent">
-                        {% if card.image_en %}
-                            <div class="tab-pane fade show active" id="en_standard" role="tabpanel">
-                                <img class="img-fluid mx-auto d-block card-img-main" src="{{card.image_en.url}}">
-                                {% if card.artist %}
-                                    <div class="col-lg p-0 d-inline-flex card-bg">
-                                        <div class="th cardh card-info flex-fill center rounded">Artist</div>
-                                        <div class="td cardtd card-info flex-fill rounded">
-                                            <a href="/cards/search?artist={{card.artist}}#results">{{card.artist}}</a>
-                                        </div>
-                                    </div>
-                                {% endif %}
-                            </div>
-                        {% endif %}
-                        {% if card.image_parallel_en %}
-                            <div class="tab-pane fade" id="en_parallel" role="tabpanel">
-                                <img class="img-fluid mx-auto d-block card-img-main" src="{{card.image_parallel_en.url}}">
-                                {% if card.artist_parallel %}
-                                    <div class="col-lg p-0 d-inline-flex card-bg">
-                                        <div class="th cardh card-info flex-fill center rounded">Artist</div>
-                                        <div class="td cardtd card-info flex-fill rounded">
-                                            <a href="/cards/search?artist={{card.artist_parallel}}#results">{{card.artist_parallel}}</a>
-                                        </div>
-                                    </div>
-                                {% endif %}
-                            </div>
-                        {% endif %}
-                    </div>
-                </div>
-            {% endif %}
-
-            {% if card.image_jp %}
-                <div class="tab-pane fade {% if not card.image_en %} show active {% endif %}" id="jp" role="tabpanel">
-                    {% if card.image_parallel_jp %}
-                        <div class="tab-pane fade show active" id="jp" role="tabpanel">
-                            <div class="nav" id="nav-tab" role="tablist">
-                                <a class="nav-item nav-link_p active" data-toggle="tab" href="#jp_standard" role="tab" aria-controls="jp_standard" aria-selected="true">Standard</a>
-                                <a class="nav-item nav-link_p" data-toggle="tab" href="#jp_parallel" role="tab" aria-controls="jp_parallel" aria-selected="true">Parallel</a>
-                            </div>
-                        </div>
-                    {% endif %}
-
-                    <div class="tab-content" id="nav-tabContent">
-                        {% if card.image_jp %}
-                            <div class="tab-pane fade show active" id="jp_standard" role="tabpanel">
-                                <img class="img-fluid mx-auto d-block card-img-main" src="{{card.image_jp.url}}">
-                                {% if card.artist %}
-                                    <div class="col-lg p-0 d-inline-flex card-bg">
-                                        <div class="th cardh card-info flex-fill center rounded">Artist</div>
-                                        <div class="td cardtd card-info flex-fill rounded">
-                                            <a href="/cards/search?artist={{card.artist}}#results">{{card.artist}}</a>
-                                        </div>
-                                    </div>
-                                {% endif %}
-                            </div>
-                        {% endif %}
-                        {% if card.image_parallel_jp %}
-                            <div class="tab-pane fade" id="jp_parallel" role="tabpanel">
-                                <img class="img-fluid mx-auto d-block card-img-main" src="{{card.image_parallel_jp.url}}">
-                                {% if card.artist_parallel %}
-                                    <div class="col-lg p-0 d-inline-flex card-bg">
-                                        <div class="th cardh card-info flex-fill center rounded">Artist</div>
-                                        <div class="td cardtd card-info flex-fill rounded">
-                                            <a href="/cards/search?artist={{card.artist_parallel}}#results">{{card.artist_parallel}}</a>
-                                        </div>
-                                    </div>
-                                {% endif %}
-                            </div>
-                        {% endif %}
-                    </div>
-                </div>
-            {% endif %}
-            
-        </div>
-
-        {% if user.is_authenticated %}
-            <div class="add-card__bg mt-2">
-                <h5 class="add-card__h Orbitron text-center">ON YOUR COLLECTION</h5>
-                {% if card.image_parallel_jp or card.image_parallel_en %}
-                    <div class="row p-0 m-0">
-                        <div class="col-lg p-0">
-                            <div class="th cardh card-info">Standard</div>
-                            <div class="th cardh card-info">Parallel</div>
-                        </div>
-                        <div class="col-lg p-0">
-                            <div class="td cardtd card-info Orbitron">{{usercard_sc}}</div>
-                            <div class="td cardtd card-info Orbitron">{{usercard_pc}}</div>
-                        </div>
-                    </div>
-                {% else %}
-                    <div class="td cardtd card-info Orbitron">{{usercard_sc}}</div>
-                {% endif %}
-
-                <!-- Button trigger modal -->
-                <button type="button" class="update-btn btn mt-2" data-toggle="modal" data-target="#exampleModal">
-                    Update collection
-                </button>
-                
-                <!-- Modal -->
-                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog" role="document">
-                    <div class="modal-content cardh text-light">
-                        <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Update collection</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                        </div>
-                        <div class="modal-body">
-                            <nav>
-                                <div class="nav nav-pills">
-                                    {% if card.image_en %}
-                                        <a class="nav-item nav-link cardh active" data-toggle="tab" href="#en_c" role="tab" aria-controls="en_c" aria-selected="true">
-                                            English
-                                        </a>
-                                    {% endif %}
-                                    {% if card.image_jp %}
-                                        <a class="nav-item nav-link cardh {% if not card.image_en %} active {% endif %}" data-toggle="tab" href="#jp_c" role="tab" aria-controls="jp_c" aria-selected="false">
-                                            Japanese
-                                        </a>
-                                    {% endif %}
-                                </div>
-                            </nav>
-
-                            <form method="POST">
-                                {% csrf_token %}
-                                <div class="tab-content card-bg border-w p-0" id="nav-tabContent">
-                                    <div class="{% if not card.image_en %} d-none {% endif %} tab-pane fade show active" id="en_c" role="tabpanel">
-                                        <table class="row p-0 m-0">
-                                            <tr class="col-lg p-0">
-                                                <td class="th cardh card-info pr-5 pl-5">Standard</td>
-                                                <td class="td cardtd card-info Orbitron">
-                                                    {% if usercard == None %}
-                                                        {% render_field form.quantity  value=0 %}
-                                                    {% else %}
-                                                        {% render_field form.quantity  value=usercard.quantity %}
-                                                    {% endif %}
-                                                </td>
-                                            </tr>
-                                            <tr class="col-lg p-0">
-                                                {% if card.image_parallel_jp or card.image_parallel_en %}
-                                                    <td class="th cardh card-info pr-5 pl-5">Parallel</td>
-                                                {% else %}
-                                                    <td class="th cardh card-info pr-5 pl-5 d-none">Parallel</td>
-                                                {% endif %}
-                                                {% if card.image_parallel_jp or card.image_parallel_en %}
-                                                    <td class="td cardtd card-info Orbitron">
-                                                        {% if usercard == None %}
-                                                            {% render_field form.quantity_parallel  value=0 %}
-                                                        {% else %}
-                                                            {% render_field form.quantity_parallel  value=usercard.quantity_parallel %}
-                                                        {% endif %}
-                                                    </td>
-                                                {% else %}
-                                                    <td class="td cardtd card-info Orbitron d-none">
-                                                        {% if usercard == None %}
-                                                            {% render_field form.quantity_parallel  value=0 %}
-                                                        {% else %}
-                                                            {% render_field form.quantity_parallel  value=usercard.quantity_parallel %}
-                                                        {% endif %}
-                                                    </td>
-                                                {% endif %}
-                                            </tr>
-                                        </table>
-                                    </div>
-                                    <div class="{% if not card.image_jp %} d-none {% endif %}tab-pane fade show {% if not card.image_en %} active {% endif %}" id="jp_c" role="tabpanel">
-                                        <table class="row p-0 m-0">
-                                            <tr class="col-lg p-0">
-                                                <td class="th cardh card-info pr-5 pl-5">Standard</td>
-                                                <td class="td cardtd card-info Orbitron">
-                                                    {% if usercard == None %}
-                                                        {% render_field form.quantity_jp  value=0 %}
-                                                    {% else %}
-                                                        {% render_field form.quantity_jp  value=usercard.quantity_jp %}
-                                                    {% endif %}
-                                                </td>
-                                            </tr>
-                                            <tr class="col-lg p-0">
-                                                {% if card.image_parallel_jp or card.image_parallel_en %}
-                                                    <td class="th cardh card-info pr-5 pl-5">Parallel</td>
-                                                {% else %}
-                                                    <td class="th cardh card-info pr-5 pl-5 d-none">Parallel</td>
-                                                {% endif %}
-                                                {% if card.image_parallel_jp or card.image_parallel_en %}
-                                                    <td class="td cardtd card-info Orbitron">
-                                                        {% if usercard == None %}
-                                                            {% render_field form.quantity_parallel_jp  value=0 %}
-                                                        {% else %}
-                                                            {% render_field form.quantity_parallel_jp  value=usercard.quantity_parallel_jp %}
-                                                        {% endif %}
-                                                    </td>
-                                                {% else %}
-                                                    <td class="td cardtd card-info Orbitron d-none">
-                                                        {% if usercard == None %}
-                                                            {% render_field form.quantity_parallel_jp  value=0 %}
-                                                        {% else %}
-                                                            {% render_field form.quantity_parallel_jp  value=usercard.quantity_parallel_jp %}
-                                                        {% endif %}
-                                                    </td>
-                                                {% endif %}
-                                            </tr>
-                                        </table>
-                                    </div>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                    <button class="btn btn-primary" type="submit">Update</button>
-                                </div>
-                            </form>
-
-                        </div>
-                    </div>
-                    </div>
-                </div>
-            </div>
-            
+    <div class="tab-content card-bg border-w">
+      <!-- EN -->
+      <div class="tab-pane active" id="en">
+        {% if alternate_arts.first %}
+          <nav class="nav nav-tabs">
+            <a class="card-tab-in w-50 cardh-nobg active" href="#en_s" data-toggle="tab">Standard</a>
+            <a class="card-tab-in w-50 cardh-nobg" href="#en_aa" data-toggle="tab">Alternate Art{% if alternate_art_c > 1 %}s{% endif %}</a>
+          </nav>
         {% endif %}
-    </div>
-
-
-    <div class="col-lg-8 pl-1 pr-1">
-        <div class="color-{{card.color}} light-bg no-radius-bot p-0 dflex-mobile">
-            <div class="d-inline-flex mb-less-3">
-                <h1 class="card-title ml-4 pt-1">{{ card.title }}</h1>
-            </div>
-            <div></div>
-            <div class="d-inline-flex mt-less-3">
-                <h5 class="ml-4">{{card.title_jp}}</h5>
-                <h5 class="card-title-n ml-2 color-{{card.color}}">{{ card.number }}</h5>
-            </div>
-        </div>
-        
-        
-        <div class="light-bg no-radius-top">
-            <div class="row p-0 m-0">
-                {% if card.card_type is not None %}
-                    <div class="col-lg p-0">
-                        <div class="th cardh card-info">Card Type</div>
-                        <div class="td cardtd card-info"><a href="/cards/search?card_type={{card.card_type}}#results">{{card.card_type}}</a></div>
-                    </div>
-                {% endif %}
-                {% if card.color is not None %}
-                    <div class="col-lg p-0">
-                        <div class="th cardh card-info">Color</div>
-                        <div class="td cardtd  card-info color-{{card.color}}">
-                            <a class="color-{{card.color}}" href="/cards/search?color={{card.color}}#results">
-                                {{card.color}}
-                            </a>
-                        </div>
-                    </div>
-                {% endif %}
-                {% if card.lv is not None %}
-                    <div class="col-lg p-0">
-                        <div class="th cardh card-info">LV</div>
-                        <div class="td cardtd card-info">{{card.lv}}</div>
-                    </div>
-                {% endif %}
-                {% if card.dp is not None %}
-                    <div class="col-lg p-0">
-                        <div class="th cardh card-info">DP</div>
-                        <div class="td cardtd card-info">{{card.dp}}<a class="zeros">000</a></div>
-                    </div>
-                {% endif %}
-            </div>
-            <div class="row p-0 m-0">
-                {% if card.number is not None %}
-                    <div class="col-lg p-0">
-                        <div class="th cardh card-info">Number</div>
-                        <div class="td cardtd card-info">{{card.number}}</div>
-                    </div>
-                {% endif %}
-                {% if card.rarity is not None %}
-                    <div class="col-lg p-0">
-                        <div class="th cardh card-info">Rarity</div>
-                        <div class="td cardtd card-info d-flex justify-content-center">
-                            {% if card.rarity == 'C' %}<a href="/cards/search?rarity={{card.rarity}}#results">Common</a>
-                            {% elif card.rarity == 'U' %}<a href="/cards/search?rarity={{card.rarity}}#results">Uncommon</a>
-                            {% elif card.rarity == 'R' %}<a href="/cards/search?rarity={{card.rarity}}#results">Rare</a>
-                            {% elif card.rarity == 'SR' %}<a href="/cards/search?rarity={{card.rarity}}#results">Super Rare</a>
-                            {% elif card.rarity == 'SEC' %}<a href="/cards/search?rarity={{card.rarity}}#results">Secret Rare</a>
-                            {% elif card.rarity == 'P' %}<a href="/cards/search?rarity={{card.rarity}}#results">Promo</a>
-                            {% endif %}
-                            {% if card.rarity == 'SEC' %}
-                                <h6 class="card-rarity-sec ml-2 d-flex justify-content-center">{{card.rarity}}</h6>
-                            {% else %}
-                                <h6 class="card-rarity ml-2 d-flex justify-content-center">{{card.rarity}}</h6>
-                            {% endif %}
-                        </div>
-                    </div>
-                {% endif %}
-                {% if card.play_cost is not None %}
-                    <div class="col-lg p-0">
-                        <div class="th cardh card-info">Play Cost</div>
-                        <div class="td cardtd card-info cost-bg-play">{{card.play_cost}}</div>
-                    </div>
-                {% endif %}
-                {% if card.evolution_cost_1 is not None %}
-                    <div class="col-lg p-0">
-                        <div class="th cardh card-info">Digivolve Cost</div>
-                        <div class="td cardtd card-info color-radial-{{card.evolution_cost_1_color}}">{{card.evolution_cost_1}}</div>
-                    </div>
-                {% endif %}
-                {% if card.evolution_cost_2 is not None %}
-                    <div class="col-lg p-0">
-                        <div class="th cardh card-info">Digivolve Cost</div>
-                        <div class="td cardtd card-info color-radial-{{card.evolution_cost_2_color}}">{{card.evolution_cost_2}}</div>
-                    </div>
-                {% endif %}
-            </div>
-            <div class="row p-0 m-0">
-                <div class="col-lg p-0 d-inline-flex">
-                    <div class="th cardh card-info flex-fill center">Set</div>
-                    <div class="td cardtd card-info flex-fill">
-                        <a href="/cards/{{card.set.slug}}"><no class="text-uppercase">{{card.set.slug}}</no> - {{card.set.title}}</a>
-                        <h6 class="fz-promo-name">{% if card.promo_name %}({{card.promo_name}}){% endif %}</h6>
-                    </div>
+        <div class="tab-content">
+          {% if card.image_en %}
+          <div class="tab-pane active" id="en_s">
+            <img class="img-fluid mx-auto d-block card-img-main" src="{{card.image_en.url}}">
+              {% if card.artist %}
+                <div class="col-lg p-0 d-inline-flex card-bg">
+                  <div class="th cardh card-info flex-fill center rounded">Artist</div>
+                  <div class="td cardtd card-info flex-fill rounded">
+                    <a href="/cards/search?artist={{card.artist}}#results">{{card.artist}}</a>
+                  </div>
                 </div>
-            </div>
-            {% if card.digimon %}
-                <div class="row p-0 m-0">
-                    <div class="col-lg p-0">
-                        <div class="th cardh card-info">Digimon</div>
-                        <div class="td cardtd card-info">
-                            {% if card.digimon.image %}
-                                <img class="digimon-icon" src="{{ card.digimon.image.url }}">
-                            {% endif %}
-                            <a href="/cards/search?digimon={{card.digimon.id}}#results" class="mt-2 ml-2">{{card.digimon}}</a>
-                        </div>
-                    </div>
-                </div>
-            {% endif %}
-            {% if card.digimon %}
-                <div class="row p-0 m-0">
-                    {% if card.digimon.stage %}
-                      <div class="col-lg p-0">
-                        <div class="th cardh card-info">Stage</div>
-                        <div class="td cardtd card-info">{{card.digimon.stage}}</div>
-                      </div>
-                    {% endif %}
-                    {% if card.digimon.attribute %}
-                      <div class="col-lg p-0">
-                        <div class="th cardh card-info">Attribute</div>
-                        <div class="td cardtd card-info">{{card.digimon.attribute}}</div>
-                      </div>
-                    {% endif %}
-                    {% if card.digimon.digimon_type %}
-                      <div class="col-lg p-0">
-                        <div class="th cardh card-info">Digimon Type</div>
-                        <div class="td cardtd card-info">{{card.digimon.digimon_type}}</div>
-                      </div>
-                    {% endif %}
-                </div>
-            {% endif %}
-        </div>
-
-
-        {% if effect_main %}
-            <div class="light-bg mt-2 no-radius-bot effecth">
-                <h4 class="ml-2 font-italic font-weight-bolder text-light">Main Effect</h4>
-            </div>
-            <div class="light-bg no-radius-top">
-                {% for effect_m in effect_main %}
-                    <h6 class="font-weight-normal">
-                        {% if effect_m.effect_blue %}<a class="effect-blue" id="white-effect">{{effect_m.effect_blue}}</a>{% endif %}
-                        {% if effect_m.effect_purple %}<a class="effect-purple" id="white-effect">{{effect_m.effect_purple}}</a>{% endif %}
-                        {% if effect_m.effect_txt %}<a class="effect-txt">{{effect_m.effect_txt | safe}}</a>{% endif %}
-                        {% if effect_m.effect_keyword %}
-                            {% if effect_m.effect_keyword.title == "Draw" %}
-                                <a class="effect-keyword" id="white-effect">{{effect_m.effect_keyword.title}} {{effect_m.effect_keyword_int}}</a>
-                                <a class="effect-txt effect-txt">(Draw {{effect_m.effect_keyword_int}} card from your deck)</a>
-                            {% elif effect_m.effect_keyword.title == "Security Attack +" %}
-                                <a class="effect-keyword" id="white-effect">{{effect_m.effect_keyword.title}}{{effect_m.effect_keyword_int}}</a>
-                                <a class="effect-txt effect-txt">(This Digimon checks {{effect_m.effect_keyword_int}} additional security card)</a>
-                            {% elif effect_m.effect_keyword.title == "Security Attack -" %}
-                                <a class="effect-keyword" id="white-effect">{{effect_m.effect_keyword.title}}{{effect_m.effect_keyword_int}}</a>
-                                <a class="effect-txt effect-txt">(This Digimon checks {{effect_m.effect_keyword_int}} fewer security cards)</a>
-                            {% elif effect_m.effect_keyword.title == "Recovery (Deck) +" %}
-                                <a class="effect-keyword" id="white-effect">Recovery +{{effect_m.effect_keyword_int}} (Deck)</a>
-                                {% if effect_m.effect_keyword_int == 1 %}
-                                    <a class="effect-txt effect-txt">(Place the top card of your deck on top of your security stack.)</a>
-                                {% else %}
-                                    <a class="effect-txt effect-txt">(Place the top {{effect_m.effect_keyword_int}} cards of your deck on top of your security stack.)</a>
-                                {% endif %}
-                            {% elif effect_m.effect_keyword.title == "De-Digivolve" %}
-                                <a class="effect-keyword" id="white-effect">{{effect_m.effect_keyword.title}} {{effect_m.effect_keyword_int}}</a>
-                                <!-- <a class="effect-txt effect-txt">on {{effect_m.effect_keyword_int_2}} of your opponent's Digimon. (Trash up to {{effect_m.effect_keyword_int}} cards from the top of one of your opponent's Digimon. If it has no digivolution cards, or becomes a level 3 Digimon, you can't trash any more cards.)</a> -->
-                            {% elif effect_m.effect_keyword.title == "Digisorption -" %}
-                                <a class="effect-keyword" id="white-effect">{{effect_m.effect_keyword.title}} {{effect_m.effect_keyword_int}}</a>
-                                <a class="effect-txt effect-txt">(When one of your Digimon digivolves into this card from your hand, you may suspend 1 of your Digimon to reduce the memory cost of the digivolution by {{effect_m.effect_keyword_int}}.)</a>
-                            {% elif effect_m.effect_keyword.title == "Digi-Burst" %}
-                                <a class="effect-keyword" id="white-effect">{{effect_m.effect_keyword.title}} {{effect_m.effect_keyword_int}}</a>
-                                <a class="effect-txt effect-txt">(You may trash any {{effect_m.effect_keyword_int}} cards from this Digimon's digivolution cards to trigger the following effect)</a>
-                            {% else %}
-                                <a class="effect-keyword" id="white-effect">{{effect_m.effect_keyword.title}}</a>
-                                <a class="effect-txt effect-txt">({{effect_m.effect_keyword.desc}})</a>
-                            {% endif %}
-                        {% endif %}
-                        {% if effect_m.effect_txt_2 %}<a class="effect-txt">{{effect_m.effect_txt_2 | safe}}</a>{% endif %}
-                    </h6>
-                {% endfor %}
-            </div>
-        {% endif %}
-
-        {% if effect_inheritable %}
-            <div class="effecth light-bg mt-2 no-radius-bot color-{{card.color}}">
-                {% if card.card_type == 'Digimon' or card.card_type == 'Digitama' %}
-                    <h4 class="ml-2 font-italic font-weight-bolder text-light">Inheritable Effect</h4>
-                {% endif %}
-                {% if card.card_type == 'Tamer' or card.card_type == 'Option' %}
-                    <h4 class="ml-2 font-italic font-weight-bolder text-light">Security Effect</h4>
-                {% endif %}
-            </div>
-            <div class="color-{{card.color}} light-bg no-radius-top">
-                <h6 class="font-weight-normal">
-                    {% for effect_i in effect_inheritable %}
-                        {% if effect_i.effect_blue %}<a class="effect-blue" id="white-effect">{{effect_i.effect_blue}}</a>{% endif %}
-                        {% if effect_i.effect_purple %}<a class="effect-purple" id="white-effect">{{effect_i.effect_purple}}</a>{% endif %}
-                        {% if effect_i.effect_txt %}<a class="effect-txt">{{effect_i.effect_txt | safe}}</a>{% endif %}
-                        {% if effect_i.effect_keyword %}
-                            {% if effect_i.effect_keyword.title == "Draw" %}
-                                <a class="effect-keyword" id="white-effect">{{effect_i.effect_keyword.title}} {{effect_i.effect_keyword_int}}</a>
-                                <a class="effect-txt effect-txt">(Draw {{effect_i.effect_keyword_int}} card from your deck)</a>
-                            {% elif effect_i.effect_keyword.title == "Security Attack +" %}
-                                <a class="effect-keyword" id="white-effect">{{effect_i.effect_keyword.title}}{{effect_i.effect_keyword_int}}</a>
-                                <a class="effect-txt effect-txt">(This Digimon checks {{effect_i.effect_keyword_int}} additional security card)</a>
-                            {% elif effect_i.effect_keyword.title == "Security Attack -" %}
-                                <a class="effect-keyword" id="white-effect">{{effect_i.effect_keyword.title}}{{effect_i.effect_keyword_int}}</a>
-                                <a class="effect-txt effect-txt">(This Digimon checks {{effect_i.effect_keyword_int}} fewer security cards)</a>
-                            {% elif effect_i.effect_keyword.title == "Recovery (Deck) +" %}
-                                <a class="effect-keyword" id="white-effect">Recovery +{{effect_i.effect_keyword_int}} (Deck)</a>
-                                {% if effect_i.effect_keyword_int == 1 %}
-                                    <a class="effect-txt effect-txt">(Place the top card of your deck on top of your security stack.)</a>
-                                {% else %}
-                                    <a class="effect-txt effect-txt">(Place the top {{effect_i.effect_keyword_int}} cards of your deck on top of your security stack.)</a>
-                                {% endif %}
-                            {% elif effect_i.effect_keyword.title == "De-Digivolve" %}
-                                <a class="effect-keyword" id="white-effect">{{effect_i.effect_keyword.title}} {{effect_i.effect_keyword_int}}</a>
-                                <a class="effect-txt effect-txt">on {{effect_i.effect_keyword_int}} of your opponent's Digimon. (Trash up to {{effect_i.effect_keyword_int}} cards from the top of one of your opponent's Digimon. If it has no digivolution cards, or becomes a level 3 Digimon, you can't trash any more cards.)</a>
-                            {% elif effect_m.effect_keyword.title == "Digisorption -" %}
-                                <a class="effect-keyword" id="white-effect">{{effect_m.effect_keyword.title}} {{effect_m.effect_keyword_int}}</a>
-                                <a class="effect-txt effect-txt">(When one of your Digimon digivolves into this card from your hand, you may suspend 1 of your Digimon to reduce the memory cost of the digivolution by {{effect_m.effect_keyword_int}}.)</a>
-                              {% elif effect_m.effect_keyword.title == "Digi-Burst" %}
-                                <a class="effect-keyword" id="white-effect">{{effect_m.effect_keyword.title}} {{effect_m.effect_keyword_int}}</a>
-                                <a class="effect-txt effect-txt">(You may trash any {{effect_m.effect_keyword_int}} cards from this Digimon's digivolution cards to trigger the following effect)</a>
-                            {% else %}
-                                <a class="effect-keyword" id="white-effect">{{effect_i.effect_keyword.title}}</a>
-                                <a class="effect-txt effect-txt">({{effect_i.effect_keyword.desc}})</a>
-                            {% endif %}
-                        {% endif %}
-                        {% if effect_m.effect_txt_2 %}<a class="effect-txt">{{effect_m.effect_txt_2 | safe}}</a>{% endif %}
+              {% endif %}
+          </div>
+          {% endif %}
+          {% if alternate_arts.first %}
+            <div class="tab-pane" id="en_aa">
+              <div class="d-flex">
+                <nav class="nav nav-tabs d-block">
+                  {% if alternate_art_c > 1 %}
+                    {% for alternate_art in alternate_arts %}
+                      {% if alternate_art.image_en %}
+                        <a class="card-tab-in cardh-nobg p-2 {% if alternate_art.number == 1 %} active {% endif %}" href="#en_aa_{{alternate_art.number}}" data-toggle="tab">{{alternate_art.number}}</a>
+                      {% endif %}
                     {% endfor %}
-                </h6>
+                  {% endif %}
+                </nav>
+                <div class="tab-content">
+                  {% if alternate_art_c > 1 %}
+                    {% for alternate_art in alternate_arts %}
+                      {% if alternate_art.image_en %}
+                        <div class="tab-pane {% if alternate_art.number == 1 %} active {% endif %}" id="en_aa_{{alternate_art.number}}">
+                          <img class="img-fluid mx-auto d-block card-img-main" src="{{alternate_art.image_en.url}}">
+                          {% if alternate_art.artist %}
+                            <div class="col-lg p-0 d-inline-flex card-bg">
+                              <div class="th cardh card-info flex-fill center rounded">Artist</div>
+                              <div class="td cardtd card-info flex-fill rounded">
+                                <a href="/cards/search?artist={{alternate_art.artist}}#results">{{alternate_art.artist}}</a>
+                              </div>
+                            </div>
+                          {% endif %}
+                        </div>
+                      {% endif %}
+                    {% endfor %}
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+          {% endif %}
+        </div>
+      </div>
+      <!-- JP -->
+      <div class="tab-pane {% if not card.image_en %}active{% endif %}" id="jp">
+        {% if alternate_arts.first %}
+          <nav class="nav nav-tabs">
+            <a class="card-tab-in w-50 cardh-nobg active" href="#jp_s" data-toggle="tab">Standard</a>
+            <a class="card-tab-in w-50 cardh-nobg" href="#jp_aa" data-toggle="tab">Alternate Art{% if alternate_art_c > 1 %}s{% endif %}</a>
+          </nav>
+        {% endif %}
+        <div class="tab-content">
+          {% if card.image_jp %}
+          <div class="tab-pane active" id="jp_s">
+            <img class="img-fluid mx-auto d-block card-img-main" src="{{card.image_jp.url}}">
+              {% if card.artist %}
+                <div class="col-lg p-0 d-inline-flex card-bg">
+                  <div class="th cardh card-info flex-fill center rounded">Artist</div>
+                  <div class="td cardtd card-info flex-fill rounded">
+                    <a href="/cards/search?artist={{card.artist}}#results">{{card.artist}}</a>
+                  </div>
+                </div>
+              {% endif %}
+          </div>
+          {% endif %}
+
+          {% if alternate_arts.first %}
+            <div class="tab-pane" id="jp_aa">
+              <div class="d-flex">
+                <nav class="nav nav-tabs d-block">
+                  {% if alternate_art_c > 1 %}
+                    {% for alternate_art in alternate_arts %}
+                      {% if alternate_art.image_jp %}
+                        <a class="card-tab-in cardh-nobg p-2 {% if alternate_art.number == 1 %} active {% endif %}" href="#jp_aa_{{alternate_art.number}}" data-toggle="tab">{{alternate_art.number}}</a>
+                      {% endif %}
+                    {% endfor %}
+                  {% endif %}
+                </nav>
+                <div class="tab-content">
+                  {% if alternate_art_c > 1 %}
+                    {% for alternate_art in alternate_arts %}
+                      {% if alternate_art.image_jp %}
+                        <div class="tab-pane {% if alternate_art.number == 1 %} active {% endif %}" id="jp_aa_{{alternate_art.number}}">
+                          <img class="img-fluid mx-auto d-block card-img-main" src="{{alternate_art.image_jp.url}}">
+                          {% if alternate_art.artist %}
+                            <div class="col-lg p-0 d-inline-flex card-bg">
+                              <div class="th cardh card-info flex-fill center rounded">Artist</div>
+                              <div class="td cardtd card-info flex-fill rounded">
+                                <a href="/cards/search?artist={{alternate_art.artist}}#results">{{alternate_art.artist}}</a>
+                              </div>
+                            </div>
+                          {% endif %}
+                        </div>
+                      {% endif %}
+                    {% endfor %}
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="col-lg-8 pl-1 pr-1">
+    <div class="color-{{card.color}} light-bg no-radius-bot p-0 dflex-mobile">
+      <div class="d-inline-flex mb-less-3">
+        <h1 class="card-title ml-4 pt-1">{{ card.title }}</h1>
+      </div>
+      <div></div>
+      <div class="d-inline-flex mt-less-3">
+        <h5 class="card-title-n ml-4 color-{{card.color}}">{{ card.number }}</h5>
+        <h5 class="ml-2">{{card.title_jp}}</h5>
+      </div>
+    </div>
+      
+    <div class="light-bg no-radius-top">
+        <div class="row p-0 m-0">
+            {% if card.card_type is not None %}
+                <div class="col-lg p-0">
+                    <div class="th cardh card-info">Card Type</div>
+                    <div class="td cardtd card-info"><a href="/cards/search?card_type={{card.card_type}}#results">{{card.card_type}}</a></div>
+                </div>
+            {% endif %}
+            {% if card.color is not None %}
+                <div class="col-lg p-0">
+                    <div class="th cardh card-info">Color</div>
+                    <div class="td cardtd  card-info color-{{card.color}}">
+                        <a class="color-{{card.color}}" href="/cards/search?color={{card.color}}#results">
+                            {{card.color}}
+                        </a>
+                    </div>
+                </div>
+            {% endif %}
+            {% if card.lv is not None %}
+                <div class="col-lg p-0">
+                    <div class="th cardh card-info">LV</div>
+                    <div class="td cardtd card-info">{{card.lv}}</div>
+                </div>
+            {% endif %}
+            {% if card.dp is not None %}
+                <div class="col-lg p-0">
+                    <div class="th cardh card-info">DP</div>
+                    <div class="td cardtd card-info">{{card.dp}}<a class="zeros">000</a></div>
+                </div>
+            {% endif %}
+        </div>
+        <div class="row p-0 m-0">
+            {% if card.number is not None %}
+                <div class="col-lg p-0">
+                    <div class="th cardh card-info">Number</div>
+                    <div class="td cardtd card-info">{{card.number}}</div>
+                </div>
+            {% endif %}
+            {% if card.rarity is not None %}
+                <div class="col-lg p-0">
+                    <div class="th cardh card-info">Rarity</div>
+                    <div class="td cardtd card-info d-flex justify-content-center">
+                        {% if card.rarity == 'C' %}<a href="/cards/search?rarity={{card.rarity}}#results">Common</a>
+                        {% elif card.rarity == 'U' %}<a href="/cards/search?rarity={{card.rarity}}#results">Uncommon</a>
+                        {% elif card.rarity == 'R' %}<a href="/cards/search?rarity={{card.rarity}}#results">Rare</a>
+                        {% elif card.rarity == 'SR' %}<a href="/cards/search?rarity={{card.rarity}}#results">Super Rare</a>
+                        {% elif card.rarity == 'SEC' %}<a href="/cards/search?rarity={{card.rarity}}#results">Secret Rare</a>
+                        {% elif card.rarity == 'P' %}<a href="/cards/search?rarity={{card.rarity}}#results">Promo</a>
+                        {% endif %}
+                        {% if card.rarity == 'SEC' %}
+                            <h6 class="card-rarity-sec ml-2 d-flex justify-content-center">{{card.rarity}}</h6>
+                        {% else %}
+                            <h6 class="card-rarity ml-2 d-flex justify-content-center">{{card.rarity}}</h6>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endif %}
+            {% if card.play_cost is not None %}
+                <div class="col-lg p-0">
+                    <div class="th cardh card-info">Play Cost</div>
+                    <div class="td cardtd card-info cost-bg-play">{{card.play_cost}}</div>
+                </div>
+            {% endif %}
+            {% if card.evolution_cost_1 is not None %}
+                <div class="col-lg p-0">
+                    <div class="th cardh card-info">Digivolve Cost</div>
+                    <div class="td cardtd card-info color-radial-{{card.evolution_cost_1_color}}">{{card.evolution_cost_1}}</div>
+                </div>
+            {% endif %}
+            {% if card.evolution_cost_2 is not None %}
+                <div class="col-lg p-0">
+                    <div class="th cardh card-info">Digivolve Cost</div>
+                    <div class="td cardtd card-info color-radial-{{card.evolution_cost_2_color}}">{{card.evolution_cost_2}}</div>
+                </div>
+            {% endif %}
+        </div>
+        <div class="row p-0 m-0">
+            <div class="col-lg p-0 d-inline-flex">
+                <div class="th cardh card-info flex-fill center">Set</div>
+                <div class="td cardtd card-info flex-fill">
+                    <a href="/cards/{{card.set.slug}}"><no class="text-uppercase">{{card.set.slug}}</no> - {{card.set.title}}</a>
+                    <h6 class="fz-promo-name">{% if card.promo_name %}({{card.promo_name}}){% endif %}</h6>
+                </div>
+            </div>
+        </div>
+        {% if card.digimon %}
+            <div class="row p-0 m-0">
+                <div class="col-lg p-0">
+                    <div class="th cardh card-info">Digimon</div>
+                    <div class="td cardtd card-info">
+                        {% if card.digimon.image %}
+                            <img class="digimon-icon" src="{{ card.digimon.image.url }}">
+                        {% endif %}
+                        <a href="/cards/search?digimon={{card.digimon.id}}#results" class="mt-2 ml-2">{{card.digimon}}</a>
+                    </div>
+                </div>
             </div>
         {% endif %}
-
+        {% if card.digimon %}
+            <div class="row p-0 m-0">
+                {% if card.digimon.stage %}
+                  <div class="col-lg p-0">
+                    <div class="th cardh card-info">Stage</div>
+                    <div class="td cardtd card-info">{{card.digimon.stage}}</div>
+                  </div>
+                {% endif %}
+                {% if card.digimon.attribute %}
+                  <div class="col-lg p-0">
+                    <div class="th cardh card-info">Attribute</div>
+                    <div class="td cardtd card-info">{{card.digimon.attribute}}</div>
+                  </div>
+                {% endif %}
+                {% if card.digimon.digimon_type %}
+                  <div class="col-lg p-0">
+                    <div class="th cardh card-info">Digimon Type</div>
+                    <div class="td cardtd card-info">{{card.digimon.digimon_type}}</div>
+                  </div>
+                {% endif %}
+            </div>
+        {% endif %}
     </div>
 
 
-    <div class="w-100 d-flex justify-content-between">
-        {% for card in previous_card|slice:":1" %}
-            <div class="light-bg">
-                {% if card.slug %}
-                    <a class="font-weight-bold previous-c" href="/cards/{{card.set.slug}}/{{ card.slug}}">◄ {{card.slug}} - {{card.title}}</a>
-                {% endif %}
-            </div>
-        {% endfor %}
-        {% for card in next_card|slice:":1" %}
-            <div class="light-bg">
-                {% if card.slug %}
-                    <a class="next-c font-weight-bold" href="/cards/{{card.set.slug}}/{{ card.slug}}">{{card.slug}} - {{card.title}} ►</a>
-                {% endif %}
-            </div>
-        {% endfor %}
-    </div>
+    {% if effect_main %}
+        <div class="light-bg mt-2 no-radius-bot effecth">
+            <h4 class="ml-2 font-italic font-weight-bolder text-light">Main Effect</h4>
+        </div>
+        <div class="light-bg no-radius-top">
+            {% for effect_m in effect_main %}
+                <h6 class="font-weight-normal">
+                    {% if effect_m.effect_blue %}<a class="effect-blue" id="white-effect">{{effect_m.effect_blue}}</a>{% endif %}
+                    {% if effect_m.effect_purple %}<a class="effect-purple" id="white-effect">{{effect_m.effect_purple}}</a>{% endif %}
+                    {% if effect_m.effect_txt %}<a class="effect-txt">{{effect_m.effect_txt | safe}}</a>{% endif %}
+                    {% if effect_m.effect_keyword %}
+                        {% if effect_m.effect_keyword.title == "Draw" %}
+                            <a class="effect-keyword" id="white-effect">{{effect_m.effect_keyword.title}} {{effect_m.effect_keyword_int}}</a>
+                            <a class="effect-txt effect-txt">(Draw {{effect_m.effect_keyword_int}} card from your deck)</a>
+                        {% elif effect_m.effect_keyword.title == "Security Attack +" %}
+                            <a class="effect-keyword" id="white-effect">{{effect_m.effect_keyword.title}}{{effect_m.effect_keyword_int}}</a>
+                            <a class="effect-txt effect-txt">(This Digimon checks {{effect_m.effect_keyword_int}} additional security card)</a>
+                        {% elif effect_m.effect_keyword.title == "Security Attack -" %}
+                            <a class="effect-keyword" id="white-effect">{{effect_m.effect_keyword.title}}{{effect_m.effect_keyword_int}}</a>
+                            <a class="effect-txt effect-txt">(This Digimon checks {{effect_m.effect_keyword_int}} fewer security cards)</a>
+                        {% elif effect_m.effect_keyword.title == "Recovery (Deck) +" %}
+                            <a class="effect-keyword" id="white-effect">Recovery +{{effect_m.effect_keyword_int}} (Deck)</a>
+                            {% if effect_m.effect_keyword_int == 1 %}
+                                <a class="effect-txt effect-txt">(Place the top card of your deck on top of your security stack.)</a>
+                            {% else %}
+                                <a class="effect-txt effect-txt">(Place the top {{effect_m.effect_keyword_int}} cards of your deck on top of your security stack.)</a>
+                            {% endif %}
+                        {% elif effect_m.effect_keyword.title == "De-Digivolve" %}
+                            <a class="effect-keyword" id="white-effect">{{effect_m.effect_keyword.title}} {{effect_m.effect_keyword_int}}</a>
+                            <!-- <a class="effect-txt effect-txt">on {{effect_m.effect_keyword_int_2}} of your opponent's Digimon. (Trash up to {{effect_m.effect_keyword_int}} cards from the top of one of your opponent's Digimon. If it has no digivolution cards, or becomes a level 3 Digimon, you can't trash any more cards.)</a> -->
+                        {% elif effect_m.effect_keyword.title == "Digisorption -" %}
+                            <a class="effect-keyword" id="white-effect">{{effect_m.effect_keyword.title}} {{effect_m.effect_keyword_int}}</a>
+                            <a class="effect-txt effect-txt">(When one of your Digimon digivolves into this card from your hand, you may suspend 1 of your Digimon to reduce the memory cost of the digivolution by {{effect_m.effect_keyword_int}}.)</a>
+                        {% elif effect_m.effect_keyword.title == "Digi-Burst" %}
+                            <a class="effect-keyword" id="white-effect">{{effect_m.effect_keyword.title}} {{effect_m.effect_keyword_int}}</a>
+                            <a class="effect-txt effect-txt">(You may trash any {{effect_m.effect_keyword_int}} cards from this Digimon's digivolution cards to trigger the following effect)</a>
+                        {% else %}
+                            <a class="effect-keyword" id="white-effect">{{effect_m.effect_keyword.title}}</a>
+                            <a class="effect-txt effect-txt">({{effect_m.effect_keyword.desc}})</a>
+                        {% endif %}
+                    {% endif %}
+                    {% if effect_m.effect_txt_2 %}<a class="effect-txt">{{effect_m.effect_txt_2 | safe}}</a>{% endif %}
+                </h6>
+            {% endfor %}
+        </div>
+    {% endif %}
 
-</div>    
+    {% if effect_inheritable %}
+        <div class="effecth light-bg mt-2 no-radius-bot color-{{card.color}}">
+            {% if card.card_type == 'Digimon' or card.card_type == 'Digitama' %}
+                <h4 class="ml-2 font-italic font-weight-bolder text-light">Inheritable Effect</h4>
+            {% endif %}
+            {% if card.card_type == 'Tamer' or card.card_type == 'Option' %}
+                <h4 class="ml-2 font-italic font-weight-bolder text-light">Security Effect</h4>
+            {% endif %}
+        </div>
+        <div class="color-{{card.color}} light-bg no-radius-top">
+          <h6 class="font-weight-normal">
+            {% for effect_i in effect_inheritable %}
+              {% if effect_i.effect_blue %}<a class="effect-blue" id="white-effect">{{effect_i.effect_blue}}</a>{% endif %}
+              {% if effect_i.effect_purple %}<a class="effect-purple" id="white-effect">{{effect_i.effect_purple}}</a>{% endif %}
+              {% if effect_i.effect_txt %}<a class="effect-txt">{{effect_i.effect_txt | safe}}</a>{% endif %}
+              {% if effect_i.effect_keyword %}
+                {% if effect_i.effect_keyword.title == "Draw" %}
+                    <a class="effect-keyword" id="white-effect">{{effect_i.effect_keyword.title}} {{effect_i.effect_keyword_int}}</a>
+                    <a class="effect-txt effect-txt">(Draw {{effect_i.effect_keyword_int}} card from your deck)</a>
+                {% elif effect_i.effect_keyword.title == "Security Attack +" %}
+                    <a class="effect-keyword" id="white-effect">{{effect_i.effect_keyword.title}}{{effect_i.effect_keyword_int}}</a>
+                    <a class="effect-txt effect-txt">(This Digimon checks {{effect_i.effect_keyword_int}} additional security card)</a>
+                {% elif effect_i.effect_keyword.title == "Security Attack -" %}
+                    <a class="effect-keyword" id="white-effect">{{effect_i.effect_keyword.title}}{{effect_i.effect_keyword_int}}</a>
+                    <a class="effect-txt effect-txt">(This Digimon checks {{effect_i.effect_keyword_int}} fewer security cards)</a>
+                {% elif effect_i.effect_keyword.title == "Recovery (Deck) +" %}
+                    <a class="effect-keyword" id="white-effect">Recovery +{{effect_i.effect_keyword_int}} (Deck)</a>
+                    {% if effect_i.effect_keyword_int == 1 %}
+                        <a class="effect-txt effect-txt">(Place the top card of your deck on top of your security stack.)</a>
+                    {% else %}
+                        <a class="effect-txt effect-txt">(Place the top {{effect_i.effect_keyword_int}} cards of your deck on top of your security stack.)</a>
+                    {% endif %}
+                {% elif effect_i.effect_keyword.title == "De-Digivolve" %}
+                    <a class="effect-keyword" id="white-effect">{{effect_i.effect_keyword.title}} {{effect_i.effect_keyword_int}}</a>
+                    <a class="effect-txt effect-txt">on {{effect_i.effect_keyword_int}} of your opponent's Digimon. (Trash up to {{effect_i.effect_keyword_int}} cards from the top of one of your opponent's Digimon. If it has no digivolution cards, or becomes a level 3 Digimon, you can't trash any more cards.)</a>
+                {% elif effect_m.effect_keyword.title == "Digisorption -" %}
+                    <a class="effect-keyword" id="white-effect">{{effect_m.effect_keyword.title}} {{effect_m.effect_keyword_int}}</a>
+                    <a class="effect-txt effect-txt">(When one of your Digimon digivolves into this card from your hand, you may suspend 1 of your Digimon to reduce the memory cost of the digivolution by {{effect_m.effect_keyword_int}}.)</a>
+                {% elif effect_m.effect_keyword.title == "Digi-Burst" %}
+                    <a class="effect-keyword" id="white-effect">{{effect_m.effect_keyword.title}} {{effect_m.effect_keyword_int}}</a>
+                    <a class="effect-txt effect-txt">(You may trash any {{effect_m.effect_keyword_int}} cards from this Digimon's digivolution cards to trigger the following effect)</a>
+                {% else %}
+                    <a class="effect-keyword" id="white-effect">{{effect_i.effect_keyword.title}}</a>
+                    <a class="effect-txt effect-txt">({{effect_i.effect_keyword.desc}})</a>
+                {% endif %}
+              {% endif %}
+              {% if effect_m.effect_txt_2 %}<a class="effect-txt">{{effect_m.effect_txt_2 | safe}}</a>{% endif %}
+            {% endfor %}
+          </h6>
+        </div>
+      {% endif %}
+  </div>
+</div>
+
+<div class="row mt-1">
+  <div class="col-lg-4">
+    {% if user.is_authenticated %}
+      <div class="add-card__bg mt-2">
+        <h5 class="add-card__h Orbitron text-center">ON YOUR COLLECTION</h5>
+        {% if alternate_arts %}
+          <div class="row p-0 m-0">
+              <div class="col-lg p-0">
+                  <div class="th cardh card-info">Standard</div>
+                  <div class="th cardh card-info">Parallel</div>
+              </div>
+              <div class="col-lg p-0">
+                  <div class="td cardtd card-info Orbitron">{{usercard_sc}}</div>
+                  <div class="td cardtd card-info Orbitron">{{usercard_pc}}</div>
+              </div>
+          </div>
+        {% else %}
+            <div class="td cardtd card-info Orbitron">{{usercard_sc}}</div>
+        {% endif %}
+
+        <!-- Button trigger modal -->
+        <button type="button" class="update-btn btn mt-2" data-toggle="modal" data-target="#exampleModal">
+            Update collection
+        </button>
+        
+        <!-- Modal -->
+        <!-- <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+          <div class="modal-content cardh text-light">
+              <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Update collection</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+              </button>
+              </div>
+              <div class="modal-body">
+                  <nav>
+                      <div class="nav nav-pills">
+                          {% if card.image_en %}
+                              <a class="nav-item nav-link cardh active" data-toggle="tab" href="#en_c" role="tab" aria-controls="en_c" aria-selected="true">
+                                  English
+                              </a>
+                          {% endif %}
+                          {% if card.image_jp %}
+                              <a class="nav-item nav-link cardh {% if not card.image_en %} active {% endif %}" data-toggle="tab" href="#jp_c" role="tab" aria-controls="jp_c" aria-selected="false">
+                                  Japanese
+                              </a>
+                          {% endif %}
+                      </div>
+                  </nav>
+
+                  <form method="POST">
+                      {% csrf_token %}
+                      <div class="tab-content card-bg border-w p-0" id="nav-tabContent">
+                          <div class="{% if not card.image_en %} d-none {% endif %} tab-pane fade show active" id="en_c" role="tabpanel">
+                              <table class="row p-0 m-0">
+                                  <tr class="col-lg p-0">
+                                      <td class="th cardh card-info pr-5 pl-5">Standard</td>
+                                      <td class="td cardtd card-info Orbitron">
+                                          {% if usercard == None %}
+                                              {% render_field form.quantity  value=0 %}
+                                          {% else %}
+                                              {% render_field form.quantity  value=usercard.quantity %}
+                                          {% endif %}
+                                      </td>
+                                  </tr>
+                                  <tr class="col-lg p-0">
+                                      {% if alternate_arts %}
+                                          <td class="th cardh card-info pr-5 pl-5">Parallel</td>
+                                      {% else %}
+                                          <td class="th cardh card-info pr-5 pl-5 d-none">Parallel</td>
+                                      {% endif %}
+                                      {% if alternate_arts %}
+                                          <td class="td cardtd card-info Orbitron">
+                                              {% if usercard == None %}
+                                                  {% render_field form.quantity_parallel  value=0 %}
+                                              {% else %}
+                                                  {% render_field form.quantity_parallel  value=usercard.quantity_parallel %}
+                                              {% endif %}
+                                          </td>
+                                      {% else %}
+                                          <td class="td cardtd card-info Orbitron d-none">
+                                              {% if usercard == None %}
+                                                  {% render_field form.quantity_parallel  value=0 %}
+                                              {% else %}
+                                                  {% render_field form.quantity_parallel  value=usercard.quantity_parallel %}
+                                              {% endif %}
+                                          </td>
+                                      {% endif %}
+                                  </tr>
+                              </table>
+                          </div>
+                          <div class="{% if not card.image_jp %} d-none {% endif %}tab-pane fade show {% if not card.image_en %} active {% endif %}" id="jp_c" role="tabpanel">
+                              <table class="row p-0 m-0">
+                                  <tr class="col-lg p-0">
+                                      <td class="th cardh card-info pr-5 pl-5">Standard</td>
+                                      <td class="td cardtd card-info Orbitron">
+                                          {% if usercard == None %}
+                                              {% render_field form.quantity_jp  value=0 %}
+                                          {% else %}
+                                              {% render_field form.quantity_jp  value=usercard.quantity_jp %}
+                                          {% endif %}
+                                      </td>
+                                  </tr>
+                                  <tr class="col-lg p-0">
+                                      {% if card.image_parallel_jp or card.image_parallel_en %}
+                                          <td class="th cardh card-info pr-5 pl-5">Parallel</td>
+                                      {% else %}
+                                          <td class="th cardh card-info pr-5 pl-5 d-none">Parallel</td>
+                                      {% endif %}
+                                      {% if card.image_parallel_jp or card.image_parallel_en %}
+                                          <td class="td cardtd card-info Orbitron">
+                                              {% if usercard == None %}
+                                                  {% render_field form.quantity_parallel_jp  value=0 %}
+                                              {% else %}
+                                                  {% render_field form.quantity_parallel_jp  value=usercard.quantity_parallel_jp %}
+                                              {% endif %}
+                                          </td>
+                                      {% else %}
+                                          <td class="td cardtd card-info Orbitron d-none">
+                                              {% if usercard == None %}
+                                                  {% render_field form.quantity_parallel_jp  value=0 %}
+                                              {% else %}
+                                                  {% render_field form.quantity_parallel_jp  value=usercard.quantity_parallel_jp %}
+                                              {% endif %}
+                                          </td>
+                                      {% endif %}
+                                  </tr>
+                              </table>
+                          </div>
+                      </div>
+                      <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                          <button class="btn btn-primary" type="submit">Update</button>
+                      </div>
+                  </form>
+
+              </div>
+          </div>
+          </div>
+        </div> -->
+      </div>
+    {% endif %}
+  </div>
+</div>
+
+
+<div class="w-100 d-flex justify-content-between">
+  {% for card in previous_card|slice:":1" %}
+    <div class="light-bg">
+      {% if card.slug %}
+        <a class="font-weight-bold previous-c" href="/cards/{{card.set.slug}}/{{ card.slug}}">◄ {{card.slug}} - {{card.title}}</a>
+      {% endif %}
+    </div>
+  {% endfor %}
+  {% for card in next_card|slice:":1" %}
+    <div class="light-bg">
+      {% if card.slug %}
+        <a class="next-c font-weight-bold" href="/cards/{{card.set.slug}}/{{ card.slug}}">{{card.slug}} - {{card.title}} ►</a>
+      {% endif %}
+    </div>
+  {% endfor %}
+</div>
 
 {% endblock %}

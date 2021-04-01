@@ -390,21 +390,21 @@
                                 </td>
                                 <td class="t-name t-name-i card-thumb align-middle border-w m-0 p-0">
                                     <table class="m-0 p-0">
-                                        <tr class="m-0 p-0">
-                                            <td class="m-0 p-0 bb-none  pl-2">
-                                                {% if card.in_deck_quantity %}
-                                                    <h6 class="font-italic mr-2">{{card.in_deck_quantity}}x</h6>
-                                                {% endif %}
-                                            </td>
-                                            <td class="m-0 p-0 bb-none  pl-2">
-                                                <a href="/cards/{{set.slug}}/{{card.slug}}">
-                                                    <div class="hover_img hovertxt">
-                                                        <h6 class="font-weight-bold">{{card.title}}</h6>
-                                                        <img class="hidden-large" id="list-thumb" src="{% if card.image_en %}{{card.image_en.url}}{% else %}{{card.image_jp.url}}{% endif %}">
-                                                    </div>
-                                                </a>
-                                            </td>
-                                        </tr>
+                                      <tr class="m-0 p-0">
+                                        <td class="m-0 p-0 bb-none  pl-2">
+                                            {% if card.in_deck_quantity %}
+                                                <h6 class="font-italic mr-2">{{card.in_deck_quantity}}x</h6>
+                                            {% endif %}
+                                        </td>
+                                        <td class="m-0 p-0 bb-none  pl-2">
+                                            <a href="/cards/{{set.slug}}/{{card.slug}}">
+                                                <div class="hover_img hovertxt">
+                                                    <h6 class="font-weight-bold">{{card.title}}</h6>
+                                                    <img class="hidden-large" id="list-thumb" src="{% if card.image_en %}{{card.image_en.url}}{% else %}{{card.image_jp.url}}{% endif %}">
+                                                </div>
+                                            </a>
+                                        </td>
+                                      </tr>
                                     </table>
                                 </td>
                                 <td class="t-rarity border-w">
@@ -424,9 +424,9 @@
                                     {% endif %}
                                 </td>
                                 <td class="t-rarity border-w">
-                                    {% if card.image_parallel_jp or card.image_parallel_en %}
-                                        <img class="m-lr-pc" width="20px" src="/static/check.png">
-                                    {% endif %}
+                                  {% if card.alternate_art.first %}
+                                    <img class="m-lr-pc" width="20px" src="/static/check.png">
+                                  {% endif %}
                                 </td>
                                 <td class="t-type border-w">{{card.card_type}}</td>
                             </tr>

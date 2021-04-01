@@ -332,16 +332,6 @@ a:hover {
 
 }
 
-.nav-pills .nav-link {
-    margin-bottom: -1px;
-    border: 1px solid transparent;
-    border-top-left-radius: .50rem;
-    border-top-right-radius: .50rem;
-    border-bottom-right-radius: 0;
-    border-bottom-left-radius: 0;
-    background-color: rgba(91,92,95,0);
-}
-
 .pilss-cl{
     border-radius: 5px;
     background-color: rgba(91,92,95,0);
@@ -351,24 +341,6 @@ a:hover {
     padding-left: 25px;
     padding-right: 25px;
     margin-left: 12px;
-}
-
-.nav-link {
-    display: block;
-    padding: 4px;
-    width: 50%;
-    text-align: center;
-    color: rgba(239, 239, 239,0.8);
-}
-
-.nav-pills .nav-link.active {
-    color: #efefef;
-    border-style: solid;
-    border-top: 1px solid #858585;
-    border-left: 1px solid #858585;
-    border-right: 1px solid #858585;
-    border-bottom: rgba(91,92,95,0.0);
-    background-color: rgba(91,92,95,1);
 }
 
 .nav-link_p {
@@ -382,15 +354,12 @@ a:hover {
     border: 1px solid #858585;
 }
 
-.nav-link_p:hover {
-    color: #efefef;
-}
-
-.nav-link_p.active {
-    border-style: solid;
-    border: 1px solid #858585;
-    background-color: #252A33;
-    color: #efefef;
+.aa-h {
+  font-weight: normal;
+  font-size: 15px;
+  text-transform: uppercase;
+  font-weight: 900;
+  text-align: center;
 }
 
 .pilss-cl.active {
@@ -931,9 +900,7 @@ td.t-lv{
         text-align: left;
     }
 
-    .nav-link {
-        font-size: 30px;
-    }
+
     img.card-thumb, .home-w {
         width: 292px!important;
         margin: 2px;
@@ -1041,6 +1008,13 @@ td.t-lv{
     text-transform: uppercase;
     font-weight: 900;
     background-color: #252A33;
+}
+
+.cardh-nobg{
+  font-weight: normal;
+  font-size: 17px;
+  text-transform: uppercase;
+  font-weight: 900;
 }
 
 .cardtd{
@@ -1259,4 +1233,58 @@ td.t-lv{
 .close:hover {
     color: #fff;
     opacity: .7;
+}
+
+.nav-link {
+  display: block;
+  padding: 5px 10px;
+}
+
+.nav-tabs {
+  border-bottom: none;
+}
+
+.ml-30p {
+  margin-left: 30px;
+}
+
+.card-tab-out {
+  padding: 4px;
+  color: #efefef;
+  margin-bottom: -1px;
+  border-bottom: rgba(91,92,95,0.0);
+  background-color: rgba(91,92,95,0);
+  text-align: center;
+}
+
+.card-tab-out.active{
+  padding: 4px;
+  color: #efefef;
+  margin-bottom: -1px;
+  border-style: solid;
+  border-top: 1px solid #858585;
+  border-left: 1px solid #858585;
+  border-right: 1px solid #858585;
+  border-top-left-radius: .50rem;
+  border-top-right-radius: .50rem;
+  border-bottom: rgba(91,92,95,0.0);
+  background-color: rgba(91,92,95,1);
+  text-align: center;
+}
+
+.card-tab-in {
+  display: block;
+  font-size: 17px;
+  text-transform: uppercase;
+  font-weight: 900;
+  color: rgba(239, 239, 239,0.8);
+  text-align: center;
+  border: 1px solid #858585;
+}
+
+.card-tab-in.active{
+  border: 1px solid #858585;
+  background-color: #252A33;
+  color: #efefef;
+  text-align: center;
 }

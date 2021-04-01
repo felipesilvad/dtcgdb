@@ -21,69 +21,13 @@ def setlist(request):
 def card_detail(request, card_slug, slug_set):
     set = Set.objects.get(slug=slug_set)
     card = Card.objects.get(set=set, slug=card_slug)
+    alternate_arts = card.alternate_art.order_by('number')
+    alternate_art_c = alternate_arts.count()
     effect_main = card.effect.filter(effect_type="Main")
     effect_inheritable = card.effect.filter(effect_type="Inheritable")
     page_title = card.number
     previous_card = set.card_set.filter(slug__lt=card_slug).order_by('-slug')
     next_card = set.card_set.filter(slug__gt=card_slug).order_by('slug')
-
-    headers = {"User-Agent": 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36'}
-    c = CurrencyRates()
-
-    jpy_yuyu_tei = None
-    usd_yuyu_tei = None
-    if card.yuyu_tei:
-        URL_yuyu_tei = card.yuyu_tei
-        page_yuyu_tei = requests.get(URL_yuyu_tei, headers=headers)
-        soup_yuyu_tei = BeautifulSoup(page_yuyu_tei.content, 'lxml')
-        price_yuyu_tei = soup_yuyu_tei.find(class_="price").b.text
-        jpy_yuyu_tei = int(price_yuyu_tei.replace('円', ''))
-        usd_yuyu_tei = round((c.convert('JPY', 'USD', jpy_yuyu_tei)), 2)
-
-
-    jpy_suruga_ya = None
-    usd_suruga_ya = None
-    if card.suruga_ya:
-        URL_suruga_ya = card.suruga_ya
-        page_suruga_ya = requests.get(URL_suruga_ya, headers=headers)
-        soup_suruga_ya = BeautifulSoup(page_suruga_ya.content, 'lxml')
-        price_suruga_ya = soup_suruga_ya.find(class_="text-red text-bold mgnL10").text
-        jpy_suruga_ya = int(price_suruga_ya.replace('円 (税込)', ''))
-        usd_suruga_ya = round((c.convert('JPY', 'USD', jpy_suruga_ya)), 2)
-
-
-    jpy_amazon_jp = None
-    usd_amazon_jp = None
-    if card.amazon_jp:
-        URL_amazon_jp = card.amazon_jp
-        page_amazon_jp = requests.get(URL_amazon_jp, headers=headers)
-        soup_amazon_jp = BeautifulSoup(page_amazon_jp.content, 'lxml')
-        price_amazon_jp = soup_amazon_jp.find(id="priceblock_ourprice")
-        if price_amazon_jp:
-            price_amazon_jp = soup_amazon_jp.find(id="priceblock_ourprice").text
-            jpy_amazon_jp = int(price_amazon_jp.replace('￥', '').replace('¥', '').replace(',', ''))
-            usd_amazon_jp = round((c.convert('JPY', 'USD', jpy_amazon_jp)), 2)
-
-
-    usd_price_ebay = None
-    jpy_price_ebay = None
-    if card.ebay:
-        URL_ebay = card.ebay
-        page_ebay = requests.get(URL_ebay, headers=headers)
-        soup_ebay = BeautifulSoup(page_ebay.content, 'lxml')
-        price_ebay = soup_ebay.find(id="prcIsum").get('content')
-        usd_price_ebay = float(price_ebay)
-        jpy_price_ebay = round((c.convert('USD', 'JPY', usd_price_ebay)))
-
-    usd = [usd_yuyu_tei, usd_suruga_ya, usd_amazon_jp, usd_price_ebay]
-    usd_res = [] 
-    for val in usd: 
-        if val != None : 
-            usd_res.append(val)
-    
-    usd_average = None
-    if usd_res != []:
-        usd_average = round(sum(usd_res) / len(usd_res), 2)
 
     usercard=None
     usercard_sc = 0
@@ -97,23 +41,21 @@ def card_detail(request, card_slug, slug_set):
             usercard_pc = usercard.quantity_parallel + usercard.quantity_parallel_jp
 
     if request.method == 'POST':
-        form = Collection(request.POST, instance=usercard)
-        if form.is_valid():
-            form.instance.profile = request.user.profile
-            form.instance.card = card
-            form.save()
-            messages.success(request, 'Collection Updated')
-            return redirect(request.META.get('HTTP_REFERER', 'redirect_if_referer_not_found'))
+      form = Collection(request.POST, instance=usercard)
+      if form.is_valid():
+        form.instance.profile = request.user.profile
+        form.instance.card = card
+        form.save()
+        messages.success(request, 'Collection Updated')
+        return redirect(request.META.get('HTTP_REFERER', 'redirect_if_referer_not_found'))
     else:
-        form = Collection()
+      form = Collection()
 
     return render(request, 'cards/card_detail.html', {
-        'page_title':page_title,'card':card, 'effect_main':effect_main, 'effect_inheritable':effect_inheritable,
-        'previous_card':previous_card, 'next_card':next_card,
-        'jpy_yuyu_tei':jpy_yuyu_tei, 'jpy_suruga_ya':jpy_suruga_ya, 'jpy_amazon_jp':jpy_amazon_jp, 'usd_price_ebay':usd_price_ebay,
-        'usd_yuyu_tei':usd_yuyu_tei, 'usd_suruga_ya':usd_suruga_ya, 'usd_amazon_jp':usd_amazon_jp, 'jpy_price_ebay':jpy_price_ebay,
-        'usd_average':usd_average,
-        'form': form, 'usercard':usercard , 'usercard_sc':usercard_sc, 'usercard_pc':usercard_pc
+      'page_title':page_title,'card':card, 'effect_main':effect_main, 'effect_inheritable':effect_inheritable,
+      'previous_card':previous_card, 'next_card':next_card,
+      'alternate_arts':alternate_arts, 'alternate_art_c':alternate_art_c,
+      'form': form, 'usercard':usercard , 'usercard_sc':usercard_sc, 'usercard_pc':usercard_pc
     })
 
 
@@ -135,7 +77,8 @@ def set_detail(request, slug_set):
     tDigitama = set.card_set.filter(card_type='Digitama').count()
     tTamer = set.card_set.filter(card_type='Tamer').count()
     tOption = set.card_set.filter(card_type='Option').count()
-    tParallel = set.card_set.filter(image_parallel_jp__icontains='.png').count()
+    # tParallel = set.card_set.filter(image_parallel_jp__icontains='.png').count()
+    tParallel = 00
 
     return render(request, 'cards/set_detail.html', {'page_title':page_title, 'cards': cards, 'set': set,
     'tRed': tRed, 'tBlue':tBlue, 'tYellow':tYellow, 'tGreen':tGreen, 'tColorless':tColorless,

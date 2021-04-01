@@ -95,21 +95,21 @@
                             {% endif %}
                         </td>
                         <!-- EN parallel -->
-                        {% if card.image_parallel_jp or card.image_parallel_en %}
-                            <td class="c-set__form cost-bg-play align-middle">
-                                {% for usercard in usercards %}
-                                    {% if usercard.card == card %}
-                                        {% if usercard.quantity_parallel == 0 %}
-                                            {% render_field form.quantity_parallel class='form-n' min=0 value=usercard.quantity_parallel %}
-                                        {% else %}
-                                            {% render_field form.quantity_parallel class='form-q' min=0 value=usercard.quantity_parallel %}
-                                        {% endif %}
-                                    {% endif %}
-                                {% endfor %}
-                                {% if card.id not in usercards_ids %}
-                                    {% render_field form.quantity_parallel class='form-n' min=0 value=0 %}
-                                {% endif %}
-                            </td>
+                        {% if card.alternate_art %}
+                          <td class="c-set__form cost-bg-play align-middle">
+                              {% for usercard in usercards %}
+                                  {% if usercard.card == card %}
+                                      {% if usercard.quantity_parallel == 0 %}
+                                          {% render_field form.quantity_parallel class='form-n' min=0 value=usercard.quantity_parallel %}
+                                      {% else %}
+                                          {% render_field form.quantity_parallel class='form-q' min=0 value=usercard.quantity_parallel %}
+                                      {% endif %}
+                                  {% endif %}
+                              {% endfor %}
+                              {% if card.id not in usercards_ids %}
+                                  {% render_field form.quantity_parallel class='form-n' min=0 value=0 %}
+                              {% endif %}
+                          </td>
                         {% else %}
                             <td class="c-set__form bg-black align-middle">
                                 <div class="d-none">
@@ -140,7 +140,7 @@
                             {% endif %}
                         </td>
                         <!-- JP Paralell -->
-                        {% if card.image_parallel_jp or card.image_parallel_en %}
+                        {% if card.alternate_art %}
                             <td class="c-set__form cost-bg-play align-middle">
                                 {% for usercard in usercards %}
                                     {% if usercard.card == card %}
