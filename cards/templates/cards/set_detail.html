@@ -1,11 +1,7 @@
 {% extends 'base_layout.html' %}
 {% block content %}
 
-<div class="c-set" {% if set.color_1 %}style = "background: {{set.color_1}};"{% endif %}>
-    <h1 class="text-uppercase text-center card-title mb-1">{{set.slug}} - {{set.title}}</h1>
-</div>
 
-{{test }}
 
 <div class="row">
     <div class="col-lg-2 light-bg m-2">
@@ -49,7 +45,11 @@
             <img class="set-thumb mx-auto d-block" src="{{set.produc_image_1.url}}">
         {% endif %}
     </div> -->
-    <div class="col-lg light-bg m-2">
+    <div class="col-lg m-2">
+      <div class="c-set" {% if set.color_1 %}style = "background: {{set.color_1}};"{% endif %}>
+        <h1 class="text-uppercase text-center card-title mb-1">{{set.slug}} - {{set.title}}</h1>
+      </div>
+      <div class="light-bg">
         <div class="row p-0 m-0">
             <div class="col-lg p-0">
                 <div class="th cardh card-info">Release Date</div>
@@ -109,6 +109,7 @@
                 <div class="td cardtd card-info">x{{tParallel}}</div>
             </div>
         </div>
+      </div>
     </div>
 </div>
 

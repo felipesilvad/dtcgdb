@@ -3,6 +3,16 @@
 {% load widget_tweaks %}
 {% block content %}
 
+<div class="w-100 d-flex justify-content-between light-bg">
+  {% for card in previous_card|slice:":1" %}
+    <a class="font-weight-bold previous-c" href="/cards/{{card.set.slug}}/{{card.slug}}">◄ {{card.slug}} {{card.title}}</a>
+  {% endfor %}
+  <h class="font-weight-bold" href="">{{card.slug}} {{card.title}} | <a href="/cards/{{card.set.slug}}"><no class="text-uppercase">{{card.set.slug}}</no> - {{card.set.title}}</a></h>
+  {% for card in next_card|slice:":1" %}
+    <a class="next-c font-weight-bold" href="/cards/{{card.set.slug}}/{{card.slug}}">{{card.slug}} {{card.title}} ►</a>
+  {% endfor %}
+</div>
+
 <div class="row mt-3">
 
   <div class="col-lg-4">
@@ -519,23 +529,37 @@
       </div>
     {% endif %}
   </div>
+
+  <div class="col-lg-8 pl-1 pr-1">
+    <div class="add-card__bg mt-2">
+      <h5 class="add-card__h Orbitron">Card Price</h5>
+      <table>
+        <tr>
+          <td>AVG</td>
+          <td>YUYU-TEI</td>
+          <td>Suruga-Ya</td>
+          <td>Amazon JP</td>
+          <td>Ebay</td>
+        </tr>
+        <tr>
+          <td>${{avg_usd}}</td>
+          <td>¥{{yuyu_tei_jpy}}</td>
+          <td>¥{{suruga_ya_jpy}}</td>
+          <td>¥{{amazon_jp_jpy}}</td>
+          <td>¥{{ebay_jp_jpy}}</td>
+        </tr>
+      </table>
+    </div>
+  </div>
 </div>
 
-
-<div class="w-100 d-flex justify-content-between">
+<div class="w-100 d-flex justify-content-between light-bg mt-3 mb-4">
   {% for card in previous_card|slice:":1" %}
-    <div class="light-bg">
-      {% if card.slug %}
-        <a class="font-weight-bold previous-c" href="/cards/{{card.set.slug}}/{{ card.slug}}">◄ {{card.slug}} - {{card.title}}</a>
-      {% endif %}
-    </div>
+    <a class="font-weight-bold previous-c" href="/cards/{{card.set.slug}}/{{card.slug}}">◄ {{card.slug}} {{card.title}}</a>
   {% endfor %}
+  <h class="font-weight-bold" href="">{{card.slug}} {{card.title}} | <a href="/cards/{{card.set.slug}}"><no class="text-uppercase">{{card.set.slug}}</no> - {{card.set.title}}</a></h>
   {% for card in next_card|slice:":1" %}
-    <div class="light-bg">
-      {% if card.slug %}
-        <a class="next-c font-weight-bold" href="/cards/{{card.set.slug}}/{{ card.slug}}">{{card.slug}} - {{card.title}} ►</a>
-      {% endif %}
-    </div>
+    <a class="next-c font-weight-bold" href="/cards/{{card.set.slug}}/{{card.slug}}">{{card.slug}} {{card.title}} ►</a>
   {% endfor %}
 </div>
 
