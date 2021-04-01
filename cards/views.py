@@ -28,14 +28,23 @@ def card_detail(request, card_slug, slug_set):
   next_card = set.card_set.filter(slug__gt=card_slug).order_by('slug')
 
   gs = gspread.service_account(filename='/home/ubuntu/dtcgdb/prices/creds.json')
+  # gs = gspread.service_account(filename='prices/creds.json')
   spreadsheet = gs.open('DTCGprices')
   sheet1 = spreadsheet.sheet1
-  cell = sheet1.find(card.number)
-  avg_usd = sheet1.cell(cell.row, 4).value
-  yuyu_tei_jpy = sheet1.cell(cell.row, 5).value
-  suruga_ya_jpy = sheet1.cell(cell.row, 7).value
-  amazon_jp_jpy = sheet1.cell(cell.row, 9).value
-  ebay_jp_jpy = sheet1.cell(cell.row, 11).value
+  avg_usd = None
+  yuyu_tei_jpy = None
+  suruga_ya_jpy = None
+  amazon_jp_jpy = None
+  ebay_jp_jpy = None
+  try:
+    cell = sheet1.find(card.number)
+    avg_usd = sheet1.cell(cell.row, 4).value
+    yuyu_tei_jpy = sheet1.cell(cell.row, 5).value
+    suruga_ya_jpy = sheet1.cell(cell.row, 7).value
+    amazon_jp_jpy = sheet1.cell(cell.row, 9).value
+    ebay_jp_jpy = sheet1.cell(cell.row, 11).value
+  except:
+    print("Not Found")
 
   usercard=None
   usercard_sc = 0
