@@ -63,23 +63,21 @@
                   {% endif %}
                 </nav>
                 <div class="tab-content">
-                  {% if alternate_art_c > 1 %}
-                    {% for alternate_art in alternate_arts %}
-                      {% if alternate_art.image_en %}
-                        <div class="tab-pane {% if alternate_art.number == 1 %} active {% endif %}" id="en_aa_{{alternate_art.number}}">
-                          <img class="img-fluid mx-auto d-block card-img-main" src="{{alternate_art.image_en.url}}">
-                          {% if alternate_art.artist %}
-                            <div class="col-lg p-0 d-inline-flex card-bg">
-                              <div class="th cardh card-info flex-fill center rounded">Artist</div>
-                              <div class="td cardtd card-info flex-fill rounded">
-                                <a href="/cards/search?artist={{alternate_art.artist}}#results">{{alternate_art.artist}}</a>
-                              </div>
+                  {% for alternate_art in alternate_arts %}
+                    {% if alternate_art.image_en %}
+                      <div class="tab-pane {% if alternate_art.number == 1 %} active {% endif %}" id="en_aa_{{alternate_art.number}}">
+                        <img class="img-fluid mx-auto d-block card-img-main" src="{{alternate_art.image_en.url}}">
+                        {% if alternate_art.artist %}
+                          <div class="col-lg p-0 d-inline-flex card-bg">
+                            <div class="th cardh card-info flex-fill center rounded">Artist</div>
+                            <div class="td cardtd card-info flex-fill rounded">
+                              <a href="/cards/search?artist={{alternate_art.artist}}#results">{{alternate_art.artist}}</a>
                             </div>
-                          {% endif %}
-                        </div>
-                      {% endif %}
-                    {% endfor %}
-                  {% endif %}
+                          </div>
+                        {% endif %}
+                      </div>
+                    {% endif %}
+                  {% endfor %}
                 </div>
               </div>
             </div>
@@ -122,23 +120,21 @@
                   {% endif %}
                 </nav>
                 <div class="tab-content">
-                  {% if alternate_art_c > 1 %}
-                    {% for alternate_art in alternate_arts %}
-                      {% if alternate_art.image_jp %}
-                        <div class="tab-pane {% if alternate_art.number == 1 %} active {% endif %}" id="jp_aa_{{alternate_art.number}}">
-                          <img class="img-fluid mx-auto d-block card-img-main" src="{{alternate_art.image_jp.url}}">
-                          {% if alternate_art.artist %}
-                            <div class="col-lg p-0 d-inline-flex card-bg">
-                              <div class="th cardh card-info flex-fill center rounded">Artist</div>
-                              <div class="td cardtd card-info flex-fill rounded">
-                                <a href="/cards/search?artist={{alternate_art.artist}}#results">{{alternate_art.artist}}</a>
-                              </div>
+                  {% for alternate_art in alternate_arts %}
+                    {% if alternate_art.image_jp %}
+                      <div class="tab-pane {% if alternate_art.number == 1 %} active {% endif %}" id="jp_aa_{{alternate_art.number}}">
+                        <img class="img-fluid mx-auto d-block card-img-main" src="{{alternate_art.image_jp.url}}">
+                        {% if alternate_art.artist %}
+                          <div class="col-lg p-0 d-inline-flex card-bg">
+                            <div class="th cardh card-info flex-fill center rounded">Artist</div>
+                            <div class="td cardtd card-info flex-fill rounded">
+                              <a href="/cards/search?artist={{alternate_art.artist}}#results">{{alternate_art.artist}}</a>
                             </div>
-                          {% endif %}
-                        </div>
-                      {% endif %}
-                    {% endfor %}
-                  {% endif %}
+                          </div>
+                        {% endif %}
+                      </div>
+                    {% endif %}
+                  {% endfor %}
                 </div>
               </div>
             </div>
