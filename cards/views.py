@@ -36,15 +36,15 @@ def card_detail(request, card_slug, slug_set):
   suruga_ya_jpy = None
   amazon_jp_jpy = None
   ebay_jp_jpy = None
-  try:
-    cell = sheet1.find(card.number)
-    avg_usd = sheet1.cell(cell.row, 4).value
-    yuyu_tei_jpy = sheet1.cell(cell.row, 5).value
-    suruga_ya_jpy = sheet1.cell(cell.row, 7).value
-    amazon_jp_jpy = sheet1.cell(cell.row, 9).value
-    ebay_jp_jpy = sheet1.cell(cell.row, 11).value
-  except:
-    print("Not Found")
+  # try:
+  #   cell = sheet1.find(card.number)
+  #   avg_usd = sheet1.cell(cell.row, 4).value
+  #   yuyu_tei_jpy = sheet1.cell(cell.row, 5).value
+  #   suruga_ya_jpy = sheet1.cell(cell.row, 7).value
+  #   amazon_jp_jpy = sheet1.cell(cell.row, 9).value
+  #   ebay_jp_jpy = sheet1.cell(cell.row, 11).value
+  # except:
+  #   print("Not Found")
 
   usercard=None
   usercard_sc = 0
