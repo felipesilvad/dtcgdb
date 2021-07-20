@@ -6,10 +6,23 @@ from .models import Card, Set, Digimon, New
 from .filters import CardFilter
 from users.forms import Collection
 from users.models import UserCard
-from forex_python.converter import CurrencyRates
 from datetime import datetime
 from threading import Timer
-import gspread
+import pyrebase
+
+config = {
+  "apiKey": "AIzaSyDb38S-7VjMuaON7Yehmfa8jCFqexLCXZc",
+  "authDomain": "dtcgprices.firebaseapp.com",
+  "databaseURL": "https://dtcgprices-default-rtdb.firebaseio.com",
+  "projectId": "dtcgprices",
+  "storageBucket": "dtcgprices.appspot.com",
+  "messagingSenderId": "798394460561",
+  "appId": "1:798394460561:web:fbd9a44b628b0ce4dad230",
+  "measurementId": "G-PFRXJB95PZ"
+}
+firebase = pyrebase.initialize_app(config)
+db = firebase.database()
+
 
 def setlist(request):
   page_title = 'Set List'
@@ -27,24 +40,75 @@ def card_detail(request, card_slug, slug_set):
   previous_card = set.card_set.filter(slug__lt=card_slug).order_by('-slug')
   next_card = set.card_set.filter(slug__gt=card_slug).order_by('slug')
 
-  gs = gspread.service_account(filename='/home/ubuntu/dtcgdb/prices/creds.json')
-  # gs = gspread.service_account(filename='prices/creds.json')
-  spreadsheet = gs.open('DTCGprices')
-  sheet1 = spreadsheet.sheet1
-  avg_usd = None
-  yuyu_tei_jpy = None
-  suruga_ya_jpy = None
-  amazon_jp_jpy = None
-  ebay_jp_jpy = None
-  # try:
-  #   cell = sheet1.find(card.number)
-  #   avg_usd = sheet1.cell(cell.row, 4).value
-  #   yuyu_tei_jpy = sheet1.cell(cell.row, 5).value
-  #   suruga_ya_jpy = sheet1.cell(cell.row, 7).value
-  #   amazon_jp_jpy = sheet1.cell(cell.row, 9).value
-  #   ebay_jp_jpy = sheet1.cell(cell.row, 11).value
-  # except:
-  #   print("Not Found")
+  card_price = db.child(card.number).child('2021').child('04').child('01').get().val()
+  if card_price:
+    try: card_price_en_avg = card_price['en']['avg']
+    except: card_price_en_avg = None
+    try: card_price_en_ebay = card_price['en']['ebay'][0]
+    except: card_price_en_ebay = None
+    try: card_price_en_ebay_url = card_price['en']['ebay'][1]
+    except: card_price_en_ebay_url = None
+    try: card_price_en_geekittude = card_price['en']['geekittude'][0]
+    except: card_price_en_geekittude = None
+    try: card_price_en_geekittude_url = card_price['en']['geekittude'][1]
+    except: card_price_en_geekittude_url = None
+    try: card_price_en_totalcards = card_price['en']['totalcards'][0]
+    except: card_price_en_totalcards = None
+    try: card_price_en_totalcards_url = card_price['en']['totalcards'][1]
+    except: card_price_en_totalcards_url = None
+    try: card_price_en_tcg_player = card_price['en']['totalcards'][0]
+    except: card_price_en_tcg_player = None
+    try: card_price_jp_avg_jpy = card_price['jp']['avg'][0]
+    except: card_price_jp_avg_jpy = None
+    try: card_price_jp_avg_usd = card_price['jp']['avg'][1]
+    except: card_price_jp_avg_usd = None
+    try: card_price_jp_amazon_jpy = card_price['jp']['amazon'][0]
+    except: card_price_jp_amazon_jpy = None
+    try: card_price_jp_amazon_usd = card_price['jp']['amazon'][1]
+    except: card_price_jp_amazon_usd = None
+    try: card_price_jp_amazon_url = card_price['jp']['amazon'][2]
+    except: card_price_jp_amazon_url = None
+    try: card_price_jp_ebay_jpy = card_price['jp']['ebay'][0]
+    except: card_price_jp_ebay_jpy = None
+    try: card_price_jp_ebay_usd = card_price['jp']['ebay'][1]
+    except: card_price_jp_ebay_usd = None
+    try: card_price_jp_ebay_url = card_price['jp']['ebay'][2]
+    except: card_price_jp_ebay_url = None
+    try: card_price_jp_suruga_ya_jpy = card_price['jp']['suruga_ya'][0]
+    except: card_price_jp_suruga_ya_jpy = None
+    try: card_price_jp_suruga_ya_usd = card_price['jp']['suruga_ya'][1]
+    except: card_price_jp_suruga_ya_usd = None
+    try: card_price_jp_suruga_ya_url = card_price['jp']['suruga_ya'][2]
+    except: card_price_jp_suruga_ya_url = None
+    try: card_price_jp_yuyu_tei_jpy = card_price['jp']['yuyu_tei'][0]
+    except: card_price_jp_yuyu_tei_jpy = None
+    try: card_price_jp_yuyu_tei_usd = card_price['jp']['yuyu_tei'][1]
+    except: card_price_jp_yuyu_tei_usd = None
+    try: card_price_jp_yuyu_tei_url = card_price['jp']['yuyu_tei'][2]
+    except: card_price_jp_yuyu_tei_url = None
+  else:
+    card_price_en_avg = None
+    card_price_en_ebay = None
+    card_price_en_ebay_url = None
+    card_price_en_geekittude = None
+    card_price_en_geekittude_url = None
+    card_price_en_totalcards = None
+    card_price_en_totalcards_url = None
+    card_price_en_tcg_player = None
+    card_price_jp_avg_jpy = None
+    card_price_jp_avg_usd = None
+    card_price_jp_amazon_jpy = None
+    card_price_jp_amazon_usd = None
+    card_price_jp_amazon_url = None
+    card_price_jp_ebay_jpy = None
+    card_price_jp_ebay_usd = None
+    card_price_jp_ebay_url = None
+    card_price_jp_suruga_ya_jpy = None
+    card_price_jp_suruga_ya_usd = None
+    card_price_jp_suruga_ya_url = None
+    card_price_jp_yuyu_tei_jpy = None
+    card_price_jp_yuyu_tei_usd = None
+    card_price_jp_yuyu_tei_url = None
 
   usercard=None
   usercard_sc = 0
@@ -72,7 +136,9 @@ def card_detail(request, card_slug, slug_set):
     'page_title':page_title,'card':card, 'effect_main':effect_main, 'effect_inheritable':effect_inheritable,
     'previous_card':previous_card, 'next_card':next_card,
     'alternate_arts':alternate_arts, 'alternate_art_c':alternate_art_c,
-    'avg_usd':avg_usd, 'yuyu_tei_jpy':yuyu_tei_jpy, 'suruga_ya_jpy':suruga_ya_jpy, 'amazon_jp_jpy':amazon_jp_jpy, 'ebay_jp_jpy':ebay_jp_jpy,
+    'card_price':card_price,
+    'card_price_en_avg': card_price_en_avg, 'card_price_en_ebay': card_price_en_ebay, 'card_price_en_ebay_url': card_price_en_ebay_url, 'card_price_en_geekittude': card_price_en_geekittude, 'card_price_en_geekittude_url': card_price_en_geekittude_url, 'card_price_en_totalcards': card_price_en_totalcards, 'card_price_en_totalcards_url': card_price_en_totalcards_url, 'card_price_en_tcg_player': card_price_en_tcg_player,
+    'card_price_jp_avg_jpy': card_price_jp_avg_jpy, 'card_price_jp_avg_usd': card_price_jp_avg_usd, 'card_price_jp_amazon_jpy': card_price_jp_amazon_jpy, 'card_price_jp_amazon_usd': card_price_jp_amazon_usd, 'card_price_jp_amazon_url': card_price_jp_amazon_url, 'card_price_jp_ebay_jpy': card_price_jp_ebay_jpy, 'card_price_jp_ebay_usd': card_price_jp_ebay_usd, 'card_price_jp_ebay_url': card_price_jp_ebay_url, 'card_price_jp_suruga_ya_jpy': card_price_jp_suruga_ya_jpy, 'card_price_jp_suruga_ya_usd': card_price_jp_suruga_ya_usd, 'card_price_jp_suruga_ya_url': card_price_jp_suruga_ya_url, 'card_price_jp_yuyu_tei_jpy': card_price_jp_yuyu_tei_jpy, 'card_price_jp_yuyu_tei_usd': card_price_jp_yuyu_tei_usd, 'card_price_jp_yuyu_tei_url': card_price_jp_yuyu_tei_url,
     'form': form, 'usercard':usercard , 'usercard_sc':usercard_sc, 'usercard_pc':usercard_pc
   })
 

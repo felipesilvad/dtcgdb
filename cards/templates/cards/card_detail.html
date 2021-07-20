@@ -223,13 +223,31 @@
             {% if card.evolution_cost_1 is not None %}
                 <div class="col-lg p-0">
                     <div class="th cardh card-info">Digivolve Cost</div>
-                    <div class="td cardtd card-info color-radial-{{card.evolution_cost_1_color}}">{{card.evolution_cost_1}}</div>
+                    <div class="td cardtd card-info color-radial-{{card.evolution_cost_1_color}}">
+                      {{card.evolution_cost_1}}
+                      <a style="font-size: small;">Lv.
+                        {% if card.evolution_cost_1_lv is not None %}
+                          {{card.evolution_cost_1_lv}}
+                        {% else %}
+                          {{ card.lv|add:"-1" }}
+                        {% endif %}
+                      </a>
+                    </div>
                 </div>
             {% endif %}
             {% if card.evolution_cost_2 is not None %}
                 <div class="col-lg p-0">
                     <div class="th cardh card-info">Digivolve Cost</div>
-                    <div class="td cardtd card-info color-radial-{{card.evolution_cost_2_color}}">{{card.evolution_cost_2}}</div>
+                    <div class="td cardtd card-info color-radial-{{card.evolution_cost_2_color}}">
+                      {{card.evolution_cost_2}}
+                      <a style="font-size: small;">Lv.
+                        {% if card.evolution_cost_2_lv is not None %}
+                          {{card.evolution_cost_2_lv}}
+                        {% else %}
+                          {{ card.lv|add:"-1" }}
+                        {% endif %}
+                      </a>
+                    </div>
                 </div>
             {% endif %}
         </div>
@@ -525,29 +543,43 @@
       </div>
     {% endif %}
   </div>
+</div>
 
-  <div class="col-lg-8 pl-1 pr-1">
-    <div class="add-card__bg mt-2">
-      <h5 class="add-card__h Orbitron">Card Price</h5>
-      <table>
-        <tr>
-          <td>AVG</td>
-          <td>YUYU-TEI</td>
-          <td>Suruga-Ya</td>
-          <td>Amazon JP</td>
-          <td>Ebay</td>
-        </tr>
-        <tr>
-          <td>${{avg_usd}}</td>
-          <td>¥{{yuyu_tei_jpy}}</td>
-          <td>¥{{suruga_ya_jpy}}</td>
-          <td>¥{{amazon_jp_jpy}}</td>
-          <td>¥{{ebay_jp_jpy}}</td>
-        </tr>
-      </table>
+{% if card_price %}
+  <div class="add-card__bg mt-2">
+    <h4 class="card-title pl-2">Card Price</h1></h4>
+    <div class="d-flex">
+      <div class="prices-logo">
+        <div class="th cardh card-info">Avarage</div>
+        <div class="td cardtd card-info"><h5>${{card_price_en_avg}}</h5></div>
+      </div>
+      <a target="_blank" href={{card_price_en_ebay_url}}>
+        <div class="">
+          <div class="th cardh card-info"><img class="img-fluid prices-logo" src="https://upload.wikimedia.org/wikipedia/commons/4/48/EBay_logo.png"></div>
+          <div class="td cardtd card-info">${{card_price_en_ebay}}</div>
+        </div>
+      </a>
+      <a target="_blank" href={{card_price_en_geekittude_url}}>
+        <div class="">
+          <div class="th cardh card-info"><img class="img-fluid prices-logo" src="https://cdn.shopify.com/s/files/1/0091/3922/4661/files/Color2_small_efabc64e-0604-46dc-bbdc-e17f85467358_175x.png"></div>
+          <div class="td cardtd card-info">${{card_price_en_geekittude}}</div>
+        </div>
+      </a>
+      <a target="_blank" href={{card_price_en_totalcards_url}}>
+        <div class="">
+          <div class="th cardh card-info"><img class="img-fluid prices-logo" src="/static/total-cards.png"></div>
+          <div class="td cardtd card-info">${{card_price_en_totalcards}}</div>
+        </div>
+      </a>
+      <a target="_blank" href="#">
+        <div class="">
+          <div class="th cardh card-info"><img class="img-fluid prices-logo" src="https://images.squarespace-cdn.com/content/53e686a0e4b0dce0cf46e2c4/1483051674673-I2AKC6CU6MZUQJEF6TKW/?content-type=image%2Fpng"></div>
+          <div class="td cardtd card-info">${{card_price_en_tcg_player}}</div>
+        </div>
+      </a>
     </div>
   </div>
-</div>
+{% endif %}
 
 <div class="w-100 d-flex justify-content-between light-bg mt-3 mb-4">
   {% for card in previous_card|slice:":1" %}

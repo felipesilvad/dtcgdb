@@ -45,8 +45,11 @@ class Card(models.Model):
   play_cost = models.IntegerField(blank=True, null=True)
   evolution_cost_1 = models.IntegerField(blank=True, null=True)
   evolution_cost_1_color = models.CharField(choices=COLORS, max_length=20, default='Red')
+  evolution_cost_1_lv = models.IntegerField(blank=True, null=True)
   evolution_cost_2 = models.IntegerField(blank=True, null=True)
   evolution_cost_2_color = models.CharField(choices=COLORS, max_length=20, default='Red')
+  evolution_cost_2_lv = models.IntegerField(blank=True, null=True)
+
   effect = models.ManyToManyField("Effect", blank=True)
 
   in_deck_quantity = models.IntegerField(blank=True, null=True)
